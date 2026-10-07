@@ -1,11 +1,13 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { Search, Heart, User } from 'lucide-react';
+import CurrencyDropdown from '../CurrencyDropdown/CurrencyDropdown';
 import styles from './Navbar.module.css';
 
 const Navbar = () => {
   return (
     <header className={styles.header}>
-      <div className={`container ${styles.navContainer}`}>
+      <div className={styles.navContainer}>
         <div className={styles.logo}>
           <Link href="/" className={styles.logoLink}>
             <Image 
@@ -33,14 +35,18 @@ const Navbar = () => {
         </nav>
 
         <div className={styles.actions}>
-          <button className={styles.actionTextBtn}>Search</button>
-          <select className={styles.currencySelect}>
-            <option value="USD">USD</option>
-            <option value="EUR">EUR</option>
-            <option value="GBP">GBP</option>
-            <option value="LKR">LKR</option>
-          </select>
-          <Link href="/admin" className={styles.actionTextBtn}>Admin</Link>
+          <button className={styles.iconBtn} aria-label="Search">
+            <Search size={20} strokeWidth={1.5} />
+          </button>
+          <button className={styles.iconBtn} aria-label="Favorites">
+            <Heart size={20} strokeWidth={1.5} />
+          </button>
+          
+          <CurrencyDropdown />
+          
+          <Link href="/admin" className={styles.iconBtn} aria-label="Account">
+            <User size={20} strokeWidth={1.5} />
+          </Link>
         </div>
       </div>
     </header>
