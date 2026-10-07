@@ -1,11 +1,22 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import styles from './Hero.module.css';
 
 const Hero = () => {
   return (
     <section className={styles.hero}>
+      <Image
+        src="/images/hero-bg-stunning.jpg"
+        alt="Premium Gemstone Background"
+        fill
+        priority
+        className={styles.bgImage}
+        sizes="100vw"
+      />
+      <div className={styles.overlay} />
+      
       <div className={`container ${styles.content}`}>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
