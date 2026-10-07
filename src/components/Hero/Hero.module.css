@@ -1,37 +1,12 @@
 .hero {
   position: relative;
-  height: 100vh;
-  min-height: 800px;
+  height: 90vh;
+  min-height: 700px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: var(--bg-secondary); /* Cream background */
   overflow: hidden;
-}
-
-.bgImage {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-}
-
-.image {
-  object-fit: cover;
-}
-
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    to bottom,
-    rgba(10, 10, 10, 0.3) 0%,
-    rgba(10, 10, 10, 0.8) 100%
-  );
 }
 
 .content {
@@ -46,13 +21,14 @@
   text-transform: uppercase;
   letter-spacing: 4px;
   font-size: 0.85rem;
-  color: var(--text-accent);
+  color: var(--text-accent); /* Gold */
   margin-bottom: 1.5rem;
+  font-weight: 600;
 }
 
 .title {
   margin-bottom: 2rem;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  color: var(--text-primary); /* Navy */
 }
 
 .description {

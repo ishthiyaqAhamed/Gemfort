@@ -2,23 +2,10 @@
 
 import { motion } from 'framer-motion';
 import styles from './Hero.module.css';
-import Image from 'next/image';
 
 const Hero = () => {
   return (
     <section className={styles.hero}>
-      <div className={styles.bgImage}>
-        <Image 
-          src="/images/hero-bg.jpg" 
-          alt="Luxury background" 
-          fill
-          priority
-          quality={90}
-          className={styles.image}
-        />
-        <div className={styles.overlay} />
-      </div>
-
       <div className={`container ${styles.content}`}>
         <motion.p
           initial={{ opacity: 0, y: 20 }}

@@ -1,5 +1,5 @@
 .featured {
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-primary); /* White background */
 }
 
 .header {
@@ -18,13 +18,23 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
   margin-bottom: 4rem;
 }
 
 .card {
   cursor: pointer;
+  background: var(--bg-secondary); /* Cream card background */
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  transition: all 0.4s ease;
+}
+
+.card:hover {
+  border-color: var(--text-accent);
+  box-shadow: 0 10px 30px rgba(0, 33, 71, 0.05);
 }
 
 .imageWrapper {
@@ -51,7 +61,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(10, 10, 10, 0.4);
+  background: rgba(255, 255, 255, 0.5); /* Light overlay */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -65,15 +75,17 @@
 
 .cardInfo {
   text-align: center;
+  padding-bottom: 1rem;
 }
 
 .stoneOrigin {
   font-family: var(--font-body);
-  color: var(--text-accent);
+  color: var(--text-accent); /* Gold */
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 2px;
   margin-bottom: 0.5rem;
+  font-weight: 600;
 }
 
 .stoneName {

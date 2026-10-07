@@ -5,7 +5,7 @@
   width: 100%;
   height: var(--nav-height);
   z-index: 100;
-  background: rgba(10, 10, 10, 0.7);
+  background: rgba(255, 255, 255, 0.9); /* Light background */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-color);
@@ -19,12 +19,43 @@
   height: 100%;
 }
 
-.logo a {
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.logoImage {
+  object-fit: contain;
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.logoTitle {
   font-family: var(--font-heading);
-  font-size: 1.5rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+  font-size: 1.8rem;
   color: var(--text-primary);
+  line-height: 1;
+  font-weight: 400;
+}
+
+.logoSubtitle {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--text-secondary);
+  line-height: 1;
+  margin-top: 4px;
 }
 
 .nav {
@@ -33,12 +64,13 @@
 }
 
 .navLink {
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
   position: relative;
   padding: 0.5rem 0;
-  color: var(--text-secondary);
+  color: var(--text-secondary); /* Slate/gray text as per image */
+  font-weight: 400;
+  transition: color 0.3s ease;
 }
 
 .navLink::after {
@@ -47,7 +79,7 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 1px;
+  height: 2px;
   background: var(--text-accent);
   transform: scaleX(0);
   transform-origin: right;
@@ -63,24 +95,8 @@
   transform-origin: left;
 }
 
-.contactBtn {
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 0.5rem 1.2rem;
-  border: 1px solid var(--border-color);
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-
-.contactBtn:hover {
-  background: var(--text-primary);
-  color: var(--bg-primary);
-  border-color: var(--text-primary);
-}
-
 @media (max-width: 900px) {
   .nav {
-    display: none; /* Add mobile menu later */
+    display: none;
   }
 }

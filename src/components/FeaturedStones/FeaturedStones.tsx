@@ -7,17 +7,45 @@ import Image from 'next/image';
 const stones = [
   {
     id: 1,
-    name: 'Royal Blue Sapphire',
+    name: 'Blue Sapphire',
     weight: '3.03 Cts',
     origin: 'Madagascar',
-    image: '/images/sapphire.jpg',
+    image: '/images/stone_blue.jpg',
   },
   {
     id: 2,
-    name: 'Unheated Pigeon Blood Ruby',
+    name: 'Padparadscha Sapphire',
+    weight: '2.15 Cts',
+    origin: 'Sri Lanka',
+    image: '/images/stone_padparadscha.jpg',
+  },
+  {
+    id: 3,
+    name: 'Pigeon Blood Ruby',
     weight: '2.03 Cts',
     origin: 'Mozambique',
-    image: '/images/ruby.jpg',
+    image: '/images/stone_ruby.jpg',
+  },
+  {
+    id: 4,
+    name: 'Pink Sapphire',
+    weight: '1.80 Cts',
+    origin: 'Madagascar',
+    image: '/images/stone_pink.jpg',
+  },
+  {
+    id: 5,
+    name: 'Yellow Sapphire',
+    weight: '4.50 Cts',
+    origin: 'Sri Lanka',
+    image: '/images/stone_yellow.jpg',
+  },
+  {
+    id: 6,
+    name: 'Alexandrite',
+    weight: '1.20 Cts',
+    origin: 'Brazil',
+    image: '/images/stone_alexandrite.jpg',
   }
 ];
 
@@ -53,7 +81,7 @@ const FeaturedStones = () => {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 * index }}
+              transition={{ duration: 0.8, delay: 0.1 * (index % 3) }}
               whileHover={{ y: -10 }}
             >
               <div className={styles.imageWrapper}>
@@ -61,6 +89,7 @@ const FeaturedStones = () => {
                   src={stone.image}
                   alt={stone.name}
                   fill
+                  sizes="(max-width: 768px) 100vw, 300px"
                   className={styles.image}
                 />
                 <div className={styles.cardOverlay}>
