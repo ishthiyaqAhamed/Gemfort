@@ -131,9 +131,9 @@ h3 {
 }
 
 .btn-primary::before {
-  background: var(--text-accent);
+  background: var(--bg-primary);
 }
 
 .btn-primary:hover span {
-  color: var(--bg-primary);
+  color: var(--text-primary);
 }

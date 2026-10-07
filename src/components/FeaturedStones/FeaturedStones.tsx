@@ -99,7 +99,6 @@ const FeaturedStones = () => {
                 </div>
               </div>
               <div className={styles.cardInfo}>
-                <p className={styles.stoneOrigin}>{stone.origin} • {stone.weight}</p>
                 <h3 className={styles.stoneName}>{stone.name}</h3>
               </div>
             </motion.div>
