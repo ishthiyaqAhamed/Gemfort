@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id          String      @id @default(cuid())
+  name        String
+  slug        String      @unique
+  description String?
+  gemstones   Gemstone[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Gemstone {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  description String?
+  price       Float?
+  weight      Float?    // in carats
+  color       String?
+  shape       String?
+  origin      String?
+  treatment   String?
+  status      String    @default("AVAILABLE") // AVAILABLE, SOLD, RESERVED
+  
+  images      String[]   // Array of image URLs
+  video       String?   // Video URL
+  certificate String?   // Certificate image/PDF URL
+
+  categoryId  String
+  category    Category  @relation(fields: [categoryId], references: [id])
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
