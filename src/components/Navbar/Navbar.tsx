@@ -31,6 +31,17 @@ const Navbar = () => {
           <Link href="/gemstone-guide" className={styles.navLink}>Gemstone Guide</Link>
           <Link href="/contact" className={styles.navLink}>Contact</Link>
         </nav>
+
+        <div className={styles.actions}>
+          <button className={styles.actionTextBtn}>Search</button>
+          <select className={styles.currencySelect}>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+            <option value="LKR">LKR</option>
+          </select>
+          <Link href="/admin" className={styles.actionTextBtn}>Admin</Link>
+        </div>
       </div>
     </header>
   );
