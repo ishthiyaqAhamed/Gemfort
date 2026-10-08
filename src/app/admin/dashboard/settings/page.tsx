@@ -1,3 +1,5 @@
+'use client';
+
 export default function AdminSettingsPage() {
   return (
     <div style={{ backgroundColor: 'white', borderRadius: '12px', padding: '3rem', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)', border: '1px solid #f3f4f6', maxWidth: '800px' }}>
@@ -29,7 +31,7 @@ export default function AdminSettingsPage() {
           </div>
         </div>
 
-        <button style={{ backgroundColor: 'var(--text-primary)', color: 'white', border: 'none', padding: '12px 24px', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', alignSelf: 'flex-start' }}>
+        <button onClick={() => alert('Settings saved successfully (Demo)')} style={{ backgroundColor: 'var(--text-primary)', color: 'white', border: 'none', padding: '12px 24px', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', alignSelf: 'flex-start' }}>
           Save Changes
         </button>
       </div>

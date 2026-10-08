@@ -1,3 +1,5 @@
+'use client';
+
 export default function AdminInventoryPage() {
   return (
     <div style={{ backgroundColor: 'white', borderRadius: '12px', padding: '3rem', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)', border: '1px solid #f3f4f6' }}>
@@ -6,7 +8,7 @@ export default function AdminInventoryPage() {
           <h1 style={{ fontSize: '1.5rem', color: '#111827', margin: '0 0 0.5rem 0' }}>Inventory Management</h1>
           <p style={{ color: '#6b7280', margin: 0 }}>Add, edit, or remove gemstones from your collection.</p>
         </div>
-        <button style={{ backgroundColor: 'var(--text-accent)', color: 'white', border: 'none', padding: '0.8rem 1.5rem', borderRadius: '6px', fontWeight: 500, cursor: 'pointer' }}>
+        <button onClick={() => alert('Backend not connected yet. Real implementation will open an upload form.')} style={{ backgroundColor: 'var(--text-accent)', color: 'white', border: 'none', padding: '0.8rem 1.5rem', borderRadius: '6px', fontWeight: 500, cursor: 'pointer' }}>
           + Add New Stone
         </button>
       </div>

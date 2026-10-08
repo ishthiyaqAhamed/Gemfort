@@ -1,3 +1,5 @@
+'use client';
+
 export default function AdminJournalPage() {
   return (
     <div style={{ backgroundColor: 'white', borderRadius: '12px', padding: '3rem', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)', border: '1px solid #f3f4f6' }}>
@@ -6,7 +8,7 @@ export default function AdminJournalPage() {
           <h1 style={{ fontSize: '1.5rem', color: '#111827', margin: '0 0 0.5rem 0' }}>Journal Entries</h1>
           <p style={{ color: '#6b7280', margin: 0 }}>Manage your blog and educational content.</p>
         </div>
-        <button style={{ backgroundColor: 'var(--text-accent)', color: 'white', border: 'none', padding: '0.8rem 1.5rem', borderRadius: '6px', fontWeight: 500, cursor: 'pointer' }}>
+        <button onClick={() => alert('Backend not connected yet. This will open a rich text editor.')} style={{ backgroundColor: 'var(--text-accent)', color: 'white', border: 'none', padding: '0.8rem 1.5rem', borderRadius: '6px', fontWeight: 500, cursor: 'pointer' }}>
           + New Article
         </button>
       </div>

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { LayoutDashboard, Gem, FileText, Settings, LogOut, Users } from 'lucide-react';
+import { LayoutDashboard, Gem, FileText, Settings, LogOut, Users, Globe } from 'lucide-react';
 
 export default function AdminDashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -35,11 +35,17 @@ export default function AdminDashboardLayout({ children }: { children: React.Rea
         display: 'flex',
         flexDirection: 'column'
       }}>
-        <div style={{ padding: '2rem', display: 'flex', alignItems: 'center', gap: '1rem', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-          <Image src="/images/logo.png" alt="Gemfort" width={40} height={40} style={{ filter: 'invert(1) brightness(2)' }} />
+        <div style={{ padding: '2rem', display: 'flex', alignItems: 'center', gap: '1.2rem', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+          <Image 
+            src="/images/logo.png" 
+            alt="Gemfort" 
+            width={45} 
+            height={45} 
+            style={{ filter: 'invert(1)', mixBlendMode: 'screen', objectFit: 'contain' }} 
+          />
           <div>
-            <h2 style={{ fontSize: '1.2rem', fontFamily: 'var(--font-serif)', margin: 0 }}>Gemfort</h2>
-            <p style={{ fontSize: '0.7rem', opacity: 0.6, letterSpacing: '1px', textTransform: 'uppercase' }}>Admin Panel</p>
+            <h2 style={{ fontSize: '1.3rem', fontFamily: 'var(--font-serif)', margin: 0, letterSpacing: '0.5px' }}>Gemfort</h2>
+            <p style={{ fontSize: '0.7rem', opacity: 0.6, letterSpacing: '2px', textTransform: 'uppercase', marginTop: '4px' }}>Admin Panel</p>
           </div>
         </div>
 
@@ -64,15 +70,19 @@ export default function AdminDashboardLayout({ children }: { children: React.Rea
             <Settings size={18} />
             <span style={{ fontSize: '0.9rem' }}>Settings</span>
           </Link>
-        </nav>
 
-        <div style={{ padding: '2rem 1rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+          <div style={{ margin: '1.5rem 0', height: '1px', backgroundColor: 'rgba(255,255,255,0.1)' }}></div>
+
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '0.8rem 1rem', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', borderRadius: '6px' }}>
+            <Globe size={18} />
+            <span style={{ fontSize: '0.9rem' }}>Back to Website</span>
+          </Link>
           <button 
             onClick={handleLogout}
             style={{ 
               display: 'flex', alignItems: 'center', gap: '1rem', padding: '0.8rem 1rem', 
               color: '#fca5a5', background: 'none', border: 'none', cursor: 'pointer',
-              width: '100%', textAlign: 'left', borderRadius: '6px'
+              width: '100%', textAlign: 'left', borderRadius: '6px', fontFamily: 'inherit'
             }}
             onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.05)'}
             onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
@@ -80,7 +90,7 @@ export default function AdminDashboardLayout({ children }: { children: React.Rea
             <LogOut size={18} />
             <span style={{ fontSize: '0.9rem' }}>Sign Out</span>
           </button>
-        </div>
+        </nav>
       </aside>
 
       {/* Main Content */}

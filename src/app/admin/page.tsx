@@ -41,13 +41,13 @@ export default function AdminLoginPage() {
         textAlign: 'center'
       }}>
         <div style={{ marginBottom: '2.5rem', display: 'flex', justifyContent: 'center' }}>
-          <div style={{ backgroundColor: 'var(--text-primary)', padding: '1.5rem', borderRadius: '50%' }}>
+          <div style={{ backgroundColor: 'var(--text-primary)', padding: '1.5rem', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Image 
               src="/images/logo.png" 
               alt="Gemfort Logo" 
               width={80} 
               height={80} 
-              style={{ objectFit: 'contain', filter: 'invert(1) brightness(2)' }} 
+              style={{ objectFit: 'contain', filter: 'invert(1)', mixBlendMode: 'screen' }} 
             />
           </div>
         </div>

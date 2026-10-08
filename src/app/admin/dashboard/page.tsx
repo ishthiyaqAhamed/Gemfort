@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function AdminDashboardPage() {
   const stats = [
     { label: 'Total Inventory', value: '42', change: '+3 this week' },
@@ -21,7 +23,7 @@ export default function AdminDashboardPage() {
       <div style={{ backgroundColor: 'white', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)', border: '1px solid #f3f4f6', overflow: 'hidden' }}>
         <div style={{ padding: '1.5rem 2rem', borderBottom: '1px solid #e5e7eb', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h2 style={{ fontSize: '1.2rem', color: '#111827', margin: 0 }}>Recent Enquiries</h2>
-          <button style={{ color: 'var(--text-accent)', background: 'none', border: 'none', fontSize: '0.9rem', fontWeight: 500, cursor: 'pointer' }}>View All</button>
+          <Link href="/admin/dashboard/enquiries" style={{ color: 'var(--text-accent)', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 500, cursor: 'pointer' }}>View All</Link>
         </div>
         <div style={{ padding: '2rem' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
