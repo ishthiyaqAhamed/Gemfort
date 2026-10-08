@@ -117,11 +117,6 @@ const FeaturedStones = () => {
             >
               <Link href={`/gemstones/${stone.id}`} className={styles.cardLink}>
                 <div className={styles.card}>
-                  <div className={styles.cardBadge}>
-                    <Sparkles size={10} style={{ display: 'inline', marginRight: '4px' }} />
-                    {stone.badge}
-                  </div>
-
                   <div className={styles.imageWrapper}>
                     <div 
                       className={styles.glow} 
