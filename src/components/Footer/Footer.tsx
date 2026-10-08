@@ -49,25 +49,21 @@ const Footer = () => {
           <h4 className={styles.title}>Get in Touch</h4>
           <div className={styles.contactItem}>
             <MapPin size={18} className={styles.contactIcon} />
-            <span>45 Gem Avenue, Colombo 03, Sri Lanka</span>
+            <span>26, Naleem Hajiar Place, China Fort<br/>Beruwala, Sri Lanka</span>
           </div>
           <div className={styles.contactItem}>
             <Phone size={18} className={styles.contactIcon} />
-            <span>+94 11 234 5678</span>
+            <span>+94 77 341 2932</span>
           </div>
           <div className={styles.contactItem}>
             <Mail size={18} className={styles.contactIcon} />
-            <span>inquiries@gemfort.com</span>
+            <span>GEMFORTINTERNATIONAL@gmail.com</span>
           </div>
         </div>
       </div>
       
       <div className={styles.bottom}>
-        <p>&copy; {new Date().getFullYear()} Gemfort International. All rights reserved.</p>
-        <div className={styles.legalLinks}>
-          <Link href="/privacy">Privacy Policy</Link>
-          <Link href="/terms">Terms of Service</Link>
-        </div>
+        <p>&copy; 2026 Gemfort International. All rights reserved.</p>
       </div>
     </footer>
   );

@@ -19,7 +19,8 @@
 }
 
 .logo {
-  filter: brightness(0) invert(1);
+  filter: invert(1);
+  mix-blend-mode: screen;
   object-fit: contain;
 }
 

@@ -5,14 +5,14 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 const allStones = [
-  { id: 1, name: 'Royal Blue Sapphire', origin: 'Sri Lanka', weight: '3.45 ct', img: '/images/blue-sapphire-isolated.jpg' },
-  { id: 2, name: 'Pigeon Blood Ruby', origin: 'Burma', weight: '2.10 ct', img: '/images/ruby-isolated.jpg' },
-  { id: 3, name: 'Sunset Padparadscha', origin: 'Sri Lanka', weight: '1.85 ct', img: '/images/padparadscha-isolated.jpg' },
-  { id: 4, name: 'Vivid Pink Sapphire', origin: 'Madagascar', weight: '4.20 ct', img: '/images/pink-sapphire-isolated.jpg' },
-  { id: 5, name: 'Color Change Alexandrite', origin: 'Tanzania', weight: '1.50 ct', img: '/images/alexandrite-isolated.jpg' },
-  { id: 6, name: 'Golden Yellow Sapphire', origin: 'Sri Lanka', weight: '5.10 ct', img: '/images/yellow-sapphire-isolated.jpg' },
-  { id: 7, name: 'Cornflower Blue Sapphire', origin: 'Sri Lanka', weight: '2.80 ct', img: '/images/blue-sapphire-isolated.jpg' },
-  { id: 8, name: 'Unheated Ruby', origin: 'Mozambique', weight: '3.05 ct', img: '/images/ruby-isolated.jpg' },
+  { id: 1, name: 'Royal Blue Sapphire', type: 'Sapphire', weight: '3.45 ct', img: '/images/guide/blue-sapphire.png', price: '$4,250' },
+  { id: 2, name: 'Pigeon Blood Ruby', type: 'Ruby', weight: '2.10 ct', img: '/images/guide/ruby.png', price: '$6,800' },
+  { id: 3, name: 'Sunset Padparadscha', type: 'Padparadscha', weight: '1.85 ct', img: '/images/guide/padparadscha.png', price: '$8,500' },
+  { id: 4, name: 'Vivid Pink Sapphire', type: 'Sapphire', weight: '4.20 ct', img: '/images/guide/pink-sapphire.png', price: '$3,900' },
+  { id: 5, name: 'Color Change Alexandrite', type: 'Alexandrite', weight: '1.50 ct', img: '/images/guide/alexandrite.png', price: '$12,000' },
+  { id: 6, name: 'Golden Yellow Sapphire', type: 'Sapphire', weight: '5.10 ct', img: '/images/guide/yellow-sapphire.png', price: '$3,200' },
+  { id: 7, name: 'Cornflower Blue Sapphire', type: 'Sapphire', weight: '2.80 ct', img: '/images/guide/blue-sapphire.png', price: '$3,800' },
+  { id: 8, name: 'Neon Spinel', type: 'Spinel', weight: '3.05 ct', img: '/images/guide/spinel.png', price: '$2,100' },
 ];
 
 const containerVariants = {
@@ -34,26 +34,28 @@ export default function GemstonesPage() {
   return (
     <main>
       <PageHeader 
-        title="Our Collection" 
+        title="Shop Collections" 
         subtitle="Ethically Sourced Natural Gemstones" 
         imagePath="/images/hero-bg-blue.jpg"
       />
       
-      <section className="section" style={{ backgroundColor: 'var(--bg-primary)' }}>
-        <div className="container">
+      <section className="section" style={{ backgroundColor: 'var(--bg-secondary)', paddingBottom: '8rem' }}>
+        <div className="container" style={{ maxWidth: '1400px' }}>
           
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem', flexWrap: 'wrap', gap: '1rem' }}>
-            <p style={{ color: 'var(--text-secondary)' }}>Showing {allStones.length} premium gemstones</p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem', flexWrap: 'wrap', gap: '1rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '2rem' }}>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', letterSpacing: '1px', textTransform: 'uppercase' }}>Showing {allStones.length} premium gemstones</p>
             <div style={{ display: 'flex', gap: '1rem' }}>
-              <select style={{ padding: '0.8rem 1.5rem', border: '1px solid var(--border-color)', borderRadius: '4px', fontFamily: 'var(--font-body)', backgroundColor: 'transparent' }}>
-                <option>All Gemstones</option>
+              <select style={{ padding: '0.8rem 1.5rem', border: '1px solid rgba(0,33,71,0.1)', borderRadius: '4px', fontFamily: 'var(--font-body)', backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)', outline: 'none' }}>
+                <option>All Categories</option>
                 <option>Sapphires</option>
                 <option>Rubies</option>
                 <option>Padparadscha</option>
+                <option>Alexandrite</option>
               </select>
-              <select style={{ padding: '0.8rem 1.5rem', border: '1px solid var(--border-color)', borderRadius: '4px', fontFamily: 'var(--font-body)', backgroundColor: 'transparent' }}>
+              <select style={{ padding: '0.8rem 1.5rem', border: '1px solid rgba(0,33,71,0.1)', borderRadius: '4px', fontFamily: 'var(--font-body)', backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)', outline: 'none' }}>
                 <option>Sort by: Featured</option>
                 <option>Price: High to Low</option>
+                <option>Price: Low to High</option>
                 <option>Carat: High to Low</option>
               </select>
             </div>
@@ -63,7 +65,7 @@ export default function GemstonesPage() {
             style={{ 
               display: 'grid', 
               gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', 
-              gap: '2rem' 
+              gap: '2.5rem' 
             }}
             variants={containerVariants}
             initial="hidden"
@@ -75,69 +77,75 @@ export default function GemstonesPage() {
                 key={stone.id} 
                 variants={itemVariants}
                 style={{ 
-                  backgroundColor: 'var(--bg-secondary)', 
-                  padding: '1rem', 
-                  borderRadius: '8px', 
-                  border: '1px solid var(--border-color)',
+                  backgroundColor: 'var(--bg-primary)', 
+                  borderRadius: '0', 
                   cursor: 'pointer',
-                  transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+                  transition: 'all 0.3s ease',
+                  position: 'relative',
+                  display: 'flex',
+                  flexDirection: 'column'
                 }}
                 onMouseOver={(e) => {
                   e.currentTarget.style.transform = 'translateY(-5px)';
-                  e.currentTarget.style.boxShadow = '0 10px 20px rgba(0,33,71,0.05)';
-                  e.currentTarget.style.borderColor = 'var(--text-accent)';
+                  const img = e.currentTarget.querySelector('img');
+                  if (img) img.style.transform = 'scale(1.05)';
                 }}
                 onMouseOut={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'none';
-                  e.currentTarget.style.borderColor = 'var(--border-color)';
+                  const img = e.currentTarget.querySelector('img');
+                  if (img) img.style.transform = 'scale(1)';
                 }}
               >
-                <div style={{ position: 'relative', width: '100%', aspectRatio: '4/5', marginBottom: '1.5rem', overflow: 'hidden', borderRadius: '4px' }}>
+                <div style={{ position: 'relative', width: '100%', aspectRatio: '1/1', overflow: 'hidden', backgroundColor: '#f9f9f9', padding: '2rem' }}>
                   <Image 
                     src={stone.img} 
                     alt={stone.name} 
                     fill 
-                    style={{ objectFit: 'cover' }} 
+                    style={{ objectFit: 'contain', padding: '2rem', transition: 'transform 0.5s ease' }} 
                   />
                   <div style={{
                     position: 'absolute',
-                    top: '10px',
-                    right: '10px',
-                    backgroundColor: 'white',
-                    padding: '4px 8px',
-                    fontSize: '0.75rem',
+                    top: '15px',
+                    left: '15px',
+                    backgroundColor: 'rgba(255,255,255,0.9)',
+                    padding: '4px 10px',
+                    fontSize: '0.7rem',
                     fontWeight: 600,
                     letterSpacing: '1px',
                     color: 'var(--text-primary)',
                     borderRadius: '2px',
-                    boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
+                    textTransform: 'uppercase'
                   }}>
                     {stone.weight}
                   </div>
                 </div>
-                <div style={{ textAlign: 'center', paddingBottom: '1rem' }}>
+                
+                <div style={{ padding: '1.5rem 0', textAlign: 'center', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
                   <p style={{ 
                     fontFamily: 'var(--font-body)', 
-                    color: 'var(--text-accent)', 
-                    fontSize: '0.75rem', 
+                    color: 'var(--text-secondary)', 
+                    fontSize: '0.7rem', 
                     textTransform: 'uppercase', 
                     letterSpacing: '2px', 
-                    marginBottom: '0.5rem',
-                    fontWeight: 600
+                    marginBottom: '0.5rem'
                   }}>
-                    {stone.origin}
+                    {stone.type}
                   </p>
-                  <h3 style={{ fontSize: '1.2rem', color: 'var(--text-primary)' }}>
+                  
+                  <h3 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', fontFamily: 'var(--font-serif)', marginBottom: '0.8rem', flexGrow: 1 }}>
                     {stone.name}
                   </h3>
+                  
+                  <p style={{ color: 'var(--text-accent)', fontWeight: 600, fontSize: '1.1rem' }}>
+                    {stone.price}
+                  </p>
                 </div>
               </motion.div>
             ))}
           </motion.div>
 
-          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '4rem' }}>
-            <button className="btn btn-primary">
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '5rem' }}>
+            <button className="btn btn-primary" style={{ padding: '16px 40px' }}>
               <span>Load More Stones</span>
             </button>
           </div>

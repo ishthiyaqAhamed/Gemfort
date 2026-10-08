@@ -31,7 +31,7 @@ const Navbar = () => {
         <nav className={styles.nav}>
           <Link href="/" className={styles.navLink}>Home</Link>
           <Link href="/about" className={styles.navLink}>About Us</Link>
-          <Link href="/gemstones" className={styles.navLink}>Gemstones</Link>
+          <Link href="/gemstones" className={styles.navLink}>Inventory</Link>
           <Link href="/expertise" className={styles.navLink}>Our Expertise</Link>
           <Link href="/journal" className={styles.navLink}>Journal</Link>
           <Link href="/gemstone-guide" className={styles.navLink}>Gemstone Guide</Link>
@@ -66,7 +66,7 @@ const Navbar = () => {
         <div className={styles.mobileMenu}>
           <Link href="/" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
           <Link href="/about" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>About Us</Link>
-          <Link href="/gemstones" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Gemstones</Link>
+          <Link href="/gemstones" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Inventory</Link>
           <Link href="/expertise" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Our Expertise</Link>
           <Link href="/journal" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Journal</Link>
           <Link href="/gemstone-guide" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Gemstone Guide</Link>
