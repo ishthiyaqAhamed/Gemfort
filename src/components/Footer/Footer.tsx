@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { Mail, MapPin, Phone } from 'lucide-react';
 import styles from './Footer.module.css';
 
@@ -10,7 +9,9 @@ const Footer = () => {
     <footer className={styles.footer}>
       <div className={`container ${styles.grid}`}>
         <div className={styles.brand}>
-          <Image src="/images/logo.png" alt="Gemfort Logo" width={160} height={50} className={styles.logo} />
+          <Link href="/" className={styles.brandName}>
+            Gemfort International
+          </Link>
           <p className={styles.description}>
             Purveyors of the world's finest natural gemstones. Sourced ethically, cut masterfully, and delivered globally since 1989.
           </p>

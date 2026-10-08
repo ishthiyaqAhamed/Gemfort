@@ -20,10 +20,19 @@
   gap: 1.25rem;
 }
 
-.logo {
-  filter: invert(1);
-  mix-blend-mode: screen;
-  object-fit: contain;
+.brandName {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-block;
+  transition: color 0.25s ease;
+}
+
+.brandName:hover {
+  color: #dfbe6e;
 }
 
 .description {
@@ -152,9 +161,8 @@ a.contactItem:hover {
     align-items: flex-start;
   }
 
-  .logo {
-    width: 130px;
-    height: auto;
+  .brandName {
+    font-size: 1.25rem;
   }
 
   .description {
