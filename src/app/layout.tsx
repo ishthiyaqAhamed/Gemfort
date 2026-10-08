@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   description: 'Natural sapphires, rubies, alexandrite, and spinel sourced from Sri Lanka, Africa, and Burma. Hand-cut in Sri Lanka for over 35 years.',
 };
 
+import { Suspense } from 'react';
+
 export default function RootLayout({
   children,
 }: {
@@ -19,9 +21,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${playfair.variable}`}>
-        <LayoutWrapper>
-          {children}
-        </LayoutWrapper>
+        <Suspense fallback={<div style={{ height: '100vh', backgroundColor: '#fbfaf6' }}></div>}>
+          <LayoutWrapper>
+            {children}
+          </LayoutWrapper>
+        </Suspense>
       </body>
     </html>
   );

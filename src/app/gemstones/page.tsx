@@ -5,15 +5,17 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { useCurrency } from '@/context/CurrencyContext';
+
 const allStones = [
-  { id: 1, name: 'Royal Blue Sapphire', type: 'Sapphire', weight: '3.45 ct', img: '/images/guide/blue-sapphire.png', price: '$4,250' },
-  { id: 2, name: 'Pigeon Blood Ruby', type: 'Ruby', weight: '2.10 ct', img: '/images/guide/ruby.png', price: '$6,800' },
-  { id: 3, name: 'Sunset Padparadscha', type: 'Padparadscha', weight: '1.85 ct', img: '/images/guide/padparadscha.png', price: '$8,500' },
-  { id: 4, name: 'Vivid Pink Sapphire', type: 'Sapphire', weight: '4.20 ct', img: '/images/guide/pink-sapphire.png', price: '$3,900' },
-  { id: 5, name: 'Color Change Alexandrite', type: 'Alexandrite', weight: '1.50 ct', img: '/images/guide/alexandrite.png', price: '$12,000' },
-  { id: 6, name: 'Golden Yellow Sapphire', type: 'Sapphire', weight: '5.10 ct', img: '/images/guide/yellow-sapphire.png', price: '$3,200' },
-  { id: 7, name: 'Cornflower Blue Sapphire', type: 'Sapphire', weight: '2.80 ct', img: '/images/guide/blue-sapphire.png', price: '$3,800' },
-  { id: 8, name: 'Neon Spinel', type: 'Spinel', weight: '3.05 ct', img: '/images/guide/spinel.png', price: '$2,100' },
+  { id: 1, name: 'Royal Blue Sapphire', type: 'Sapphire', weight: '3.45 ct', img: '/images/guide/blue-sapphire.png', priceUSD: 4250 },
+  { id: 2, name: 'Pigeon Blood Ruby', type: 'Ruby', weight: '2.10 ct', img: '/images/guide/ruby.png', priceUSD: 6800 },
+  { id: 3, name: 'Sunset Padparadscha', type: 'Padparadscha', weight: '1.85 ct', img: '/images/guide/padparadscha.png', priceUSD: 8500 },
+  { id: 4, name: 'Vivid Pink Sapphire', type: 'Sapphire', weight: '4.20 ct', img: '/images/guide/pink-sapphire.png', priceUSD: 3900 },
+  { id: 5, name: 'Color Change Alexandrite', type: 'Alexandrite', weight: '1.50 ct', img: '/images/guide/alexandrite.png', priceUSD: 12000 },
+  { id: 6, name: 'Golden Yellow Sapphire', type: 'Sapphire', weight: '5.10 ct', img: '/images/guide/yellow-sapphire.png', priceUSD: 3200 },
+  { id: 7, name: 'Cornflower Blue Sapphire', type: 'Sapphire', weight: '2.80 ct', img: '/images/guide/blue-sapphire.png', priceUSD: 3800 },
+  { id: 8, name: 'Neon Spinel', type: 'Spinel', weight: '3.05 ct', img: '/images/guide/spinel.png', priceUSD: 2100 },
 ];
 
 const containerVariants = {
@@ -32,6 +34,8 @@ const itemVariants = {
 };
 
 export default function GemstonesPage() {
+  const { formatPrice } = useCurrency();
+
   return (
     <main>
       <PageHeader 
@@ -65,8 +69,8 @@ export default function GemstonesPage() {
           <motion.div 
             style={{ 
               display: 'grid', 
-              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', 
-              gap: '3rem 2rem' 
+              gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', 
+              gap: '2.5rem 1.5rem' 
             }}
             variants={containerVariants}
             initial="hidden"
@@ -173,7 +177,7 @@ export default function GemstonesPage() {
                       <div style={{ width: '20px', height: '1px', backgroundColor: 'var(--border-color)', margin: 'auto auto 1.5rem auto' }}></div>
 
                       <p style={{ color: 'var(--text-primary)', fontWeight: 400, fontSize: '1.1rem', letterSpacing: '1px' }}>
-                        {stone.price}
+                        {formatPrice(stone.priceUSD)}
                       </p>
                     </div>
                   </div>

@@ -3,16 +3,17 @@
 import { usePathname } from 'next/navigation';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
+import { CurrencyProvider } from '@/context/CurrencyContext';
 
 export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith('/admin');
 
   return (
-    <>
+    <CurrencyProvider>
       {!isAdmin && <Navbar />}
       {children}
       {!isAdmin && <Footer />}
-    </>
+    </CurrencyProvider>
   );
 }
