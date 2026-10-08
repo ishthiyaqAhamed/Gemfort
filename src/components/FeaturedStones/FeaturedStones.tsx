@@ -134,7 +134,6 @@ const FeaturedStones = () => {
                   <div className={styles.cardInfo}>
                     <div className={styles.originMeta}>
                       <span className={styles.origin}>{stone.origin}</span>
-                      <span className={styles.weight}>{stone.weight}</span>
                     </div>
 
                     <h3 className={styles.stoneName}>{stone.name}</h3>

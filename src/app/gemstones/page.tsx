@@ -100,7 +100,6 @@ export default function GemstonesPage() {
                       </h3>
 
                       <div className={styles.stoneMeta}>
-                        <span className={styles.stoneWeight}>{stone.weight}</span>
                         <span className={styles.stonePrice}>{formatPrice(stone.priceUSD)}</span>
                       </div>
                       
