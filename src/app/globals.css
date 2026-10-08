@@ -76,6 +76,12 @@ h3 {
   padding: 120px 0;
 }
 
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 0;
+  }
+}
+
 .btn {
   display: inline-flex;
   align-items: center;

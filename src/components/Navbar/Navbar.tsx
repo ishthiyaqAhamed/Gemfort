@@ -1,10 +1,14 @@
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Search, Heart, User } from 'lucide-react';
+import { Search, Heart, User, Menu, X } from 'lucide-react';
 import CurrencyDropdown from '../CurrencyDropdown/CurrencyDropdown';
 import styles from './Navbar.module.css';
 
 const Navbar = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   return (
     <header className={styles.header}>
       <div className={styles.navContainer}>
@@ -47,8 +51,28 @@ const Navbar = () => {
           <Link href="/admin" className={styles.iconBtn} aria-label="Account">
             <User size={20} strokeWidth={1.5} />
           </Link>
+          
+          <button 
+            className={styles.hamburgerBtn}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? <X size={24} strokeWidth={1.5} /> : <Menu size={24} strokeWidth={1.5} />}
+          </button>
         </div>
       </div>
+
+      {isMobileMenuOpen && (
+        <div className={styles.mobileMenu}>
+          <Link href="/" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
+          <Link href="/about" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>About Us</Link>
+          <Link href="/gemstones" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Gemstones</Link>
+          <Link href="/expertise" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Our Expertise</Link>
+          <Link href="/journal" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Journal</Link>
+          <Link href="/gemstone-guide" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Gemstone Guide</Link>
+          <Link href="/contact" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Contact</Link>
+        </div>
+      )}
     </header>
   );
 };

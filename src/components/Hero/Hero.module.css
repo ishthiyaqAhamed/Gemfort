@@ -67,9 +67,35 @@
   justify-content: center;
 }
 
+@media (max-width: 900px) {
+  .bgImage {
+    object-position: 80% center;
+  }
+}
+
 @media (max-width: 600px) {
+  .hero {
+    min-height: 600px;
+    height: 80vh;
+  }
+  
+  .content {
+    padding: 0 1.5rem;
+    padding-top: var(--nav-height);
+  }
+
+  .bgImage {
+    object-position: 85% center;
+  }
+
   .actions {
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
+    width: 100%;
+    padding: 0 1rem;
+  }
+  
+  .actions button {
+    width: 100%;
   }
 }

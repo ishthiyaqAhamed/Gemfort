@@ -126,8 +126,84 @@
   color: var(--text-accent);
 }
 
+.hamburgerBtn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 0.2rem;
+}
+
+.mobileMenu {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .navContainer {
+    padding: 0 2rem;
+  }
+}
+
 @media (max-width: 900px) {
   .nav {
     display: none;
+  }
+  
+  .hamburgerBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .mobileMenu {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-primary);
+    position: absolute;
+    top: var(--nav-height);
+    left: 0;
+    width: 100%;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+  }
+  
+  .mobileNavLink {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--bg-tertiary);
+  }
+  
+  .mobileNavLink:last-child {
+    border-bottom: none;
+  }
+  
+  .actions {
+    gap: 0.8rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .navContainer {
+    padding: 0 1rem;
+  }
+  
+  .logoTitle {
+    font-size: 1.3rem;
+  }
+  
+  .logoSubtitle {
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+  }
+  
+  .iconBtn {
+    display: none;
+  }
+  
+  .hamburgerBtn {
+    margin-left: auto;
   }
 }
