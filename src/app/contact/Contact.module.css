@@ -1,3 +1,9 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 4rem;
+}
+
 .card {
   background-color: var(--bg-primary);
   padding: 3.5rem;
@@ -60,4 +66,16 @@
 .submitBtn:hover {
   background-color: var(--text-accent);
   color: #fff;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .card {
+    padding: 1.75rem 1.25rem;
+    border-radius: 12px;
+  }
 }

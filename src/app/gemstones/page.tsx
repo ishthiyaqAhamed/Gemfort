@@ -48,17 +48,17 @@ export default function GemstonesPage() {
       <section className="section" style={{ backgroundColor: '#0a0f1a', paddingBottom: '8rem' }}>
         <div className="container" style={{ maxWidth: '1400px' }}>
           
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem', borderBottom: '1px solid rgba(199,164,80,0.15)', paddingBottom: '1.5rem' }}>
-            <p style={{ color: 'rgba(240,236,228,0.4)', fontSize: '0.8rem', letterSpacing: '2px', textTransform: 'uppercase' }}>Showing {allStones.length} premium gemstones</p>
-            <div style={{ display: 'flex', gap: '0.75rem' }}>
-              <select style={{ padding: '0.6rem 1rem', border: '1px solid rgba(199,164,80,0.25)', borderRadius: '8px', fontFamily: 'var(--font-body)', backgroundColor: 'rgba(255,255,255,0.06)', color: 'rgba(240,236,228,0.8)', outline: 'none', fontSize: '0.85rem' }}>
+          <div className={styles.filterBar}>
+            <p className={styles.filterCount}>Showing {allStones.length} premium gemstones</p>
+            <div className={styles.filterControls}>
+              <select className={styles.filterSelect}>
                 <option style={{ backgroundColor: '#001228' }}>All Categories</option>
                 <option style={{ backgroundColor: '#001228' }}>Sapphires</option>
                 <option style={{ backgroundColor: '#001228' }}>Rubies</option>
                 <option style={{ backgroundColor: '#001228' }}>Padparadscha</option>
                 <option style={{ backgroundColor: '#001228' }}>Alexandrite</option>
               </select>
-              <select style={{ padding: '0.6rem 1rem', border: '1px solid rgba(199,164,80,0.25)', borderRadius: '8px', fontFamily: 'var(--font-body)', backgroundColor: 'rgba(255,255,255,0.06)', color: 'rgba(240,236,228,0.8)', outline: 'none', fontSize: '0.85rem' }}>
+              <select className={styles.filterSelect}>
                 <option style={{ backgroundColor: '#001228' }}>Sort by: Featured</option>
                 <option style={{ backgroundColor: '#001228' }}>Price: High to Low</option>
                 <option style={{ backgroundColor: '#001228' }}>Price: Low to High</option>

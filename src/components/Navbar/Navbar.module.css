@@ -4,10 +4,10 @@
   left: 0;
   width: 100%;
   height: var(--nav-height);
-  z-index: 100;
-  background: rgba(255, 255, 255, 0.9); /* Light background */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border-color);
   transition: all 0.3s ease;
 }
@@ -76,7 +76,7 @@
   letter-spacing: 0.5px;
   position: relative;
   padding: 0.5rem 0;
-  color: var(--text-secondary); /* Slate/gray text as per image */
+  color: var(--text-secondary);
   font-weight: 400;
   transition: color 0.3s ease;
 }
@@ -132,9 +132,12 @@
   border: none;
   color: var(--text-primary);
   cursor: pointer;
-  padding: 0.2rem;
+  padding: 0.4rem;
+  border-radius: 8px;
+  transition: background-color 0.2s;
 }
 
+/* ─── Super Premium Mobile Drawer ─────────────────── */
 .mobileMenu {
   display: none;
 }
@@ -159,44 +162,138 @@
   .mobileMenu {
     display: flex;
     flex-direction: column;
-    background: var(--bg-primary);
-    position: absolute;
+    position: fixed;
     top: var(--nav-height);
     left: 0;
-    width: 100%;
-    padding: 1rem 0;
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    width: 100vw;
+    height: calc(100vh - var(--nav-height));
+    background: rgba(6, 11, 20, 0.97);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    padding: 1.5rem 1.75rem 2.5rem;
+    overflow-y: auto;
+    z-index: 1000;
+    border-top: 1px solid rgba(199, 164, 80, 0.2);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+  }
+
+  .mobileMenuHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(199, 164, 80, 0.15);
+  }
+
+  .mobileMenuTag {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #c7a450;
+    font-weight: 700;
+  }
+
+  .mobileNavLinks {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-bottom: 2rem;
   }
   
   .mobileNavLink {
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
-    color: var(--text-primary);
-    border-bottom: 1px solid var(--bg-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 0.5rem;
+    font-size: 1.15rem;
+    color: #f0ece4;
+    font-family: var(--font-heading);
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    transition: all 0.2s ease;
   }
-  
-  .mobileNavLink:last-child {
-    border-bottom: none;
+
+  .mobileNavLink:hover, .mobileNavLink:active {
+    color: #dfbe6e;
+    padding-left: 0.85rem;
   }
-  
-  .actions {
-    gap: 0.8rem;
+
+  .mobileNavChevron {
+    color: rgba(199, 164, 80, 0.4);
+    font-size: 0.9rem;
+  }
+
+  /* VIP Concierge Card inside Mobile Nav */
+  .mobileVipCard {
+    background: linear-gradient(145deg, rgba(16, 27, 49, 0.85) 0%, rgba(6, 12, 22, 0.95) 100%);
+    border: 1px solid rgba(199, 164, 80, 0.25);
+    border-radius: 16px;
+    padding: 1.25rem;
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .mobileVipTitle {
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #c7a450;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .mobileVipBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    background: linear-gradient(135deg, #128C7E 0%, #075E54 100%);
+    color: #ffffff;
+    padding: 0.85rem 1.25rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .mobileAdminLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: rgba(240, 236, 228, 0.6);
+    font-size: 0.78rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding-top: 0.5rem;
+    transition: color 0.2s;
+  }
+
+  .mobileAdminLink:hover {
+    color: #dfbe6e;
   }
 }
 
 @media (max-width: 600px) {
   .navContainer {
-    padding: 0 1rem;
+    padding: 0 1.2rem;
   }
   
   .logoTitle {
-    font-size: 1.3rem;
+    font-size: 1.35rem;
   }
   
   .logoSubtitle {
     font-size: 0.6rem;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
   }
   
   .iconBtn {
@@ -204,6 +301,6 @@
   }
   
   .hamburgerBtn {
-    margin-left: auto;
+    margin-left: 0.5rem;
   }
 }

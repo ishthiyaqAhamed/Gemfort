@@ -1,24 +1,47 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Search, Heart, User, Menu, X } from 'lucide-react';
+import { 
+  Heart, 
+  User, 
+  Menu, 
+  X, 
+  ChevronRight, 
+  MessageCircle, 
+  Lock, 
+  Sparkles 
+} from 'lucide-react';
 import CurrencyDropdown from '../CurrencyDropdown/CurrencyDropdown';
 import styles from './Navbar.module.css';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Lock background scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMobileMenuOpen]);
+
   return (
     <header className={styles.header}>
       <div className={styles.navContainer}>
         <div className={styles.logo}>
-          <Link href="/" className={styles.logoLink}>
+          <Link href="/" className={styles.logoLink} onClick={() => setIsMobileMenuOpen(false)}>
             <Image 
               src="/images/logo.png" 
               alt="Gemfort Logo" 
-              width={55} 
-              height={55} 
+              width={52} 
+              height={52} 
+              priority
               className={styles.logoImage}
             />
             <div className={styles.logoText}>
@@ -52,23 +75,78 @@ const Navbar = () => {
           <button 
             className={styles.hamburgerBtn}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
           >
-            {isMobileMenuOpen ? <X size={24} strokeWidth={1.5} /> : <Menu size={24} strokeWidth={1.5} />}
+            {isMobileMenuOpen ? <X size={26} strokeWidth={1.5} /> : <Menu size={26} strokeWidth={1.5} />}
           </button>
         </div>
       </div>
 
       {isMobileMenuOpen && (
         <div className={styles.mobileMenu}>
-          <Link href="/" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
-          <Link href="/about" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>About Us</Link>
-          <Link href="/gemstones" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Inventory</Link>
-          <Link href="/expertise" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Our Expertise</Link>
-          <Link href="/journal" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Journal</Link>
-          <Link href="/gemstone-guide" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Gemstone Guide</Link>
-          <Link href="/contact" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Contact</Link>
-          <Link href="/admin" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)} style={{ color: 'var(--text-accent)', borderTop: '1px solid var(--border-color)', marginTop: '0.5rem', paddingTop: '1rem' }}>Admin Portal</Link>
+          <div className={styles.mobileMenuHeader}>
+            <span className={styles.mobileMenuTag}>
+              <Sparkles size={12} style={{ display: 'inline', marginRight: '4px' }} />
+              High Jewelry Salon
+            </span>
+            <CurrencyDropdown />
+          </div>
+
+          <div className={styles.mobileNavLinks}>
+            <Link href="/" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>
+              <span>Home</span>
+              <ChevronRight size={16} className={styles.mobileNavChevron} />
+            </Link>
+            <Link href="/gemstones" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>
+              <span>Vault Inventory</span>
+              <ChevronRight size={16} className={styles.mobileNavChevron} />
+            </Link>
+            <Link href="/about" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>
+              <span>The Maison &amp; Legacy</span>
+              <ChevronRight size={16} className={styles.mobileNavChevron} />
+            </Link>
+            <Link href="/expertise" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>
+              <span>Our Expertise</span>
+              <ChevronRight size={16} className={styles.mobileNavChevron} />
+            </Link>
+            <Link href="/journal" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>
+              <span>Journal &amp; Insights</span>
+              <ChevronRight size={16} className={styles.mobileNavChevron} />
+            </Link>
+            <Link href="/gemstone-guide" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>
+              <span>Gemstone Education Guide</span>
+              <ChevronRight size={16} className={styles.mobileNavChevron} />
+            </Link>
+            <Link href="/contact" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>
+              <span>Bespoke Inquiries &amp; Contact</span>
+              <ChevronRight size={16} className={styles.mobileNavChevron} />
+            </Link>
+          </div>
+
+          <div className={styles.mobileVipCard}>
+            <span className={styles.mobileVipTitle}>
+              <Sparkles size={13} /> VIP Private Concierge
+            </span>
+            <a 
+              href="https://wa.me/17738850603?text=Hello%20Gemfort%20Concierge%2C%20I%20would%20like%20to%20inquire%20about%20a%20private%20gemstone%20acquisition." 
+              target="_blank" 
+              rel="noreferrer"
+              className={styles.mobileVipBtn}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <MessageCircle size={18} />
+              <span>Connect on WhatsApp</span>
+            </a>
+
+            <Link 
+              href="/admin" 
+              className={styles.mobileAdminLink} 
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <Lock size={13} />
+              <span>Admin Portal Access</span>
+            </Link>
+          </div>
         </div>
       )}
     </header>

@@ -24,7 +24,7 @@ export default function ContactPage() {
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '4rem' }}>
+          <div className={styles.grid}>
             
             {/* Left Column: Contact Info */}
             <motion.div 
