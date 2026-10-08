@@ -3,7 +3,7 @@
 import PageHeader from '@/components/PageHeader/PageHeader';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { ShieldCheck, Search, Scissors, Stamp, PackageSearch, Gem, Globe2, BookOpen } from 'lucide-react';
+import { ShieldCheck, Search, Scissors, Stamp, PackageSearch, Gem, Globe2, BookOpen, ArrowDown, ArrowRight, ArrowLeft } from 'lucide-react';
 
 const stages = [
   { id: '01', title: 'Source', desc: 'Rough selected from Sri Lankan gem gravels and trusted suppliers.' },
@@ -64,7 +64,7 @@ export default function ExpertisePage() {
                 </p>
               </div>
               <div style={{ position: 'relative', width: '100%', aspectRatio: '3/4', borderRadius: '8px', overflow: 'hidden' }}>
-                <Image src="/images/journal/2.jpg" alt="Sourcing" fill style={{ objectFit: 'cover' }} />
+                <Image src="/images/custom-sourcing.png" alt="Sourcing" fill style={{ objectFit: 'cover' }} />
               </div>
             </motion.div>
 
@@ -140,19 +140,137 @@ export default function ExpertisePage() {
             <p style={{ color: 'var(--text-secondary)', marginTop: '1rem' }}>Nothing skips a stage, regardless of the value of the material.</p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }}>
+          <style dangerouslySetInnerHTML={{__html: `
+            .timeline-grid {
+              display: grid;
+              gap: 3.5rem 5rem;
+            }
+            .timeline-card {
+              position: relative;
+              background-color: var(--bg-primary);
+              padding: 2.5rem 2rem;
+              border-radius: 16px;
+              border: 1px solid rgba(0,33,71,0.06);
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              text-align: center;
+              box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+            }
+            .timeline-arrow-right, .timeline-arrow-down, .timeline-arrow-left {
+              position: absolute;
+              display: none;
+              color: var(--text-accent);
+              opacity: 0.9;
+            }
+            .timeline-arrow-right {
+              right: -3rem;
+              top: 50%;
+              transform: translate(50%, -50%);
+            }
+            .timeline-arrow-left {
+              left: -3rem;
+              top: 50%;
+              transform: translate(-50%, -50%);
+            }
+            .timeline-arrow-down {
+              bottom: -2.2rem;
+              left: 50%;
+              transform: translate(-50%, 50%);
+            }
+
+            /* Assign grid areas */
+            .timeline-card:nth-child(1) { grid-area: card1; }
+            .timeline-card:nth-child(2) { grid-area: card2; }
+            .timeline-card:nth-child(3) { grid-area: card3; }
+            .timeline-card:nth-child(4) { grid-area: card4; }
+            .timeline-card:nth-child(5) { grid-area: card5; }
+            .timeline-card:nth-child(6) { grid-area: card6; }
+            .timeline-card:nth-child(7) { grid-area: card7; }
+
+            /* Desktop */
+            @media (min-width: 993px) {
+              .timeline-grid {
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-areas:
+                  "card1 card2 card3"
+                  "card6 card5 card4"
+                  "card7 . .";
+              }
+              .timeline-card:nth-child(1) .timeline-arrow-right { display: block; }
+              .timeline-card:nth-child(2) .timeline-arrow-right { display: block; }
+              .timeline-card:nth-child(3) .timeline-arrow-down { display: block; }
+              
+              .timeline-card:nth-child(4) .timeline-arrow-left { display: block; }
+              .timeline-card:nth-child(5) .timeline-arrow-left { display: block; }
+              .timeline-card:nth-child(6) .timeline-arrow-down { display: block; }
+            }
+
+            /* Tablet */
+            @media (max-width: 992px) and (min-width: 769px) {
+              .timeline-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-areas:
+                  "card1 card2"
+                  "card4 card3"
+                  "card5 card6"
+                  "card8 card7";
+              }
+              .timeline-card:nth-child(1) .timeline-arrow-right { display: block; }
+              .timeline-card:nth-child(2) .timeline-arrow-down { display: block; }
+              .timeline-card:nth-child(3) .timeline-arrow-left { display: block; }
+              .timeline-card:nth-child(4) .timeline-arrow-down { display: block; }
+              .timeline-card:nth-child(5) .timeline-arrow-right { display: block; }
+              .timeline-card:nth-child(6) .timeline-arrow-down { display: block; }
+            }
+
+            /* Mobile */
+            @media (max-width: 768px) {
+              .timeline-grid {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                  "card1"
+                  "card2"
+                  "card3"
+                  "card4"
+                  "card5"
+                  "card6"
+                  "card7";
+              }
+              .timeline-card .timeline-arrow-down {
+                display: block;
+              }
+              .timeline-card:last-child .timeline-arrow-down {
+                display: none;
+              }
+            }
+          `}} />
+
+          <div className="timeline-grid" style={{ width: '100%', maxWidth: '1100px', margin: '0 auto' }}>
             {stages.map((stage, i) => (
               <motion.div 
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                key={stage.id}
+                className="timeline-card"
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                style={{ backgroundColor: 'var(--bg-primary)', padding: '2rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}
+                transition={{ delay: 0.1 * i, duration: 0.5 }}
               >
-                <span style={{ fontSize: '2.5rem', color: 'var(--text-accent)', fontWeight: 300, opacity: 0.5 }}>{stage.id}</span>
-                <h3 style={{ fontSize: '1.3rem', color: 'var(--text-primary)', margin: '1rem 0' }}>{stage.title}</h3>
+                <div style={{ fontSize: '3rem', color: 'rgba(199, 164, 80, 0.6)', fontWeight: 400, fontFamily: 'var(--font-serif)', lineHeight: 1, marginBottom: '1rem' }}>
+                  {stage.id}
+                </div>
+                <h3 style={{ fontSize: '1.4rem', color: 'var(--text-primary)', marginBottom: '0.8rem', fontFamily: 'var(--font-serif)' }}>{stage.title}</h3>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.6 }}>{stage.desc}</p>
+
+                <div className="timeline-arrow-right">
+                  <ArrowRight size={36} strokeWidth={2} />
+                </div>
+                <div className="timeline-arrow-left">
+                  <ArrowLeft size={36} strokeWidth={2} />
+                </div>
+                <div className="timeline-arrow-down">
+                  <ArrowDown size={36} strokeWidth={2} />
+                </div>
               </motion.div>
             ))}
           </div>

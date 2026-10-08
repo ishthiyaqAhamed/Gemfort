@@ -39,17 +39,14 @@ const Navbar = () => {
         </nav>
 
         <div className={styles.actions}>
-          <button className={styles.iconBtn} aria-label="Search">
-            <Search size={20} strokeWidth={1.5} />
-          </button>
           <button className={styles.iconBtn} aria-label="Favorites">
-            <Heart size={20} strokeWidth={1.5} />
+            <Heart size={18} strokeWidth={1.5} />
           </button>
           
           <CurrencyDropdown />
           
           <Link href="/admin" className={styles.iconBtn} aria-label="Account">
-            <User size={20} strokeWidth={1.5} />
+            <User size={18} strokeWidth={1.5} />
           </Link>
           
           <button 

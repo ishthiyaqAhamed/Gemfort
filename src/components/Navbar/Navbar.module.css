@@ -113,7 +113,7 @@
 .iconBtn {
   background: none;
   border: none;
-  color: var(--text-primary);
+  color: var(--text-secondary);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -123,7 +123,7 @@
 }
 
 .iconBtn:hover {
-  color: var(--text-accent);
+  color: var(--text-primary);
 }
 
 .hamburgerBtn {

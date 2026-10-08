@@ -1,63 +1,29 @@
 'use client';
 
+import { useState } from 'react';
 import PageHeader from '@/components/PageHeader/PageHeader';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { X } from 'lucide-react';
+import { articles } from '@/data/articles';
 
-const articles = [
-  { 
-    id: 1, 
-    title: 'Chinafort "Pathe" Gem Market: the heart of Sri Lanka\'s gem trade', 
-    date: '4 August 2026', 
-    category: 'China Fort', 
-    excerpt: 'Nestled in Beruwala, just 55 km south of Colombo, the Chinafort "Pathe" Gem Market is a living ecosystem where generations of expertise, immense trust and precious stones change hands in a uniquely vibrant open-air market.',
-    img: '/images/journal/1.png'
-  },
-  { 
-    id: 2, 
-    title: 'Reading rough sapphire: what a buyer looks for before cutting', 
-    date: '18 July 2026', 
-    category: 'Gem Trading', 
-    excerpt: 'Most of a sapphire\'s value is decided before it is faceted. A look at how rough is evaluated in the Sri Lankan trade.',
-    img: '/images/journal/2.jpg'
-  },
-  { 
-    id: 3, 
-    title: 'Famous Sri Lankan gemstones: the island\'s most celebrated stones', 
-    date: '27 June 2026', 
-    category: 'Famous Gemstones', 
-    excerpt: 'Ceylon gemstones are internationally celebrated, particularly for their exceptional blue sapphires and remarkable star corundum. Many of the world\'s largest and most famous sapphires of Sri Lankan origin now sit in royal collections and museums.',
-    img: '/images/journal/3.png'
-  },
-  { 
-    id: 4, 
-    title: 'Inside the Pathe gem market', 
-    date: '6 June 2026', 
-    category: 'Pathe Market', 
-    excerpt: 'Located in the heart of China Fort, Pathe Gem Market is one of Sri Lanka\'s best-known destinations for gemstone trading — where generations of merchants, miners and international buyers meet.',
-    img: '/images/journal/4.png'
-  },
-  { 
-    id: 5, 
-    title: 'Heat treatment explained, without the mythology', 
-    date: '19 May 2026', 
-    category: 'Gemstone Origins', 
-    excerpt: 'What heating actually does to a sapphire, which treatments the trade accepts, and which it does not.',
-    img: '/images/journal/5.jpg'
-  },
-  { 
-    id: 6, 
-    title: 'Two thousand years of Sri Lankan gem heritage', 
-    date: '30 April 2026', 
-    category: 'Gem Heritage', 
-    excerpt: 'Sri Lanka, known internationally as Ceylon until 1972, has earned worldwide recognition for its remarkable wealth of gemstones and its exceptional variety of precious and semi-precious stones.',
-    img: '/images/journal/6.png'
-  }
-];
-
-
+type Article = typeof articles[0];
 
 export default function JournalPage() {
+  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
+
+  // Split content by double newlines into paragraphs
+  const renderContent = (content: string) => {
+    if (!content) return null;
+    return content.split('\n\n').map((paragraph, idx) => {
+      // Check if paragraph is likely a heading
+      if (paragraph.length < 100 && !paragraph.endsWith('.') && idx > 0) {
+        return <h3 key={idx} style={{ fontSize: '1.4rem', color: 'var(--text-primary)', marginTop: '2rem', marginBottom: '1rem', fontFamily: 'var(--font-serif)' }}>{paragraph}</h3>;
+      }
+      return <p key={idx} style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: 1.8, marginBottom: '1.2rem' }}>{paragraph}</p>;
+    });
+  };
+
   return (
     <main>
       <PageHeader 
@@ -66,7 +32,7 @@ export default function JournalPage() {
         imagePath="/images/hero-bg-stunning.jpg"
       />
       
-      <section className="section" style={{ backgroundColor: 'var(--bg-primary)' }}>
+      <section className="section" style={{ backgroundColor: 'var(--bg-primary)', position: 'relative' }}>
         <div className="container">
           
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '3rem' }}>
@@ -77,9 +43,10 @@ export default function JournalPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', cursor: 'pointer', group: 'hover' }}
+                style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', cursor: 'pointer' }}
+                onClick={() => setSelectedArticle(article)}
               >
-                <div style={{ position: 'relative', width: '100%', aspectRatio: '16/10', overflow: 'hidden', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
+                <div style={{ position: 'relative', width: '100%', aspectRatio: '16/10', overflow: 'hidden', borderRadius: '8px', border: '1px solid rgba(0,33,71,0.06)' }}>
                   <Image 
                     src={article.img} 
                     alt={article.title} 
@@ -95,7 +62,7 @@ export default function JournalPage() {
                     {article.category}
                   </span>
                   
-                  <h2 style={{ fontSize: '1.5rem', color: 'var(--text-primary)', marginBottom: '1rem', lineHeight: 1.4 }}>
+                  <h2 style={{ fontSize: '1.5rem', color: 'var(--text-primary)', marginBottom: '1rem', lineHeight: 1.4, fontFamily: 'var(--font-serif)' }}>
                     {article.title}
                   </h2>
                   
@@ -103,7 +70,7 @@ export default function JournalPage() {
                     {article.excerpt}
                   </p>
                   
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border-color)', paddingTop: '1rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(0,33,71,0.06)', paddingTop: '1rem' }}>
                     <span style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}>{article.date}</span>
                     <span style={{ color: 'var(--text-primary)', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '1.5px', fontWeight: 600 }}>Read Article</span>
                   </div>
@@ -114,6 +81,109 @@ export default function JournalPage() {
 
         </div>
       </section>
+
+      {/* Modal Popup */}
+      <AnimatePresence>
+        {selectedArticle && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(0, 33, 71, 0.85)',
+              zIndex: 9999,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              padding: '2rem',
+              backdropFilter: 'blur(8px)',
+            }}
+            onClick={() => setSelectedArticle(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              style={{
+                backgroundColor: 'var(--bg-primary)',
+                width: '100%',
+                maxWidth: '900px',
+                maxHeight: '90vh',
+                borderRadius: '16px',
+                overflow: 'hidden',
+                position: 'relative',
+                display: 'flex',
+                flexDirection: 'column',
+                boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)',
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button 
+                onClick={() => setSelectedArticle(null)}
+                style={{
+                  position: 'absolute',
+                  top: '1.5rem',
+                  right: '1.5rem',
+                  zIndex: 10,
+                  background: 'rgba(255,255,255,0.9)',
+                  border: 'none',
+                  borderRadius: '50%',
+                  width: '40px',
+                  height: '40px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  cursor: 'pointer',
+                  color: 'var(--text-primary)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                }}
+              >
+                <X size={20} />
+              </button>
+
+              <div style={{ overflowY: 'auto', padding: '0', display: 'flex', flexDirection: 'column' }}>
+                {/* Modal Header Image */}
+                <div style={{ position: 'relative', width: '100%', height: '350px', flexShrink: 0 }}>
+                  <Image 
+                    src={selectedArticle.img} 
+                    alt={selectedArticle.title} 
+                    fill 
+                    style={{ objectFit: 'cover' }} 
+                  />
+                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, var(--bg-primary) 0%, transparent 100%)' }} />
+                </div>
+                
+                {/* Modal Content */}
+                <div style={{ padding: '3rem 4rem', marginTop: '-100px', position: 'relative', zIndex: 2 }}>
+                  <span style={{ color: 'var(--text-accent)', textTransform: 'uppercase', fontSize: '0.85rem', letterSpacing: '1px', fontWeight: 600 }}>
+                    {selectedArticle.category}
+                  </span>
+                  
+                  <h1 style={{ fontSize: '2.5rem', color: 'var(--text-primary)', marginTop: '1rem', marginBottom: '1.5rem', lineHeight: 1.2, fontFamily: 'var(--font-serif)' }}>
+                    {selectedArticle.title}
+                  </h1>
+                  
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '3rem', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                    <span>{selectedArticle.date}</span>
+                    <span style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: 'var(--text-accent)' }} />
+                    <span>Gemfort Journal</span>
+                  </div>
+                  
+                  <div className="article-body">
+                    {renderContent(selectedArticle.content)}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }
