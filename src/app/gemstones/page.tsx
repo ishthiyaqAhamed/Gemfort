@@ -45,24 +45,24 @@ export default function GemstonesPage() {
         imagePath="/images/hero-bg-blue.jpg"
       />
       
-      <section className="section" style={{ backgroundColor: 'var(--bg-secondary)', paddingBottom: '8rem' }}>
+      <section className="section" style={{ backgroundColor: '#0a0f1a', paddingBottom: '8rem' }}>
         <div className="container" style={{ maxWidth: '1400px' }}>
           
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem', flexWrap: 'wrap', gap: '1rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '2rem' }}>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', letterSpacing: '1px', textTransform: 'uppercase' }}>Showing {allStones.length} premium gemstones</p>
-            <div style={{ display: 'flex', gap: '1rem' }}>
-              <select style={{ padding: '0.8rem 1.5rem', border: '1px solid rgba(0,33,71,0.1)', borderRadius: '4px', fontFamily: 'var(--font-body)', backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)', outline: 'none' }}>
-                <option>All Categories</option>
-                <option>Sapphires</option>
-                <option>Rubies</option>
-                <option>Padparadscha</option>
-                <option>Alexandrite</option>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem', borderBottom: '1px solid rgba(199,164,80,0.15)', paddingBottom: '1.5rem' }}>
+            <p style={{ color: 'rgba(240,236,228,0.4)', fontSize: '0.8rem', letterSpacing: '2px', textTransform: 'uppercase' }}>Showing {allStones.length} premium gemstones</p>
+            <div style={{ display: 'flex', gap: '0.75rem' }}>
+              <select style={{ padding: '0.6rem 1rem', border: '1px solid rgba(199,164,80,0.25)', borderRadius: '8px', fontFamily: 'var(--font-body)', backgroundColor: 'rgba(255,255,255,0.06)', color: 'rgba(240,236,228,0.8)', outline: 'none', fontSize: '0.85rem' }}>
+                <option style={{ backgroundColor: '#001228' }}>All Categories</option>
+                <option style={{ backgroundColor: '#001228' }}>Sapphires</option>
+                <option style={{ backgroundColor: '#001228' }}>Rubies</option>
+                <option style={{ backgroundColor: '#001228' }}>Padparadscha</option>
+                <option style={{ backgroundColor: '#001228' }}>Alexandrite</option>
               </select>
-              <select style={{ padding: '0.8rem 1.5rem', border: '1px solid rgba(0,33,71,0.1)', borderRadius: '4px', fontFamily: 'var(--font-body)', backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)', outline: 'none' }}>
-                <option>Sort by: Featured</option>
-                <option>Price: High to Low</option>
-                <option>Price: Low to High</option>
-                <option>Carat: High to Low</option>
+              <select style={{ padding: '0.6rem 1rem', border: '1px solid rgba(199,164,80,0.25)', borderRadius: '8px', fontFamily: 'var(--font-body)', backgroundColor: 'rgba(255,255,255,0.06)', color: 'rgba(240,236,228,0.8)', outline: 'none', fontSize: '0.85rem' }}>
+                <option style={{ backgroundColor: '#001228' }}>Sort by: Featured</option>
+                <option style={{ backgroundColor: '#001228' }}>Price: High to Low</option>
+                <option style={{ backgroundColor: '#001228' }}>Price: Low to High</option>
+                <option style={{ backgroundColor: '#001228' }}>Carat: High to Low</option>
               </select>
             </div>
           </div>
@@ -114,9 +114,12 @@ export default function GemstonesPage() {
             ))}
           </motion.div>
 
-          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '5rem' }}>
-            <button className="btn btn-primary" style={{ padding: '16px 40px' }}>
-              <span>Load More Stones</span>
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '4rem' }}>
+            <button style={{ padding: '14px 40px', backgroundColor: 'transparent', border: '1px solid rgba(199,164,80,0.5)', color: '#c7a450', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '2.5px', textTransform: 'uppercase', borderRadius: '8px', cursor: 'pointer', transition: 'all 0.3s ease' }}
+              onMouseOver={(e) => { e.currentTarget.style.backgroundColor = 'rgba(199,164,80,0.12)'; e.currentTarget.style.borderColor = '#c7a450'; }}
+              onMouseOut={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.borderColor = 'rgba(199,164,80,0.5)'; }}
+            >
+              Load More Stones
             </button>
           </div>
 
