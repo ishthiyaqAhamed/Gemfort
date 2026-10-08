@@ -18,7 +18,7 @@
   width: 100%;
   aspect-ratio: 1/1;
   overflow: hidden;
-  background-color: #fcfcfc;
+  background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,6 +28,7 @@
   object-fit: contain;
   padding: 1.5rem;
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  mix-blend-mode: multiply;
 }
 
 .cardDetails {

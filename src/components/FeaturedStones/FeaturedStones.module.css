@@ -56,6 +56,7 @@
 .image {
   object-fit: cover;
   transition: transform 0.8s ease;
+  mix-blend-mode: multiply;
 }
 
 .card:hover .image {
