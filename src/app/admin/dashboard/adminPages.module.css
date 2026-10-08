@@ -1,0 +1,273 @@
+/* ─── Shared Admin Pages Styling ─────────────────── */
+.pageHeaderCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  background-color: #ffffff;
+  padding: 1.75rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  border: 1px solid #e5e7eb;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.pageTitle {
+  font-size: 1.4rem;
+  color: #111827;
+  margin: 0 0 0.35rem 0;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.pageSubtitle {
+  color: #6b7280;
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.primaryBtn {
+  background-color: #c7a450;
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.4rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.primaryBtn:hover {
+  background-color: #b5923e;
+}
+
+/* ─── Stats Grid ─────────────────────────────────── */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.statCard {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  border: 1px solid #e5e7eb;
+}
+
+.statLabel {
+  color: #6b7280;
+  font-size: 0.82rem;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statValue {
+  font-size: 1.8rem;
+  color: #111827;
+  margin: 0 0 0.35rem 0;
+  font-weight: 700;
+}
+
+.statChange {
+  color: #10b981;
+  font-size: 0.78rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* ─── Table Containers ───────────────────────────── */
+.tableCard {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+}
+
+.tableHeader {
+  padding: 1.25rem 1.75rem;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.tableTitle {
+  font-size: 1.15rem;
+  color: #111827;
+  margin: 0;
+  font-weight: 600;
+}
+
+.tableResponsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dataTable {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.dataTable th {
+  background-color: #f9fafb;
+  padding: 0.85rem 1.25rem;
+  font-weight: 600;
+  color: #4b5563;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.dataTable td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 0.88rem;
+  vertical-align: middle;
+}
+
+.dataTable tr:last-child td {
+  border-bottom: none;
+}
+
+.statusBadge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statusAvailable {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.statusReserved {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.statusSold {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.statusNew {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.statusInProgress {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.statusResolved {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.actionBtn {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.actionBtn:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+.actionBtnDanger {
+  color: #ef4444;
+}
+
+.actionBtnDanger:hover {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+/* ─── Mobile Viewport Refinements ─────────────────── */
+@media (max-width: 768px) {
+  .pageHeaderCard {
+    padding: 1.25rem 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .primaryBtn {
+    width: 100%;
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .statCard {
+    padding: 1rem;
+    border-radius: 10px;
+  }
+
+  .statLabel {
+    font-size: 0.72rem;
+  }
+
+  .statValue {
+    font-size: 1.4rem;
+  }
+
+  .statChange {
+    font-size: 0.7rem;
+  }
+
+  .tableHeader {
+    padding: 1rem;
+  }
+
+  .tableTitle {
+    font-size: 1rem;
+  }
+
+  .dataTable td {
+    padding: 0.85rem 1rem;
+    font-size: 0.82rem;
+  }
+
+  .dataTable th {
+    padding: 0.75rem 1rem;
+    font-size: 0.72rem;
+  }
+}

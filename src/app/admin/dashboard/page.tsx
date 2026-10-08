@@ -1,39 +1,48 @@
 import Link from 'next/link';
+import styles from './adminPages.module.css';
 
 export default function AdminDashboardPage() {
   const stats = [
     { label: 'Total Inventory', value: '42', change: '+3 this week' },
     { label: 'Pending Enquiries', value: '7', change: '2 new today' },
-    { label: 'Journal Articles', value: '12', change: 'Last updated 2 days ago' },
-    { label: 'Total Views', value: '1,248', change: '+12% from last month' },
+    { label: 'Journal Articles', value: '12', change: 'Updated 2d ago' },
+    { label: 'Total Views', value: '1,248', change: '+12% this mo.' },
   ];
 
   return (
     <div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '2rem', marginBottom: '3rem' }}>
+      {/* Stats Grid */}
+      <div className={styles.statsGrid}>
         {stats.map((stat, i) => (
-          <div key={i} style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)', border: '1px solid #f3f4f6' }}>
-            <p style={{ color: '#6b7280', fontSize: '0.9rem', marginBottom: '0.5rem', fontWeight: 500 }}>{stat.label}</p>
-            <h3 style={{ fontSize: '2rem', color: '#111827', margin: '0 0 0.5rem 0' }}>{stat.value}</h3>
-            <p style={{ color: '#10b981', fontSize: '0.8rem', margin: 0 }}>{stat.change}</p>
+          <div key={i} className={styles.statCard}>
+            <p className={styles.statLabel}>{stat.label}</p>
+            <h3 className={styles.statValue}>{stat.value}</h3>
+            <p className={styles.statChange}>{stat.change}</p>
           </div>
         ))}
       </div>
 
-      <div style={{ backgroundColor: 'white', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)', border: '1px solid #f3f4f6', overflow: 'hidden' }}>
-        <div style={{ padding: '1.5rem 2rem', borderBottom: '1px solid #e5e7eb', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h2 style={{ fontSize: '1.2rem', color: '#111827', margin: 0 }}>Recent Enquiries</h2>
-          <Link href="/admin/dashboard/enquiries" style={{ color: 'var(--text-accent)', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 500, cursor: 'pointer' }}>View All</Link>
+      {/* Recent Enquiries Table Card */}
+      <div className={styles.tableCard}>
+        <div className={styles.tableHeader}>
+          <h2 className={styles.tableTitle}>Recent Enquiries</h2>
+          <Link 
+            href="/admin/dashboard/enquiries" 
+            style={{ color: '#c7a450', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 600 }}
+          >
+            View All →
+          </Link>
         </div>
-        <div style={{ padding: '2rem' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+        
+        <div className={styles.tableResponsive}>
+          <table className={styles.dataTable}>
             <thead>
-              <tr style={{ borderBottom: '2px solid #f3f4f6', textAlign: 'left', color: '#6b7280', fontSize: '0.9rem' }}>
-                <th style={{ paddingBottom: '1rem', fontWeight: 500 }}>Name</th>
-                <th style={{ paddingBottom: '1rem', fontWeight: 500 }}>Email</th>
-                <th style={{ paddingBottom: '1rem', fontWeight: 500 }}>Interest</th>
-                <th style={{ paddingBottom: '1rem', fontWeight: 500 }}>Date</th>
-                <th style={{ paddingBottom: '1rem', fontWeight: 500 }}>Status</th>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Interest</th>
+                <th>Date</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
@@ -42,17 +51,17 @@ export default function AdminDashboardPage() {
                 { name: 'Sarah Wu', email: 'sarah.wu99@example.com', interest: 'Padparadscha inquiry', date: 'Oct 07, 2026', status: 'In Progress' },
                 { name: 'Michael Thorne', email: 'mthorne@example.com', interest: 'Ruby engagement ring', date: 'Oct 05, 2026', status: 'Resolved' },
               ].map((row, i) => (
-                <tr key={i} style={{ borderBottom: '1px solid #f3f4f6' }}>
-                  <td style={{ padding: '1.5rem 0', color: '#111827', fontWeight: 500 }}>{row.name}</td>
-                  <td style={{ padding: '1.5rem 0', color: '#4b5563' }}>{row.email}</td>
-                  <td style={{ padding: '1.5rem 0', color: '#4b5563' }}>{row.interest}</td>
-                  <td style={{ padding: '1.5rem 0', color: '#6b7280', fontSize: '0.9rem' }}>{row.date}</td>
-                  <td style={{ padding: '1.5rem 0' }}>
-                    <span style={{ 
-                      backgroundColor: row.status === 'New' ? '#dbeafe' : row.status === 'In Progress' ? '#fef3c7' : '#d1fae5', 
-                      color: row.status === 'New' ? '#1e40af' : row.status === 'In Progress' ? '#92400e' : '#065f46',
-                      padding: '4px 12px', borderRadius: '999px', fontSize: '0.8rem', fontWeight: 500
-                    }}>
+                <tr key={i}>
+                  <td style={{ fontWeight: 600, color: '#111827' }}>{row.name}</td>
+                  <td style={{ color: '#4b5563' }}>{row.email}</td>
+                  <td style={{ color: '#4b5563' }}>{row.interest}</td>
+                  <td style={{ color: '#6b7280', fontSize: '0.85rem' }}>{row.date}</td>
+                  <td>
+                    <span className={`${styles.statusBadge} ${
+                      row.status === 'New' ? styles.statusNew : 
+                      row.status === 'In Progress' ? styles.statusInProgress : 
+                      styles.statusResolved
+                    }`}>
                       {row.status}
                     </span>
                   </td>

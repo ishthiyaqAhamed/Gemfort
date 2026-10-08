@@ -1,68 +1,80 @@
 'use client';
 
+import { Mail } from 'lucide-react';
+import styles from '../adminPages.module.css';
+
 export default function AdminEnquiriesPage() {
   return (
-    <div style={{ backgroundColor: 'white', borderRadius: '12px', padding: '3rem', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)', border: '1px solid #f3f4f6' }}>
-      <div style={{ marginBottom: '2rem' }}>
-        <h1 style={{ fontSize: '1.5rem', color: '#111827', margin: '0 0 0.5rem 0' }}>Customer Enquiries</h1>
-        <p style={{ color: '#6b7280', margin: 0 }}>Review and respond to gemstone sourcing requests.</p>
+    <div>
+      <div className={styles.pageHeaderCard}>
+        <div>
+          <h1 className={styles.pageTitle}>Customer Enquiries</h1>
+          <p className={styles.pageSubtitle}>Review and respond to private gemstone acquisition and sourcing requests.</p>
+        </div>
       </div>
       
-      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-        <thead>
-          <tr style={{ borderBottom: '2px solid #f3f4f6', textAlign: 'left', color: '#6b7280', fontSize: '0.9rem' }}>
-            <th style={{ paddingBottom: '1rem', fontWeight: 500 }}>Name</th>
-            <th style={{ paddingBottom: '1rem', fontWeight: 500 }}>Email</th>
-            <th style={{ paddingBottom: '1rem', fontWeight: 500 }}>Requirements</th>
-            <th style={{ paddingBottom: '1rem', fontWeight: 500 }}>Date</th>
-            <th style={{ paddingBottom: '1rem', fontWeight: 500 }}>Status</th>
-            <th style={{ paddingBottom: '1rem', fontWeight: 500, textAlign: 'right' }}>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {[
-            { name: 'James Carter', email: 'j.carter@example.com', interest: 'Looking for a royal blue sapphire, around 3 carats, budget $5k.', date: 'Oct 08, 2026', status: 'New' },
-            { name: 'Sarah Wu', email: 'sarah.wu99@example.com', interest: 'Padparadscha sapphire for engagement ring, unheated.', date: 'Oct 07, 2026', status: 'In Progress' },
-            { name: 'Michael Thorne', email: 'mthorne@example.com', interest: 'Pigeon blood ruby, 2+ ct.', date: 'Oct 05, 2026', status: 'Resolved' },
-          ].map((row, i) => (
-            <tr key={i} style={{ borderBottom: '1px solid #f3f4f6' }}>
-              <td style={{ padding: '1.5rem 0', color: '#111827', fontWeight: 500 }}>{row.name}</td>
-              <td style={{ padding: '1.5rem 0', color: '#4b5563' }}>{row.email}</td>
-              <td style={{ padding: '1.5rem 0', color: '#4b5563', maxWidth: '300px' }}>{row.interest}</td>
-              <td style={{ padding: '1.5rem 0', color: '#6b7280', fontSize: '0.9rem' }}>{row.date}</td>
-              <td style={{ padding: '1.5rem 0' }}>
-                <span style={{ 
-                  backgroundColor: row.status === 'New' ? '#dbeafe' : row.status === 'In Progress' ? '#fef3c7' : '#d1fae5', 
-                  color: row.status === 'New' ? '#1e40af' : row.status === 'In Progress' ? '#92400e' : '#065f46',
-                  padding: '4px 12px', borderRadius: '999px', fontSize: '0.8rem', fontWeight: 500
-                }}>
-                  {row.status}
-                </span>
-              </td>
-              <td style={{ padding: '1.5rem 0', textAlign: 'right' }}>
-                <a 
-                  href={`mailto:${row.email}?subject=Regarding your gemstone enquiry at Gemfort`}
-                  style={{ 
-                    display: 'inline-block',
-                    backgroundColor: 'var(--text-accent)', 
-                    color: 'white', 
-                    textDecoration: 'none',
-                    padding: '0.5rem 1rem', 
-                    borderRadius: '6px', 
-                    fontSize: '0.85rem',
-                    fontWeight: 500,
-                    transition: 'opacity 0.2s'
-                  }}
-                  onMouseOver={(e) => e.currentTarget.style.opacity = '0.9'}
-                  onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
-                >
-                  Reply via Email
-                </a>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className={styles.tableCard}>
+        <div className={styles.tableResponsive}>
+          <table className={styles.dataTable}>
+            <thead>
+              <tr>
+                <th>Client Name</th>
+                <th>Email</th>
+                <th>Acquisition Details</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th style={{ textAlign: 'right' }}>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { name: 'James Carter', email: 'j.carter@example.com', interest: 'Looking for an unheated royal blue sapphire, around 3 carats, budget $5,000.', date: 'Oct 08, 2026', status: 'New' },
+                { name: 'Sarah Wu', email: 'sarah.wu99@example.com', interest: 'Padparadscha sapphire for bespoke engagement ring, unheated certified.', date: 'Oct 07, 2026', status: 'In Progress' },
+                { name: 'Michael Thorne', email: 'mthorne@example.com', interest: 'Pigeon blood ruby, 2+ carats, GRS/GIA report requested.', date: 'Oct 05, 2026', status: 'Resolved' },
+              ].map((row, i) => (
+                <tr key={i}>
+                  <td style={{ fontWeight: 600, color: '#111827', whiteSpace: 'nowrap' }}>{row.name}</td>
+                  <td style={{ color: '#4b5563', whiteSpace: 'nowrap' }}>{row.email}</td>
+                  <td style={{ color: '#4b5563', minWidth: '220px', maxWidth: '340px', lineHeight: 1.5 }}>{row.interest}</td>
+                  <td style={{ color: '#6b7280', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>{row.date}</td>
+                  <td>
+                    <span className={`${styles.statusBadge} ${
+                      row.status === 'New' ? styles.statusNew : 
+                      row.status === 'In Progress' ? styles.statusInProgress : 
+                      styles.statusResolved
+                    }`}>
+                      {row.status}
+                    </span>
+                  </td>
+                  <td style={{ textAlign: 'right', whiteSpace: 'nowrap' }}>
+                    <a 
+                      href={`mailto:${row.email}?subject=Regarding your gemstone enquiry at Gemfort`}
+                      style={{ 
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.4rem',
+                        backgroundColor: '#c7a450', 
+                        color: 'white', 
+                        textDecoration: 'none',
+                        padding: '0.45rem 0.85rem', 
+                        borderRadius: '6px', 
+                        fontSize: '0.78rem',
+                        fontWeight: 600,
+                        transition: 'opacity 0.2s'
+                      }}
+                      onMouseOver={(e) => e.currentTarget.style.opacity = '0.9'}
+                      onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
+                    >
+                      <Mail size={13} />
+                      <span>Reply</span>
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }
