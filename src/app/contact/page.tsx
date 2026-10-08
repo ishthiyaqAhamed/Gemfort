@@ -66,7 +66,9 @@ export default function ContactPage() {
 
                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
                   <Mail size={20} color="var(--text-accent)" style={{ flexShrink: 0 }} />
-                  <p style={{ color: 'var(--text-secondary)' }}>GEMFORTINTERNATIONAL@gmail.com</p>
+                  <a href="mailto:gemfortinternational@gmail.com" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>
+                    gemfortinternational@gmail.com
+                  </a>
                 </div>
 
                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>

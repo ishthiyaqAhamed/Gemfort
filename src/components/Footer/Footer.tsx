@@ -58,9 +58,9 @@ const Footer = () => {
             <Phone size={16} className={styles.contactIcon} />
             <span>+94 77 341 2932</span>
           </a>
-          <a href="mailto:GEMFORTINTERNATIONAL@gmail.com" className={styles.contactItem}>
+          <a href="mailto:gemfortinternational@gmail.com" className={styles.contactItem}>
             <Mail size={16} className={styles.contactIcon} />
-            <span>GEMFORTINTERNATIONAL@gmail.com</span>
+            <span>gemfortinternational@gmail.com</span>
           </a>
         </div>
       </div>

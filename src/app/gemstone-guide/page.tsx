@@ -159,13 +159,13 @@ export default function GemstoneGuidePage() {
 
   return (
     <main style={{ backgroundColor: 'var(--bg-secondary)', minHeight: '100vh', paddingBottom: '5rem' }}>
-      <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', paddingTop: '4rem' }}>
+      <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', paddingTop: 'calc(var(--nav-height) + 2.5rem)' }}>
         
         {/* Header Section */}
-        <div style={{ marginBottom: '3rem' }}>
-          <p className="eyebrow" style={{ color: 'var(--text-accent)' }}>BUYING GUIDES</p>
-          <h1 style={{ fontSize: '3rem', color: 'var(--text-primary)', marginBottom: '1.5rem', fontFamily: 'var(--font-serif)' }}>Select a gemstone</h1>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>
+        <div style={{ marginBottom: '2.5rem' }}>
+          <p className="eyebrow" style={{ color: 'var(--text-accent)', letterSpacing: '3px', textTransform: 'uppercase', fontSize: '0.8rem', fontWeight: 600, marginBottom: '0.5rem' }}>BUYING GUIDES</p>
+          <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', color: 'var(--text-primary)', marginBottom: '1rem', fontFamily: 'var(--font-serif)', lineHeight: 1.15 }}>Select a gemstone</h1>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', lineHeight: 1.6 }}>
             Each guide follows the same structure so you can compare varieties directly.
           </p>
         </div>
@@ -216,11 +216,15 @@ export default function GemstoneGuidePage() {
                   position: 'relative',
                   backgroundColor: 'white',
                   border: '1px solid var(--border-color)',
-                  borderRadius: '4px',
-                  overflow: 'hidden'
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                  padding: '2rem',
+                  boxShadow: '0 8px 30px rgba(0, 33, 71, 0.04)'
                 }}
               >
-                <Image src={activeStone.img} alt={activeStone.name} fill style={{ objectFit: 'cover' }} />
+                <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+                  <Image src={activeStone.img} alt={activeStone.name} fill style={{ objectFit: 'contain' }} />
+                </div>
               </motion.div>
             </AnimatePresence>
 
