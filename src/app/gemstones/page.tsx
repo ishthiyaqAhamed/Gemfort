@@ -4,6 +4,7 @@ import PageHeader from '@/components/PageHeader/PageHeader';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import styles from './gemstones.module.css';
 
 import { useCurrency } from '@/context/CurrencyContext';
 
@@ -67,11 +68,7 @@ export default function GemstonesPage() {
           </div>
 
           <motion.div 
-            style={{ 
-              display: 'grid', 
-              gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', 
-              gap: '2.5rem 1.5rem' 
-            }}
+            className={styles.grid}
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -81,104 +78,35 @@ export default function GemstonesPage() {
               <motion.div 
                 key={stone.id} 
                 variants={itemVariants}
-                style={{ position: 'relative' }}
               >
-                <Link href={`/gemstones/${stone.id}`} style={{ textDecoration: 'none', display: 'block' }}>
-                  <div style={{ 
-                    backgroundColor: 'var(--bg-primary)', 
-                    borderRadius: '8px', 
-                    cursor: 'pointer',
-                    transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.02)',
-                    overflow: 'hidden',
-                    height: '100%'
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-6px)';
-                    e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 33, 71, 0.06)';
-                    const img = e.currentTarget.querySelector('.stone-img') as HTMLElement;
-                    if (img) img.style.transform = 'scale(1.05)';
-                    const overlay = e.currentTarget.querySelector('.hover-overlay') as HTMLElement;
-                    if (overlay) overlay.style.opacity = '1';
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.02)';
-                    const img = e.currentTarget.querySelector('.stone-img') as HTMLElement;
-                    if (img) img.style.transform = 'scale(1)';
-                    const overlay = e.currentTarget.querySelector('.hover-overlay') as HTMLElement;
-                    if (overlay) overlay.style.opacity = '0';
-                  }}
-                  >
-                    {/* Image Area */}
-                    <div style={{ position: 'relative', width: '100%', aspectRatio: '1/1', overflow: 'hidden', backgroundColor: '#fcfcfc', borderBottom: '1px solid rgba(0,0,0,0.03)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Link href={`/gemstones/${stone.id}`} style={{ textDecoration: 'none' }}>
+                  <div className={styles.card}>
+                    <div className={styles.imageWrapper}>
                       <Image 
                         src={stone.img} 
                         alt={stone.name} 
                         fill 
-                        className="stone-img"
-                        style={{ objectFit: 'contain', padding: '3rem', transition: 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)' }} 
+                        className={styles.stoneImg}
                       />
-                      
-                      {/* Hover Overlay */}
-                      <div 
-                        className="hover-overlay"
-                        style={{
-                          position: 'absolute',
-                          inset: 0,
-                          backgroundColor: 'rgba(0,33,71,0.04)',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          opacity: 0,
-                          transition: 'opacity 0.4s ease'
-                        }}
-                      >
-                        <span style={{ 
-                          backgroundColor: 'var(--text-primary)', 
-                          color: 'var(--bg-primary)', 
-                          padding: '12px 28px', 
-                          borderRadius: '4px',
-                          fontSize: '0.75rem',
-                          fontWeight: 600,
-                          letterSpacing: '2px',
-                          textTransform: 'uppercase',
-                          boxShadow: '0 10px 25px rgba(0,33,71,0.15)'
-                        }}>
-                          Inquire Now
-                        </span>
-                      </div>
                     </div>
                     
-                    {/* Text Details Area */}
-                    <div style={{ padding: '2.5rem 2rem', textAlign: 'center', display: 'flex', flexDirection: 'column', flexGrow: 1, backgroundColor: 'var(--bg-primary)' }}>
-                      <p style={{ 
-                        fontFamily: 'var(--font-body)', 
-                        color: 'var(--text-accent)', 
-                        fontSize: '0.65rem', 
-                        fontWeight: 700,
-                        textTransform: 'uppercase', 
-                        letterSpacing: '3px', 
-                        marginBottom: '1rem'
-                      }}>
+                    <div className={styles.cardDetails}>
+                      <p className={styles.stoneType}>
                         {stone.type}
                       </p>
                       
-                      <h3 style={{ fontSize: '1.4rem', color: 'var(--text-primary)', fontFamily: 'var(--font-serif)', marginBottom: '0.5rem', fontWeight: 500, lineHeight: '1.3' }}>
+                      <h3 className={styles.stoneName}>
                         {stone.name}
                       </h3>
 
-                      <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-serif)', fontStyle: 'italic', marginBottom: '1.5rem', letterSpacing: '0.5px' }}>
-                        {stone.weight}
-                      </p>
+                      <div className={styles.stoneMeta}>
+                        <span className={styles.stoneWeight}>{stone.weight}</span>
+                        <span className={styles.stonePrice}>{formatPrice(stone.priceUSD)}</span>
+                      </div>
                       
-                      <div style={{ width: '20px', height: '1px', backgroundColor: 'var(--border-color)', margin: 'auto auto 1.5rem auto' }}></div>
-
-                      <p style={{ color: 'var(--text-primary)', fontWeight: 400, fontSize: '1.1rem', letterSpacing: '1px' }}>
-                        {formatPrice(stone.priceUSD)}
-                      </p>
+                      <button className={styles.actionBtn}>
+                        Inquire Now
+                      </button>
                     </div>
                   </div>
                 </Link>

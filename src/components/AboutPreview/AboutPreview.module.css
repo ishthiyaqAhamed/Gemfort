@@ -11,6 +11,14 @@
   align-items: center;
 }
 
+.headerContent {
+  display: none; /* Hidden on desktop */
+}
+
+.desktopHeader {
+  display: block;
+}
+
 .imageContainer {
   position: relative;
   width: 100%;
@@ -63,17 +71,26 @@
 
 @media (max-width: 900px) {
   .grid {
-    grid-template-columns: 1fr;
-    gap: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
   }
   
-  .imageContainer {
-    order: 2;
+  .headerContent {
+    display: block; /* Show header above image on mobile */
+    text-align: center;
   }
   
+  .desktopHeader {
+    display: none; /* Hide header below image on mobile */
+  }
+
   .textContent {
-    order: 1;
     text-align: center;
     align-items: center;
+  }
+  
+  .title {
+    margin-bottom: 0;
   }
 }

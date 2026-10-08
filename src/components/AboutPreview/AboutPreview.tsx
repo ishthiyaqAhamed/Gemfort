@@ -10,6 +10,17 @@ const AboutPreview = () => {
     <section className={`section ${styles.aboutSection}`}>
       <div className={`container ${styles.grid}`}>
         <motion.div 
+          className={styles.headerContent}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8 }}
+        >
+          <h4 className={styles.subtitle}>The Gemfort Legacy</h4>
+          <h2 className={styles.title}>Masters of Rough to Radiance</h2>
+        </motion.div>
+
+        <motion.div 
           className={styles.imageContainer}
           initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -32,8 +43,10 @@ const AboutPreview = () => {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <h4 className={styles.subtitle}>The Gemfort Legacy</h4>
-          <h2 className={styles.title}>Masters of Rough to Radiance</h2>
+          <div className={styles.desktopHeader}>
+            <h4 className={styles.subtitle}>The Gemfort Legacy</h4>
+            <h2 className={styles.title}>Masters of Rough to Radiance</h2>
+          </div>
           <p className={styles.paragraph}>
             For over three decades, Gemfort International has built a reputation on uncompromising quality and ethical sourcing. Our master gem cutters in Sri Lanka bring generations of expertise to every facet, unlocking the true brilliance hidden within natural rough stones.
           </p>
