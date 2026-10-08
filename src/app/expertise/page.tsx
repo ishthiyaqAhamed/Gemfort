@@ -49,12 +49,16 @@ export default function ExpertisePage() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className={styles.featureRow}
+              className={styles.featureBlock}
             >
-              <div className={styles.featureTextCol}>
+              <div className={styles.headerBlock}>
                 <p className={styles.featureEyebrow}>Sourcing</p>
                 <h2 className={styles.featureTitle}>Where our stones begin</h2>
-                
+              </div>
+              <div className={styles.mediaBlock}>
+                <Image src="/images/custom-sourcing.png" alt="Sourcing" fill className={styles.featureImage} />
+              </div>
+              <div className={styles.textBlock}>
                 <h3 className={styles.subHeading}>Local sourcing</h3>
                 <p className={styles.paragraph}>
                   China Fort traders have built strong relationships over several decades with local gem miners and dealers operating in major mining regions such as Ratnapura, Nithigala, Idangoda, Eheliyagoda and Pelmadulla. Experienced buyers use a combination of traditional techniques and modern methods. Stones may be exposed to direct sunlight to observe natural characteristics, or placed in clean water against a white background to study colour distribution.
@@ -65,9 +69,6 @@ export default function ExpertisePage() {
                   In addition to sourcing gemstones within Sri Lanka, our traders travel internationally in search of exceptional stones. Their sourcing activities extend to Madagascar (Ikaka and Ambatondrazaka), Tanzania (Tunduru), Mozambique, Kenya, and Burma. These gemstones are brought to China Fort, where highly experienced lapidaries cut and polish them.
                 </p>
               </div>
-              <div className={styles.featureImageCol}>
-                <Image src="/images/custom-sourcing.png" alt="Sourcing" fill className={styles.featureImage} />
-              </div>
             </motion.div>
 
             {/* Cutting & Polishing */}
@@ -75,18 +76,22 @@ export default function ExpertisePage() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className={styles.featureRowReverse}
+              className={styles.featureBlockReverse}
             >
-              <div className={styles.featureImageCol}>
-                <Image src="/images/about-preview.jpg" alt="Cutting" fill className={styles.featureImage} />
-              </div>
-              <div className={styles.featureTextCol}>
+              <div className={styles.headerBlock}>
                 <p className={styles.featureEyebrow}>Craftsmanship</p>
                 <h2 className={styles.featureTitle}>Cutting &amp; Polishing</h2>
-                
+              </div>
+              <div className={styles.mediaBlock}>
+                <Image src="/images/about-preview.jpg" alt="Cutting" fill className={styles.featureImage} />
+              </div>
+              <div className={styles.textBlock}>
                 <h3 className={styles.subHeading}>Gem cutting</h3>
                 <p className={styles.paragraph}>
-                  Gem cutting is the specialised art of transforming a rough gemstone into an attractive, lustrous stone suitable for jewellery. A skilled cutter needs accurate eyesight, strong judgement, extensive experience, and an artistic understanding of shape and proportion. Our cutters have mastered a wide range of faceted shapes including emerald cut, brilliant cut, Ceylon cut, cushion and shield shapes.
+                  Gem cutting is the specialised art of transforming a rough gemstone into an attractive, lustrous stone suitable for jewellery.
+                </p>
+                <p className={styles.paragraph}>
+                  A skilled cutter needs accurate eyesight, strong judgement, extensive experience, and an artistic understanding of shape and proportion. Our cutters have mastered a wide range of faceted shapes including emerald cut, brilliant cut, Ceylon cut, cushion and shield shapes.
                 </p>
 
                 <h3 className={styles.subHeading}>Polishing</h3>
@@ -101,12 +106,16 @@ export default function ExpertisePage() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className={styles.featureRow}
+              className={styles.featureBlock}
             >
-              <div className={styles.featureTextCol}>
+              <div className={styles.headerBlock}>
                 <p className={styles.featureEyebrow}>Verification</p>
                 <h2 className={styles.featureTitle}>Testing &amp; Certification</h2>
-                
+              </div>
+              <div className={styles.mediaBlock}>
+                <Image src="/images/journal/5.jpg" alt="Testing" fill className={styles.featureImage} />
+              </div>
+              <div className={styles.textBlock}>
                 <p className={styles.paragraph} style={{ marginBottom: '1rem' }}>
                   Gem laboratories in China Fort use modern technologies and are supported by professionals from internationally recognised gemological institutes. Gemstones are submitted for testing to determine important characteristics, including heat treatment or synthetics.
                 </p>
@@ -123,9 +132,6 @@ export default function ExpertisePage() {
                   <li>CGL – Ceylon Gem Laboratories</li>
                   <li>AIGS &amp; AGTL</li>
                 </ul>
-              </div>
-              <div className={styles.featureImageCol}>
-                <Image src="/images/journal/5.jpg" alt="Testing" fill className={styles.featureImage} />
               </div>
             </motion.div>
 
