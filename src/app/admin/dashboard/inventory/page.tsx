@@ -38,7 +38,7 @@ export default function AdminInventoryPage() {
                 <th style={{ padding: '1rem 1.5rem', fontWeight: 600, color: '#4b5563', fontSize: '0.875rem', textTransform: 'uppercase', letterSpacing: '0.05em', textAlign: 'right' }}>Actions</th>
               </tr>
             </thead>
-            <tbody style={{ divideY: '1px solid #e5e7eb' }}>
+            <tbody style={{ borderTop: '1px solid #e5e7eb' }}>
               {inventory.map((stone, i) => (
                 <tr key={i} style={{ borderBottom: '1px solid #f3f4f6', transition: 'background-color 0.2s', cursor: 'default' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f9fafb'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
                   <td style={{ padding: '1rem 1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
