@@ -17,7 +17,7 @@ const AboutPreview = () => {
           transition={{ duration: 0.8 }}
         >
           <Image 
-            src="/images/about-preview.jpg"
+            src="/images/masters-of-rough.jpg"
             alt="Master Jeweler examining rough gemstone"
             fill
             className={styles.image}

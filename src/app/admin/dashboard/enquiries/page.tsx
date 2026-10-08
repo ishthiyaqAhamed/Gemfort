@@ -1,3 +1,5 @@
+'use client';
+
 export default function AdminEnquiriesPage() {
   return (
     <div style={{ backgroundColor: 'white', borderRadius: '12px', padding: '3rem', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)', border: '1px solid #f3f4f6' }}>
@@ -14,6 +16,7 @@ export default function AdminEnquiriesPage() {
             <th style={{ paddingBottom: '1rem', fontWeight: 500 }}>Requirements</th>
             <th style={{ paddingBottom: '1rem', fontWeight: 500 }}>Date</th>
             <th style={{ paddingBottom: '1rem', fontWeight: 500 }}>Status</th>
+            <th style={{ paddingBottom: '1rem', fontWeight: 500, textAlign: 'right' }}>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -35,6 +38,26 @@ export default function AdminEnquiriesPage() {
                 }}>
                   {row.status}
                 </span>
+              </td>
+              <td style={{ padding: '1.5rem 0', textAlign: 'right' }}>
+                <a 
+                  href={`mailto:${row.email}?subject=Regarding your gemstone enquiry at Gemfort`}
+                  style={{ 
+                    display: 'inline-block',
+                    backgroundColor: 'var(--text-accent)', 
+                    color: 'white', 
+                    textDecoration: 'none',
+                    padding: '0.5rem 1rem', 
+                    borderRadius: '6px', 
+                    fontSize: '0.85rem',
+                    fontWeight: 500,
+                    transition: 'opacity 0.2s'
+                  }}
+                  onMouseOver={(e) => e.currentTarget.style.opacity = '0.9'}
+                  onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
+                >
+                  Reply via Email
+                </a>
               </td>
             </tr>
           ))}

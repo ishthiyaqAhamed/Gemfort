@@ -6,11 +6,19 @@ import styles from './PageHeader.module.css';
 interface PageHeaderProps {
   title: string;
   subtitle?: string;
+  imagePath?: string;
 }
 
-const PageHeader = ({ title, subtitle }: PageHeaderProps) => {
+const PageHeader = ({ title, subtitle, imagePath }: PageHeaderProps) => {
   return (
-    <div className={styles.header}>
+    <div 
+      className={styles.header} 
+      style={imagePath ? { 
+        backgroundImage: `linear-gradient(rgba(251, 250, 246, 0.9), rgba(251, 250, 246, 0.95)), url(${imagePath})`, 
+        backgroundSize: 'cover', 
+        backgroundPosition: 'center' 
+      } : {}}
+    >
       <div className={`container ${styles.content}`}>
         <motion.h1
           initial={{ opacity: 0, y: 20 }}

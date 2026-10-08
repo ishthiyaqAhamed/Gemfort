@@ -24,89 +24,60 @@ export default function AdminInventoryPage() {
         </button>
       </div>
       
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '2rem' }}>
-        {inventory.map((stone, i) => (
-          <div key={i} style={{ 
-            backgroundColor: 'white', 
-            borderRadius: '12px', 
-            overflow: 'hidden', 
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.04)', 
-            border: '1px solid #f3f4f6',
-            display: 'flex',
-            flexDirection: 'column',
-            transition: 'transform 0.2s ease, box-shadow 0.2s ease'
-          }}
-          onMouseOver={(e) => {
-            e.currentTarget.style.transform = 'translateY(-4px)';
-            e.currentTarget.style.boxShadow = '0 12px 30px rgba(0, 0, 0, 0.08)';
-          }}
-          onMouseOut={(e) => {
-            e.currentTarget.style.transform = 'translateY(0)';
-            e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.04)';
-          }}>
-            {/* Image Area */}
-            <div style={{ position: 'relative', height: '220px', backgroundColor: '#f9fafb', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
-              <Image 
-                src={stone.img} 
-                alt={stone.name} 
-                fill 
-                style={{ objectFit: 'contain', padding: '1.5rem' }} 
-              />
-              <span style={{ 
-                position: 'absolute', top: '16px', right: '16px',
-                backgroundColor: stone.status === 'Available' ? '#d1fae5' : stone.status === 'Reserved' ? '#fef3c7' : '#fee2e2', 
-                color: stone.status === 'Available' ? '#065f46' : stone.status === 'Reserved' ? '#92400e' : '#991b1b',
-                padding: '4px 12px', borderRadius: '999px', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase'
-              }}>
-                {stone.status}
-              </span>
-              <span style={{ 
-                position: 'absolute', top: '16px', left: '16px',
-                backgroundColor: 'rgba(0,0,0,0.05)', color: '#4b5563',
-                padding: '4px 8px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 600, fontFamily: 'monospace'
-              }}>
-                {stone.id}
-              </span>
-            </div>
-
-            {/* Details Area */}
-            <div style={{ padding: '1.5rem', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-              <p style={{ color: 'var(--text-accent)', fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1px', margin: '0 0 0.5rem 0' }}>
-                {stone.type} • {stone.weight}
-              </p>
-              <h3 style={{ fontSize: '1.1rem', color: '#111827', margin: '0 0 1rem 0', fontFamily: 'var(--font-serif)', lineHeight: '1.4' }}>
-                {stone.name}
-              </h3>
-              <p style={{ fontSize: '1.25rem', color: '#111827', fontWeight: 600, margin: 'auto 0 0 0' }}>
-                {stone.price}
-              </p>
-            </div>
-
-            {/* Action Footer */}
-            <div style={{ padding: '1rem 1.5rem', borderTop: '1px solid #f3f4f6', backgroundColor: '#fafafa', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <button style={{ background: 'none', border: 'none', color: '#6b7280', display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 500 }}
-                onMouseOver={(e) => e.currentTarget.style.color = '#111827'}
-                onMouseOut={(e) => e.currentTarget.style.color = '#6b7280'}
-              >
-                <Edit2 size={16} /> Edit
-              </button>
-              <div style={{ display: 'flex', gap: '1rem' }}>
-                <button style={{ background: 'none', border: 'none', color: '#6b7280', cursor: 'pointer' }} title="View on site"
-                  onMouseOver={(e) => e.currentTarget.style.color = 'var(--text-accent)'}
-                  onMouseOut={(e) => e.currentTarget.style.color = '#6b7280'}
-                >
-                  <ExternalLink size={18} />
-                </button>
-                <button style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer' }} title="Delete"
-                  onMouseOver={(e) => e.currentTarget.style.color = '#b91c1c'}
-                  onMouseOut={(e) => e.currentTarget.style.color = '#ef4444'}
-                >
-                  <Trash2 size={18} />
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
+      <div style={{ backgroundColor: 'white', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)', border: '1px solid #f3f4f6', overflow: 'hidden' }}>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+            <thead>
+              <tr style={{ backgroundColor: '#f9fafb', borderBottom: '1px solid #e5e7eb' }}>
+                <th style={{ padding: '1rem 1.5rem', fontWeight: 600, color: '#4b5563', fontSize: '0.875rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Stone</th>
+                <th style={{ padding: '1rem 1.5rem', fontWeight: 600, color: '#4b5563', fontSize: '0.875rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>ID</th>
+                <th style={{ padding: '1rem 1.5rem', fontWeight: 600, color: '#4b5563', fontSize: '0.875rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Type</th>
+                <th style={{ padding: '1rem 1.5rem', fontWeight: 600, color: '#4b5563', fontSize: '0.875rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Weight</th>
+                <th style={{ padding: '1rem 1.5rem', fontWeight: 600, color: '#4b5563', fontSize: '0.875rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Price</th>
+                <th style={{ padding: '1rem 1.5rem', fontWeight: 600, color: '#4b5563', fontSize: '0.875rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Status</th>
+                <th style={{ padding: '1rem 1.5rem', fontWeight: 600, color: '#4b5563', fontSize: '0.875rem', textTransform: 'uppercase', letterSpacing: '0.05em', textAlign: 'right' }}>Actions</th>
+              </tr>
+            </thead>
+            <tbody style={{ divideY: '1px solid #e5e7eb' }}>
+              {inventory.map((stone, i) => (
+                <tr key={i} style={{ borderBottom: '1px solid #f3f4f6', transition: 'background-color 0.2s', cursor: 'default' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f9fafb'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                  <td style={{ padding: '1rem 1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                    <div style={{ position: 'relative', width: '48px', height: '48px', backgroundColor: '#f3f4f6', borderRadius: '8px', overflow: 'hidden' }}>
+                      <Image src={stone.img} alt={stone.name} fill style={{ objectFit: 'contain', padding: '4px' }} />
+                    </div>
+                    <span style={{ fontWeight: 500, color: '#111827' }}>{stone.name}</span>
+                  </td>
+                  <td style={{ padding: '1rem 1.5rem', color: '#6b7280', fontFamily: 'monospace' }}>{stone.id}</td>
+                  <td style={{ padding: '1rem 1.5rem', color: '#4b5563' }}>{stone.type}</td>
+                  <td style={{ padding: '1rem 1.5rem', color: '#4b5563' }}>{stone.weight}</td>
+                  <td style={{ padding: '1rem 1.5rem', color: '#111827', fontWeight: 500 }}>{stone.price}</td>
+                  <td style={{ padding: '1rem 1.5rem' }}>
+                    <span style={{ 
+                      backgroundColor: stone.status === 'Available' ? '#d1fae5' : stone.status === 'Reserved' ? '#fef3c7' : '#fee2e2', 
+                      color: stone.status === 'Available' ? '#065f46' : stone.status === 'Reserved' ? '#92400e' : '#991b1b',
+                      padding: '4px 12px', borderRadius: '999px', fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', display: 'inline-block'
+                    }}>
+                      {stone.status}
+                    </span>
+                  </td>
+                  <td style={{ padding: '1rem 1.5rem', textAlign: 'right' }}>
+                    <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end' }}>
+                      <button style={{ background: 'none', border: 'none', color: '#6b7280', cursor: 'pointer', padding: '4px' }} title="Edit">
+                        <Edit2 size={18} />
+                      </button>
+                      <button style={{ background: 'none', border: 'none', color: '#6b7280', cursor: 'pointer', padding: '4px' }} title="View on site">
+                        <ExternalLink size={18} />
+                      </button>
+                      <button style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', padding: '4px' }} title="Delete">
+                        <Trash2 size={18} />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
