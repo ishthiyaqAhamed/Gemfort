@@ -85,10 +85,6 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div className={styles.mobileMenu}>
           <div className={styles.mobileMenuHeader}>
-            <span className={styles.mobileMenuTag}>
-              <Sparkles size={12} style={{ display: 'inline', marginRight: '4px' }} />
-              High Jewelry Salon
-            </span>
             <CurrencyDropdown />
           </div>
 
@@ -124,9 +120,6 @@ const Navbar = () => {
           </div>
 
           <div className={styles.mobileVipCard}>
-            <span className={styles.mobileVipTitle}>
-              <Sparkles size={13} /> VIP Private Concierge
-            </span>
             <a 
               href="https://wa.me/17738850603?text=Hello%20Gemfort%20Concierge%2C%20I%20would%20like%20to%20inquire%20about%20a%20private%20gemstone%20acquisition." 
               target="_blank" 

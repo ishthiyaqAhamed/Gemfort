@@ -180,7 +180,7 @@
   .mobileMenuHeader {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid rgba(199, 164, 80, 0.15);
