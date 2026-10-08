@@ -68,6 +68,7 @@ const Navbar = () => {
           <Link href="/journal" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Journal</Link>
           <Link href="/gemstone-guide" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Gemstone Guide</Link>
           <Link href="/contact" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>Contact</Link>
+          <Link href="/admin" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)} style={{ color: 'var(--text-accent)', borderTop: '1px solid var(--border-color)', marginTop: '0.5rem', paddingTop: '1rem' }}>Admin Portal</Link>
         </div>
       )}
     </header>

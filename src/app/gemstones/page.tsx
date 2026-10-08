@@ -115,11 +115,11 @@ export default function GemstonesPage() {
           </motion.div>
 
           <div style={{ display: 'flex', justifyContent: 'center', marginTop: '4rem' }}>
-            <button style={{ padding: '14px 40px', backgroundColor: 'transparent', border: '1px solid rgba(199,164,80,0.5)', color: '#c7a450', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '2.5px', textTransform: 'uppercase', borderRadius: '8px', cursor: 'pointer', transition: 'all 0.3s ease' }}
+            <button style={{ padding: '10px 24px', backgroundColor: 'transparent', border: '1px solid rgba(199,164,80,0.5)', color: '#c7a450', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', borderRadius: '8px', cursor: 'pointer', transition: 'all 0.3s ease' }}
               onMouseOver={(e) => { e.currentTarget.style.backgroundColor = 'rgba(199,164,80,0.12)'; e.currentTarget.style.borderColor = '#c7a450'; }}
               onMouseOut={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.borderColor = 'rgba(199,164,80,0.5)'; }}
             >
-              Load More Stones
+              Load More
             </button>
           </div>
 

@@ -100,7 +100,7 @@ export default function JournalPage() {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              padding: '2rem',
+              padding: '0',
               backdropFilter: 'blur(8px)',
             }}
             onClick={() => setSelectedArticle(null)}
@@ -114,8 +114,9 @@ export default function JournalPage() {
                 backgroundColor: 'var(--bg-primary)',
                 width: '100%',
                 maxWidth: '900px',
-                maxHeight: '90vh',
-                borderRadius: '16px',
+                height: '100%',
+                maxHeight: '100dvh',
+                borderRadius: '0',
                 overflow: 'hidden',
                 position: 'relative',
                 display: 'flex',
@@ -160,7 +161,7 @@ export default function JournalPage() {
                 </div>
                 
                 {/* Modal Content */}
-                <div style={{ padding: '3rem 4rem', marginTop: '-100px', position: 'relative', zIndex: 2 }}>
+                <div style={{ padding: '2rem 1.5rem', marginTop: '-100px', position: 'relative', zIndex: 2 }}>
                   <span style={{ color: 'var(--text-accent)', textTransform: 'uppercase', fontSize: '0.85rem', letterSpacing: '1px', fontWeight: 600 }}>
                     {selectedArticle.category}
                   </span>
