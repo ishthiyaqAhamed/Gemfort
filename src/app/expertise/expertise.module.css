@@ -78,6 +78,7 @@
 
 .featureImage {
   object-fit: cover;
+  object-position: center 25%;
 }
 
 .textBlock {
@@ -170,13 +171,13 @@
   }
 
   .featureEyebrow {
-    font-size: 0.68rem;
+    font-size: 0.75rem;
     letter-spacing: 2px;
     margin-bottom: 0.35rem;
   }
 
   .featureTitle {
-    font-size: 1.6rem;
+    font-size: 1.85rem;
     line-height: 1.2;
     margin-bottom: 0;
   }
@@ -184,11 +185,11 @@
   /* Floated image on the right: text flows along the left and wraps underneath */
   .mediaBlock {
     float: right;
-    width: 48%;
-    max-width: 180px;
-    min-width: 130px;
+    width: 44%;
+    max-width: 170px;
+    min-width: 125px;
     aspect-ratio: 4 / 5;
-    margin: 0.2rem 0 0.85rem 1rem;
+    margin: 0.25rem 0 0.85rem 1rem;
     border-radius: 10px;
     overflow: hidden;
     position: relative;
@@ -200,44 +201,45 @@
   }
 
   .subHeading {
-    font-size: 1rem;
-    margin-bottom: 0.3rem;
+    font-size: 1.2rem;
+    margin-bottom: 0.4rem;
     line-height: 1.3;
   }
 
+  /* Standard, readable font size matching other pages */
   .paragraph {
-    font-size: 0.82rem;
-    line-height: 1.65;
-    margin-bottom: 0.85rem;
+    font-size: 0.98rem;
+    line-height: 1.75;
+    margin-bottom: 1.25rem;
     color: var(--text-secondary);
   }
 
   .labList {
-    font-size: 0.8rem;
-    line-height: 1.6;
-    padding-left: 1.2rem;
+    font-size: 0.95rem;
+    line-height: 1.75;
+    padding-left: 1.25rem;
   }
 }
 
 @media (max-width: 480px) {
   .mediaBlock {
-    width: 46%;
+    width: 42%;
     max-width: 155px;
     min-width: 120px;
-    margin: 0.2rem 0 0.75rem 0.85rem;
+    margin: 0.25rem 0 0.75rem 0.85rem;
     border-radius: 8px;
   }
 
   .featureTitle {
-    font-size: 1.4rem;
+    font-size: 1.7rem;
   }
 
   .subHeading {
-    font-size: 0.95rem;
+    font-size: 1.15rem;
   }
 
   .paragraph {
-    font-size: 0.78rem;
-    line-height: 1.6;
+    font-size: 0.95rem;
+    line-height: 1.7;
   }
 }
