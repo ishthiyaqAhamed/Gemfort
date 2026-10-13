@@ -366,7 +366,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                   className={styles.vipWhatsappBtn}
                 >
                   <MessageCircle size={22} />
-                  <span>Inquire via VIP WhatsApp Concierge</span>
+                  <span>Inquire via VIP WhatsApp<span className={styles.conciergeText}> Concierge</span></span>
                 </a>
 
                 <a

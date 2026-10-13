@@ -482,6 +482,10 @@
   color: #ffffff;
 }
 
+.conciergeText {
+  display: inline;
+}
+
 /* ─── Sticky Mobile VIP Concierge Dock ─────────────── */
 .stickyBar {
   display: none;
@@ -503,6 +507,27 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
   }
+
+  /* ─── Removed in Mobile UI per request ────────────── */
+  .vaultTag {
+    display: none !important;
+  }
+
+  .certPill {
+    display: none !important;
+  }
+
+  .inspectHint {
+    display: none !important;
+  }
+
+  .conciergeText {
+    display: none !important;
+  }
+
+  .secondaryActionBtn {
+    display: none !important;
+  }
 }
 
 @media (max-width: 600px) {
@@ -518,11 +543,6 @@
   .backLink {
     padding: 0.4rem 0.85rem;
     font-size: 0.75rem;
-  }
-
-  .vaultTag {
-    font-size: 0.65rem;
-    padding: 0.35rem 0.75rem;
   }
 
   .stageCard {
