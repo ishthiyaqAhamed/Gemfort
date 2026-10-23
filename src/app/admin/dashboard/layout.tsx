@@ -68,13 +68,15 @@ export default function AdminDashboardLayout({ children }: { children: React.Rea
       <aside className={`${styles.sidebar} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
         <div className={styles.sidebarHeader}>
           <div className={styles.brandGroup}>
-            <Image 
-              src="/images/logo.png" 
-              alt="Gemfort" 
-              width={38} 
-              height={38} 
-              className={styles.sidebarLogo}
-            />
+            <div className={styles.sidebarLogoWrapper}>
+              <Image 
+                src="/images/logo.png" 
+                alt="Gemfort" 
+                width={32} 
+                height={32} 
+                className={styles.sidebarLogo}
+              />
+            </div>
             <div>
               <h2 className={styles.sidebarTitle}>Gemfort</h2>
               <p className={styles.sidebarSubtitle}>Admin Panel</p>
@@ -157,13 +159,15 @@ export default function AdminDashboardLayout({ children }: { children: React.Rea
           </button>
 
           <div className={styles.mobileBrand}>
-            <Image 
-              src="/images/logo.png" 
-              alt="Gemfort" 
-              width={26} 
-              height={26} 
-              style={{ filter: 'invert(1)', mixBlendMode: 'screen', objectFit: 'contain' }}
-            />
+            <div className={styles.sidebarLogoWrapper} style={{ width: '32px', height: '32px', padding: '2px' }}>
+              <Image 
+                src="/images/logo.png" 
+                alt="Gemfort" 
+                width={26} 
+                height={26} 
+                style={{ objectFit: 'contain' }}
+              />
+            </div>
             <span className={styles.mobileBrandTitle}>Admin Panel</span>
           </div>
 

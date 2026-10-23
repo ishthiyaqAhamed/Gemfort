@@ -29,11 +29,11 @@ export default function AdminLoginPage() {
           <div className={styles.logoCircle}>
             <Image 
               src="/images/logo.png" 
-              alt="Gemfort Logo" 
-              width={42} 
-              height={42} 
+              alt="Logo" 
+              width={64} 
+              height={64} 
               priority
-              style={{ objectFit: 'contain', filter: 'invert(1)', mixBlendMode: 'screen' }} 
+              style={{ objectFit: 'contain' }} 
             />
           </div>
         </div>

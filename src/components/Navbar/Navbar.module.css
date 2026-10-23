@@ -35,7 +35,7 @@
 
 .logoImage {
   object-fit: contain;
-  border-radius: 50%;
+  border-radius: 6px;
 }
 
 .logoText {

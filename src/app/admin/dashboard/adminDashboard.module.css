@@ -40,9 +40,18 @@
   gap: 0.85rem;
 }
 
+.sidebarLogoWrapper {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
 .sidebarLogo {
-  filter: invert(1);
-  mix-blend-mode: screen;
   object-fit: contain;
 }
 
