@@ -146,7 +146,7 @@ const allStones: GemstoneData[] = [
     weight: '2.80 ct',
     img: '/images/guide/blue-sapphire.png',
     priceUSD: 3800,
-    desc: 'Classic velvety Cornflower Blue Ceylon Sapphire with soft inner glow and exceptional silk refraction. Completely unheated, accompanied by full laboratory dossier.',
+    desc: 'Classic velvety Cornflower Blue Ceylon Sapphire with soft inner glow and exceptional silk refraction. Completely unheated, accompanied by full laboratory report & certification.',
     shape: 'Cushion Mixed Cut',
     colorGrade: 'Cornflower Blue',
     clarity: 'Eye-Clean (VVS)',
@@ -185,7 +185,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
   const formattedPrice = formatPrice(stone.priceUSD);
 
   const whatsappInquiryUrl = `https://wa.me/17738850603?text=${encodeURIComponent(
-    `Hello Gemfort International,,\n\nI am inquiring about an acquisition from your private vault:\n\n• Ref ID: GEM-${stone.id.toString().padStart(3, '0')}\n• Gemstone: ${stone.name}\n• Carat: ${stone.weight}\n• Origin: ${stone.origin}\n• Price: ${formattedPrice}\n• Certificate: ${stone.certNumber}\n\nPlease share the high-resolution gemological dossier and arrange a private consultation.`
+    `Hello Gemfort International,,\n\nI am inquiring about an acquisition from your private vault:\n\n• Ref ID: GEM-${stone.id.toString().padStart(3, '0')}\n• Gemstone: ${stone.name}\n• Carat: ${stone.weight}\n• Origin: ${stone.origin}\n• Price: ${formattedPrice}\n• Certificate: ${stone.certNumber}\n\nPlease share the high-resolution gemological report and arrange a private consultation.`
   )}`;
 
   const whatsappVideoUrl = `https://wa.me/17738850603?text=${encodeURIComponent(
@@ -217,7 +217,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               </span>
               <button
                 onClick={handleShare}
-                aria-label="Share Gemstone Dossier"
+                aria-label="Share Gemstone Details"
                 style={{
                   background: 'rgba(255, 255, 255, 0.05)',
                   border: '1px solid rgba(199, 164, 80, 0.25)',
@@ -298,7 +298,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
               {/* Gemological Appraisal Dossier */}
               <div className={styles.dossierTitle}>
-                <Award size={14} /> Gemological Appraisal Dossier
+                <Award size={14} /> Gemological Specifications
               </div>
 
               <div className={styles.specGrid}>

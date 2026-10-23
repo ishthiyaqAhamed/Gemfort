@@ -141,7 +141,7 @@ const FeaturedStones = () => {
                     <div className={styles.cardFooter}>
                       <span className={styles.price}>{formatPrice(stone.priceUSD)}</span>
                       <span className={styles.viewAction}>
-                        Dossier <ArrowRight size={13} />
+                        View Details <ArrowRight size={13} />
                       </span>
                     </div>
                   </div>
