@@ -7,74 +7,72 @@ import {
   Volume2, 
   VolumeX, 
   Play, 
-  Pause, 
-  Sparkles, 
   ArrowRight, 
   ShieldCheck, 
-  Gem, 
-  MessageCircle 
+  Gem 
 } from 'lucide-react';
 import styles from './PortraitShowcase.module.css';
 
 const PortraitShowcase = () => {
+  const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isMuted, setIsMuted] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [hasInteracted, setHasInteracted] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
+    const section = sectionRef.current;
+    if (!video || !section) return;
 
-    // Attempt unmuted play first; if browser blocks, fallback to muted autoplay
-    video.muted = false;
-    const playPromise = video.play();
+    // Ensure native mobile attributes are set for iOS Safari and Android Chrome
+    video.muted = isMuted;
+    video.setAttribute('playsinline', 'true');
+    video.setAttribute('webkit-playsinline', 'true');
 
-    if (playPromise !== undefined) {
-      playPromise
-        .then(() => {
-          setIsMuted(false);
-          setIsPlaying(true);
-        })
-        .catch(() => {
-          // Modern browsers block autoplay with sound by default without prior interaction
-          video.muted = true;
-          video.play()
-            .then(() => {
-              setIsMuted(true);
-              setIsPlaying(true);
-            })
-            .catch(() => {
-              setIsPlaying(false);
-            });
+    // ONLY play when the user scrolls and reaches the video section
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // User reached the video section: play automatically
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+              playPromise
+                .then(() => setIsPlaying(true))
+                .catch(() => {
+                  // If browser blocks unmuted playback, ensure muted and play
+                  video.muted = true;
+                  setIsMuted(true);
+                  video.play()
+                    .then(() => setIsPlaying(true))
+                    .catch(() => setIsPlaying(false));
+                });
+            }
+          } else {
+            // User scrolled away from the video section: pause
+            video.pause();
+            setIsPlaying(false);
+          }
         });
-    }
-
-    // Auto-unmute on first user click anywhere on page if still muted
-    const enableSoundOnInteraction = () => {
-      if (video && video.muted && !hasInteracted) {
-        video.muted = false;
-        setIsMuted(false);
-        setHasInteracted(true);
+      },
+      {
+        threshold: 0.2, // Trigger when 20% of section enters viewport
       }
-    };
+    );
 
-    window.addEventListener('click', enableSoundOnInteraction, { once: true });
-    window.addEventListener('touchstart', enableSoundOnInteraction, { once: true });
+    observer.observe(section);
 
     return () => {
-      window.removeEventListener('click', enableSoundOnInteraction);
-      window.removeEventListener('touchstart', enableSoundOnInteraction);
+      observer.disconnect();
     };
-  }, [hasInteracted]);
+  }, [isMuted]);
 
-  const toggleSound = (e: React.MouseEvent) => {
+  const toggleSound = (e: React.MouseEvent | React.TouchEvent) => {
     e.stopPropagation();
     if (!videoRef.current) return;
     const nextMuted = !videoRef.current.muted;
     videoRef.current.muted = nextMuted;
     setIsMuted(nextMuted);
-    setHasInteracted(true);
   };
 
   const togglePlay = () => {
@@ -89,16 +87,16 @@ const PortraitShowcase = () => {
   };
 
   return (
-    <section className={styles.section}>
+    <section ref={sectionRef} className={styles.section}>
       <div className={`container ${styles.container}`}>
         
-        {/* Left: Portrait Video Frame */}
+        {/* Left: Portrait Video Frame (Desktop & Mobile) */}
         <motion.div 
           className={styles.videoCol}
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.7 }}
         >
           <div className={styles.portraitCard} onClick={togglePlay}>
             {/* Ambient luxury halo */}
@@ -109,17 +107,11 @@ const PortraitShowcase = () => {
                 ref={videoRef}
                 src="/videos/hero.mp4"
                 playsInline
-                autoPlay
                 loop
                 muted={isMuted}
+                preload="metadata"
                 className={styles.video}
               />
-
-              {/* Status overlay badge */}
-              <div className={styles.videoBadge}>
-                <span className={styles.livePulse} />
-                <span>Live Vault Footage</span>
-              </div>
 
               {/* Floating Sound Toggle */}
               <button 
@@ -146,7 +138,7 @@ const PortraitShowcase = () => {
                 )}
               </button>
 
-              {/* Play/Pause Indicator if paused */}
+              {/* Play Indicator when paused */}
               {!isPlaying && (
                 <div className={styles.playOverlay}>
                   <div className={styles.playIconCircle}>
@@ -155,27 +147,17 @@ const PortraitShowcase = () => {
                 </div>
               )}
             </div>
-
-            {/* Bottom card reflection line */}
-            <div className={styles.cardFooter}>
-              <span>Handcrafted in Sri Lanka • 4K Macro Inspection</span>
-            </div>
           </div>
         </motion.div>
 
         {/* Right: Editorial Narrative */}
         <motion.div 
           className={styles.contentCol}
-          initial={{ opacity: 0, x: 40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.7, delay: 0.15 }}
         >
-          <div className={styles.tag}>
-            <Sparkles size={14} />
-            <span>Artistry in Motion</span>
-          </div>
-
           <h2 className={styles.title}>
             Living Brilliance, <br />
             Untouched by Heat
@@ -212,16 +194,6 @@ const PortraitShowcase = () => {
               <span>Explore Vault Collection</span>
               <ArrowRight size={16} />
             </Link>
-
-            <a
-              href="https://wa.me/17738850603?text=Hello%20Gemfort%20International%2C%20I%20saw%20your%20video%20showcase%20and%20would%20like%20to%20inquire%20about%20your%20current%20inventory."
-              target="_blank"
-              rel="noreferrer"
-              className={styles.whatsappBtn}
-            >
-              <MessageCircle size={18} />
-              <span>Private Consultation</span>
-            </a>
           </div>
         </motion.div>
 
