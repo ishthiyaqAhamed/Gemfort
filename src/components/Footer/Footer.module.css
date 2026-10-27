@@ -221,7 +221,7 @@ a.contactItem:hover {
   }
 
   .bottom {
-    padding: 1rem 5% calc(1.5rem + env(safe-area-inset-bottom));
+    padding: 1rem 5% calc(4.5rem + env(safe-area-inset-bottom, 0px));
     font-size: 0.72rem;
     text-align: center;
     justify-content: center;
