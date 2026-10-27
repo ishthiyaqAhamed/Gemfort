@@ -175,7 +175,7 @@
     background: linear-gradient(180deg, #ffffff 0%, #faf8f2 100%);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    padding: 0.5rem 1.25rem 0.75rem;
+    padding: 0.85rem 1.25rem 0.85rem;
     overflow-y: hidden;
     overflow-x: hidden;
     z-index: 1000;
@@ -187,44 +187,6 @@
     .mobileMenu {
       overflow-y: auto;
     }
-  }
-
-  .mobileMenuHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.25rem;
-    padding-bottom: 0.35rem;
-    border-bottom: 1px solid rgba(0, 33, 71, 0.08);
-    flex-shrink: 0;
-  }
-
-  .mobileDrawerBrand {
-    display: flex;
-    align-items: center;
-    gap: 0.45rem;
-  }
-
-  .drawerLogo {
-    width: 28px !important;
-    height: 28px !important;
-    object-fit: contain;
-  }
-
-  .mobileDrawerTitle {
-    font-family: var(--font-heading);
-    font-size: 1.15rem;
-    color: #002147;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-  }
-
-  .mobileMenuTag {
-    font-size: 0.7rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: #8c6d1f;
-    font-weight: 700;
   }
 
   .mobileNavLinks {

@@ -84,20 +84,6 @@ const Navbar = () => {
 
       {isMobileMenuOpen && (
         <div className={styles.mobileMenu}>
-          <div className={styles.mobileMenuHeader}>
-            <div className={styles.mobileDrawerBrand}>
-              <Image
-                src="/images/gemfort-emblem.png"
-                alt="Gemfort Logo"
-                width={32}
-                height={32}
-                className={styles.drawerLogo}
-              />
-              <span className={styles.mobileDrawerTitle}>Gemfort</span>
-            </div>
-            <CurrencyDropdown />
-          </div>
-
           <div className={styles.mobileNavLinks}>
             <Link href="/" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>
               <span>Home</span>
