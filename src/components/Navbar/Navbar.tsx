@@ -89,9 +89,9 @@ const Navbar = () => {
               <Image
                 src="/images/logo-all-transparent.png"
                 alt="Gemfort Logo"
-                width={36}
-                height={36}
-                className={styles.logoImage}
+                width={28}
+                height={28}
+                className={styles.drawerLogo}
               />
               <span className={styles.mobileDrawerTitle}>Gemfort</span>
             </div>

@@ -16,6 +16,12 @@
   --nav-height: 80px;
 }
 
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 68px;
+  }
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
