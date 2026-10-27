@@ -11,7 +11,6 @@ import {
   Lock,
   FileText,
   CheckCircle2,
-  Video,
   Share2
 } from 'lucide-react';
 import React, { useState } from 'react';
@@ -188,10 +187,6 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
     `Hello Gemfort International,,\n\nI am inquiring about an acquisition from your private vault:\n\n• Ref ID: GEM-${stone.id.toString().padStart(3, '0')}\n• Gemstone: ${stone.name}\n• Carat: ${stone.weight}\n• Origin: ${stone.origin}\n• Price: ${formattedPrice}\n• Certificate: ${stone.certNumber}\n\nPlease share the high-resolution gemological report and arrange a private consultation.`
   )}`;
 
-  const whatsappVideoUrl = `https://wa.me/17738850603?text=${encodeURIComponent(
-    `Hello Gemfort International,, please send me the 360° Macro 4K video inspection and certificate photos for GEM-${stone.id.toString().padStart(3, '0')} (${stone.name}, ${stone.weight}).`
-  )}`;
-
   const handleShare = () => {
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
       navigator.clipboard.writeText(window.location.href);
@@ -218,18 +213,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               <button
                 onClick={handleShare}
                 aria-label="Share Gemstone Details"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(199, 164, 80, 0.25)',
-                  color: copied ? '#9fe2bf' : '#c7a450',
-                  padding: '0.45rem',
-                  borderRadius: '50%',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  transition: 'all 0.2s'
-                }}
+                className={`${styles.shareBtn} ${copied ? styles.shareBtnCopied : ''}`}
               >
                 <Share2 size={15} />
               </button>
@@ -367,16 +351,6 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                 >
                   <MessageCircle size={22} />
                   <span>Inquire via VIP WhatsApp<span className={styles.conciergeText}> Concierge</span></span>
-                </a>
-
-                <a
-                  href={whatsappVideoUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={styles.secondaryActionBtn}
-                >
-                  <Video size={18} />
-                  <span>Request 360° Macro 4K Video</span>
                 </a>
               </div>
 

@@ -181,10 +181,24 @@
   .mobileMenuHeader {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid rgba(199, 164, 80, 0.15);
+  }
+
+  .mobileDrawerBrand {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .mobileDrawerTitle {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    color: #ffffff;
+    font-weight: 500;
+    letter-spacing: 0.5px;
   }
 
   .mobileMenuTag {
@@ -286,6 +300,15 @@
 @media (max-width: 600px) {
   .navContainer {
     padding: 0 1.2rem;
+  }
+  
+  .logoLink {
+    gap: 0.6rem;
+  }
+
+  .logoImage {
+    width: 40px !important;
+    height: 40px !important;
   }
   
   .logoTitle {

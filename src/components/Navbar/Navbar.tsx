@@ -37,7 +37,7 @@ const Navbar = () => {
         <div className={styles.logo}>
           <Link href="/" className={styles.logoLink} onClick={() => setIsMobileMenuOpen(false)}>
             <Image
-              src="/images/logo.png"
+              src="/images/logo-all-transparent.png"
               alt="Gemfort Logo"
               width={52}
               height={52}
@@ -85,6 +85,16 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div className={styles.mobileMenu}>
           <div className={styles.mobileMenuHeader}>
+            <div className={styles.mobileDrawerBrand}>
+              <Image
+                src="/images/logo-all-transparent.png"
+                alt="Gemfort Logo"
+                width={36}
+                height={36}
+                className={styles.logoImage}
+              />
+              <span className={styles.mobileDrawerTitle}>Gemfort</span>
+            </div>
             <CurrencyDropdown />
           </div>
 
