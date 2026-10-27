@@ -325,7 +325,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                 </div>
               </div>
 
-              {/* VIP Privileges */}
+              {/*  Privileges */}
               <ul className={styles.privileges}>
                 <li className={styles.privilegeItem}>
                   <ShieldCheck size={18} className={styles.privilegeIcon} />
@@ -347,10 +347,10 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                   href={whatsappInquiryUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className={styles.vipWhatsappBtn}
+                  className={styles.WhatsappBtn}
                 >
                   <MessageCircle size={22} />
-                  <span>Inquire via VIP WhatsApp<span className={styles.conciergeText}> Concierge</span></span>
+                  <span>Inquire via  WhatsApp<span className={styles.conciergeText}> Concierge</span></span>
                 </a>
               </div>
 
@@ -360,7 +360,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
         </div>
       </section>
 
-      {/* ─── STICKY MOBILE VIP CONCIERGE DOCK ──────────────────────── */}
+      {/* ─── STICKY MOBILE  CONCIERGE DOCK ──────────────────────── */}
       <aside className={styles.stickyBar}>
         <div className={styles.stickyPriceCol}>
           <span className={styles.stickyLabel}>Private Vault</span>
@@ -376,7 +376,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
         >
           <span className={styles.onlineIndicator} />
           <MessageCircle size={18} />
-          <span>VIP Inquire</span>
+          <span> Inquire</span>
         </a>
       </aside>
     </main>

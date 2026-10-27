@@ -432,7 +432,7 @@
   line-height: 1.45;
 }
 
-/* ─── VIP Privileges ───────────────────────────────── */
+/* ───  Privileges ───────────────────────────────── */
 .privileges {
   list-style: none;
   padding: 0;
@@ -461,14 +461,14 @@
   flex-shrink: 0;
 }
 
-/* ─── In-Page VIP Action Buttons ───────────────────── */
+/* ─── In-Page  Action Buttons ───────────────────── */
 .actions {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.vipWhatsappBtn {
+.WhatsappBtn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -489,7 +489,7 @@
   overflow: hidden;
 }
 
-.vipWhatsappBtn:hover {
+.WhatsappBtn:hover {
   transform: translateY(-2px);
   box-shadow: 0 14px 35px rgba(18, 140, 126, 0.5);
   color: #ffffff;
@@ -499,7 +499,7 @@
   display: inline;
 }
 
-/* ─── Sticky Mobile VIP Concierge Dock ─────────────── */
+/* ─── Sticky Mobile  Concierge Dock ─────────────── */
 .stickyBar {
   display: none;
 }
@@ -508,7 +508,8 @@
 @media (max-width: 900px) {
   .section {
     padding-top: 5.5rem;
-    padding-bottom: 8rem; /* Extra room so sticky dock never covers content */
+    padding-bottom: 8rem;
+    /* Extra room so sticky dock never covers content */
   }
 
   .grid {
@@ -625,7 +626,7 @@
     font-size: 0.8rem;
   }
 
-  /* Sticky Mobile VIP Dock (Light Theme) */
+  /* Sticky Mobile  Dock (Light Theme) */
   .stickyBar {
     display: flex;
     position: fixed;

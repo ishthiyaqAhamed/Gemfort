@@ -129,12 +129,12 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <div className={styles.mobileVipCard}>
+          <div className={styles.mobileCard}>
             <a
               href="https://wa.me/17738850603?text=Hello%20Gemfort%20Concierge%2C%20I%20would%20like%20to%20inquire%20about%20a%20private%20gemstone%20inquiry"
               target="_blank"
               rel="noreferrer"
-              className={styles.mobileVipBtn}
+              className={styles.mobileBtn}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               <MessageCircle size={18} />
