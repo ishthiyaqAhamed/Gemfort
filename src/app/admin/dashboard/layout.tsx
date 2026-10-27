@@ -70,7 +70,7 @@ export default function AdminDashboardLayout({ children }: { children: React.Rea
           <div className={styles.brandGroup}>
             <div className={styles.sidebarLogoWrapper}>
               <Image 
-                src="/images/logo.png" 
+                src="/images/gemfort-emblem.png" 
                 alt="Gemfort" 
                 width={32} 
                 height={32} 

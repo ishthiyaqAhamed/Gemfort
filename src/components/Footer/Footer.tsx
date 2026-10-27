@@ -12,8 +12,8 @@ const Footer = () => {
         <div className={styles.brand}>
           <Link href="/" className={styles.brandName} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.85rem' }}>
             <Image 
-              src="/images/logo.png" 
-              alt="Logo" 
+              src="/images/gemfort-emblem.png" 
+              alt="Gemfort Logo" 
               width={38} 
               height={38} 
               style={{ objectFit: 'contain' }}
