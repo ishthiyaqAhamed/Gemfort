@@ -8,7 +8,6 @@ import {
   MessageCircle,
   Award,
   Sparkles,
-  Lock,
   FileText,
   CheckCircle2,
   Share2,
@@ -546,14 +545,6 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
               {/* Privileges */}
               <ul className={styles.privileges}>
-                <li className={styles.privilegeItem}>
-                  <ShieldCheck size={18} className={styles.privilegeIcon} />
-                  <span><strong>Armored Global Delivery</strong> — Hand-delivered or insured via Malca-Amit / Brinks.</span>
-                </li>
-                <li className={styles.privilegeItem}>
-                  <Lock size={18} className={styles.privilegeIcon} />
-                  <span><strong>Private Viewing Suites</strong> — In-person inspection available in London, Geneva &amp; Colombo.</span>
-                </li>
                 <li className={styles.privilegeItem}>
                   <CheckCircle2 size={18} className={styles.privilegeIcon} />
                   <span><strong>Lifetime Provenance Guarantee</strong> — Guaranteed 100% natural and ethically mined.</span>
