@@ -3,8 +3,25 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Edit2, Trash2, ExternalLink, Plus, X, Loader2, RefreshCw, CheckCircle2, AlertCircle } from 'lucide-react';
+import {
+  Edit2,
+  Trash2,
+  ExternalLink,
+  Plus,
+  X,
+  Loader2,
+  RefreshCw,
+  CheckCircle2,
+  AlertCircle,
+  Sparkles,
+  Award,
+  DollarSign,
+  UploadCloud,
+  FileText,
+  Check,
+} from 'lucide-react';
 import styles from '../adminPages.module.css';
+import modalStyles from './gemstoneModal.module.css';
 
 interface Category {
   id: string;
@@ -49,13 +66,18 @@ export default function AdminInventoryPage() {
   const [formColor, setFormColor] = useState('');
   const [formShape, setFormShape] = useState('');
   const [formOrigin, setFormOrigin] = useState('Ratnapura, Sri Lanka');
-  const [formTreatment, setFormTreatment] = useState('100% Unheated & Untreated');
+  const [formTreatment, setFormTreatment] = useState('100% Unheated & Untreated Natural');
   const [formCert, setFormCert] = useState('');
   const [formStatus, setFormStatus] = useState<'AVAILABLE' | 'RESERVED' | 'SOLD'>('AVAILABLE');
   const [formImage, setFormImage] = useState('/images/guide/blue-sapphire.png');
   const [formDesc, setFormDesc] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [alertMsg, setAlertMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
+  // Image upload states
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<string | null>(null);
+  const [uploadProvider, setUploadProvider] = useState<'cloudinary' | 'local' | null>(null);
 
   const loadData = async () => {
     setLoading(true);
@@ -88,18 +110,54 @@ export default function AdminInventoryPage() {
     loadData();
   }, []);
 
+  const handleFileUpload = async (file: File) => {
+    if (!file) return;
+    setUploadingImage(true);
+    setUploadProgress('Uploading image...');
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('folder', 'gemfort/vault');
+
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success && data.url) {
+        setFormImage(data.url);
+        setUploadProvider(data.provider === 'cloudinary' ? 'cloudinary' : 'local');
+        setUploadProgress(
+          data.provider === 'cloudinary'
+            ? 'Stored on Cloudinary CDN'
+            : 'Image Loaded Successfully'
+        );
+      } else {
+        alert(data.error || 'Failed to upload image.');
+      }
+    } catch (err) {
+      console.error('Upload error:', err);
+      alert('Network error while uploading image.');
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
   const openAddModal = () => {
     setFormName('');
     setFormPrice('');
     setFormWeight('');
-    setFormColor('');
+    setFormColor('Royal Blue (Vivid)');
     setFormShape('Cushion Mixed Cut');
     setFormOrigin('Ratnapura, Sri Lanka');
-    setFormTreatment('100% Unheated & Untreated');
-    setFormCert('GRS-2026-');
+    setFormTreatment('100% Unheated & Untreated Natural');
+    setFormCert('GRS-2026-88419');
     setFormStatus('AVAILABLE');
     setFormImage('/images/guide/blue-sapphire.png');
     setFormDesc('');
+    setUploadProgress(null);
+    setUploadProvider(null);
     if (categories.length > 0) setFormCategory(categories[0].id);
     setIsAddOpen(true);
     setAlertMsg(null);
@@ -166,6 +224,8 @@ export default function AdminInventoryPage() {
     setFormStatus(stone.status);
     setFormImage(stone.images?.[0] || '/images/guide/blue-sapphire.png');
     setFormDesc(stone.description || '');
+    setUploadProgress(null);
+    setUploadProvider(stone.images?.[0]?.includes('cloudinary') ? 'cloudinary' : null);
     setIsEditOpen(true);
     setAlertMsg(null);
   };
@@ -357,308 +417,348 @@ export default function AdminInventoryPage() {
         </div>
       </div>
 
-      {/* ─── ADD / EDIT GEMSTONE MODAL ──────────────────────── */}
+      {/* ─── LUXURY GEMSTONE REGISTRATION / EDIT MODAL ──────────────────────── */}
       {(isAddOpen || isEditOpen) && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(0, 20, 45, 0.65)',
-          backdropFilter: 'blur(8px)',
-          WebkitBackdropFilter: 'blur(8px)',
-          zIndex: 9999,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '1.5rem',
-        }}>
-          <div style={{
-            backgroundColor: '#ffffff',
-            borderRadius: '16px',
-            width: '100%',
-            maxWidth: '680px',
-            maxHeight: '90vh',
-            overflowY: 'auto',
-            padding: '2rem',
-            position: 'relative',
-            boxShadow: '0 25px 50px rgba(0, 33, 71, 0.25)',
-            border: '1px solid rgba(199, 164, 80, 0.3)',
-          }}>
-            <button
-              onClick={() => { setIsAddOpen(false); setIsEditOpen(false); }}
-              aria-label="Close"
-              style={{
-                position: 'absolute',
-                top: '1.25rem',
-                right: '1.25rem',
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                color: '#64748b',
-                padding: '4px',
-              }}
-            >
-              <X size={20} />
-            </button>
-
-            <h3 style={{ fontSize: '1.4rem', color: '#002147', marginBottom: '0.4rem', fontFamily: 'var(--font-heading)' }}>
-              {isAddOpen ? 'Add New Gemstone to Vault' : `Edit: ${currentEditStone?.name}`}
-            </h3>
-            <p style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '1.5rem' }}>
-              Enter gemological specifications, pricing, and certified laboratory details.
-            </p>
-
-            {alertMsg && (
-              <div style={{
-                padding: '0.75rem 1rem',
-                borderRadius: '8px',
-                marginBottom: '1.25rem',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.65rem',
-                backgroundColor: alertMsg.type === 'success' ? '#ecfdf5' : '#fef2f2',
-                color: alertMsg.type === 'success' ? '#065f46' : '#991b1b',
-                border: `1px solid ${alertMsg.type === 'success' ? '#a7f3d0' : '#fecaca'}`,
-                fontSize: '0.88rem',
-              }}>
-                {alertMsg.type === 'success' ? <CheckCircle2 size={18} color="#059669" /> : <AlertCircle size={18} color="#dc2626" />}
-                <span>{alertMsg.text}</span>
-              </div>
-            )}
-
-            <form onSubmit={isAddOpen ? handleCreateStone : handleUpdateStone} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.78rem', color: '#002147', fontWeight: 600, textTransform: 'uppercase', marginBottom: '0.3rem' }}>
-                    Gemstone Name *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. Royal Blue Sapphire"
-                    value={formName}
-                    onChange={(e) => setFormName(e.target.value)}
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '0.9rem', outline: 'none' }}
-                  />
-                </div>
-
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.78rem', color: '#002147', fontWeight: 600, textTransform: 'uppercase', marginBottom: '0.3rem' }}>
-                    Category *
-                  </label>
-                  <select
-                    value={formCategory}
-                    onChange={(e) => setFormCategory(e.target.value)}
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '0.9rem', outline: 'none', backgroundColor: '#fff' }}
-                  >
-                    {categories.map((cat) => (
-                      <option key={cat.id} value={cat.id}>
-                        {cat.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.78rem', color: '#002147', fontWeight: 600, textTransform: 'uppercase', marginBottom: '0.3rem' }}>
-                    Price (USD)
-                  </label>
-                  <input
-                    type="number"
-                    step="any"
-                    placeholder="e.g. 4250"
-                    value={formPrice}
-                    onChange={(e) => setFormPrice(e.target.value)}
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '0.9rem', outline: 'none' }}
-                  />
-                </div>
-
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.78rem', color: '#002147', fontWeight: 600, textTransform: 'uppercase', marginBottom: '0.3rem' }}>
-                    Carat Weight
-                  </label>
-                  <input
-                    type="number"
-                    step="any"
-                    placeholder="e.g. 3.45"
-                    value={formWeight}
-                    onChange={(e) => setFormWeight(e.target.value)}
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '0.9rem', outline: 'none' }}
-                  />
-                </div>
-
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.78rem', color: '#002147', fontWeight: 600, textTransform: 'uppercase', marginBottom: '0.3rem' }}>
-                    Status
-                  </label>
-                  <select
-                    value={formStatus}
-                    onChange={(e) => setFormStatus(e.target.value as any)}
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '0.9rem', outline: 'none', backgroundColor: '#fff' }}
-                  >
-                    <option value="AVAILABLE">Available</option>
-                    <option value="RESERVED">Reserved</option>
-                    <option value="SOLD">Sold</option>
-                  </select>
-                </div>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.78rem', color: '#002147', fontWeight: 600, textTransform: 'uppercase', marginBottom: '0.3rem' }}>
-                    Color Grade
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Royal Blue (Vivid)"
-                    value={formColor}
-                    onChange={(e) => setFormColor(e.target.value)}
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '0.9rem', outline: 'none' }}
-                  />
-                </div>
-
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.78rem', color: '#002147', fontWeight: 600, textTransform: 'uppercase', marginBottom: '0.3rem' }}>
-                    Cut &amp; Shape
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Cushion Mixed Cut"
-                    value={formShape}
-                    onChange={(e) => setFormShape(e.target.value)}
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '0.9rem', outline: 'none' }}
-                  />
-                </div>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.78rem', color: '#002147', fontWeight: 600, textTransform: 'uppercase', marginBottom: '0.3rem' }}>
-                    Origin Provenance
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Ratnapura, Sri Lanka"
-                    value={formOrigin}
-                    onChange={(e) => setFormOrigin(e.target.value)}
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '0.9rem', outline: 'none' }}
-                  />
-                </div>
-
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.78rem', color: '#002147', fontWeight: 600, textTransform: 'uppercase', marginBottom: '0.3rem' }}>
-                    Certificate Number
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="e.g. GRS-2026-88419"
-                    value={formCert}
-                    onChange={(e) => setFormCert(e.target.value)}
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '0.9rem', outline: 'none' }}
-                  />
-                </div>
-              </div>
-
+        <div className={modalStyles.modalOverlay}>
+          <div className={modalStyles.modalCard}>
+            
+            {/* Modal Header */}
+            <div className={modalStyles.modalHeader}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.78rem', color: '#002147', fontWeight: 600, textTransform: 'uppercase', marginBottom: '0.3rem' }}>
-                  Image Path / URL
-                </label>
-                <input
-                  type="text"
-                  placeholder="/images/guide/blue-sapphire.png"
-                  value={formImage}
-                  onChange={(e) => setFormImage(e.target.value)}
-                  style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '0.9rem', outline: 'none' }}
-                />
-                <div style={{ display: 'flex', gap: '0.4rem', marginTop: '0.4rem', flexWrap: 'wrap' }}>
-                  <span style={{ fontSize: '0.72rem', color: '#6b7280' }}>Quick presets:</span>
-                  {[
-                    { label: 'Blue Sapphire', path: '/images/guide/blue-sapphire.png' },
-                    { label: 'Ruby', path: '/images/guide/ruby.png' },
-                    { label: 'Padparadscha', path: '/images/guide/padparadscha.png' },
-                    { label: 'Pink Sapphire', path: '/images/guide/pink-sapphire.png' },
-                    { label: 'Alexandrite', path: '/images/guide/alexandrite.png' },
-                    { label: 'Yellow Sapphire', path: '/images/guide/yellow-sapphire.png' },
-                    { label: 'Spinel', path: '/images/guide/spinel.png' },
-                  ].map((preset) => (
-                    <button
-                      key={preset.path}
-                      type="button"
-                      onClick={() => setFormImage(preset.path)}
-                      style={{
-                        fontSize: '0.72rem',
-                        padding: '2px 8px',
-                        borderRadius: '4px',
-                        border: '1px solid #d1d5db',
-                        backgroundColor: formImage === preset.path ? '#002147' : '#f9fafb',
-                        color: formImage === preset.path ? '#fff' : '#4b5563',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      {preset.label}
-                    </button>
-                  ))}
-                </div>
+                <span className={modalStyles.headerBadge}>
+                  <Sparkles size={11} /> Gemfort Vault Registry
+                </span>
+                <h3 className={modalStyles.modalTitle}>
+                  {isAddOpen ? 'Register New Gemstone' : `Edit: ${currentEditStone?.name}`}
+                </h3>
+                <p className={modalStyles.modalSubtitle}>
+                  Certified Ceylon provenance, physical grading, pricing, and high-resolution imagery.
+                </p>
               </div>
 
-              <div>
-                <label style={{ display: 'block', fontSize: '0.78rem', color: '#002147', fontWeight: 600, textTransform: 'uppercase', marginBottom: '0.3rem' }}>
-                  Gemstone Narrative / Description
-                </label>
-                <textarea
-                  rows={3}
-                  placeholder="Collector-grade natural gemstone with exceptional optical scintillation..."
-                  value={formDesc}
-                  onChange={(e) => setFormDesc(e.target.value)}
-                  style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '0.9rem', outline: 'none', resize: 'vertical' }}
-                />
-              </div>
+              <button
+                type="button"
+                onClick={() => { setIsAddOpen(false); setIsEditOpen(false); }}
+                aria-label="Close Modal"
+                className={modalStyles.closeBtn}
+              >
+                <X size={18} />
+              </button>
+            </div>
 
-              <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.75rem' }}>
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  style={{
-                    flex: 1,
-                    padding: '11px',
-                    backgroundColor: '#c7a450',
-                    color: '#ffffff',
-                    border: 'none',
-                    borderRadius: '8px',
-                    fontWeight: 600,
-                    fontSize: '0.92rem',
-                    cursor: 'pointer',
+            {/* Modal Scrollable Body */}
+            <form onSubmit={isAddOpen ? handleCreateStone : handleUpdateStone} style={{ display: 'contents' }}>
+              <div className={modalStyles.modalBody}>
+                
+                {alertMsg && (
+                  <div style={{
+                    padding: '0.85rem 1.15rem',
+                    borderRadius: '10px',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '0.5rem',
-                  }}
-                >
-                  {submitting && <Loader2 size={16} className="animate-spin" />}
-                  <span>{submitting ? 'Saving to Vault...' : isAddOpen ? 'Add Gemstone to Database' : 'Save Changes'}</span>
-                </button>
+                    gap: '0.65rem',
+                    backgroundColor: alertMsg.type === 'success' ? '#ecfdf5' : '#fef2f2',
+                    color: alertMsg.type === 'success' ? '#065f46' : '#991b1b',
+                    border: `1px solid ${alertMsg.type === 'success' ? '#a7f3d0' : '#fecaca'}`,
+                    fontSize: '0.88rem',
+                  }}>
+                    {alertMsg.type === 'success' ? <CheckCircle2 size={18} color="#059669" /> : <AlertCircle size={18} color="#dc2626" />}
+                    <span>{alertMsg.text}</span>
+                  </div>
+                )}
+
+                {/* 1. Core Identity & Category */}
+                <div className={modalStyles.formSection}>
+                  <div className={modalStyles.sectionHeader}>
+                    <div className={modalStyles.sectionIcon}>
+                      <Sparkles size={15} />
+                    </div>
+                    <h4 className={modalStyles.sectionTitle}>1. Identity &amp; Classification</h4>
+                  </div>
+
+                  <div className={modalStyles.gridTwo}>
+                    <div className={modalStyles.inputGroup}>
+                      <label className={modalStyles.label}>
+                        Gemstone Name <span className={modalStyles.requiredStar}>*</span>
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. Royal Blue Ceylon Sapphire"
+                        value={formName}
+                        onChange={(e) => setFormName(e.target.value)}
+                        className={modalStyles.input}
+                      />
+                    </div>
+
+                    <div className={modalStyles.inputGroup}>
+                      <label className={modalStyles.label}>
+                        Category Collection <span className={modalStyles.requiredStar}>*</span>
+                      </label>
+                      <select
+                        value={formCategory}
+                        onChange={(e) => setFormCategory(e.target.value)}
+                        className={modalStyles.select}
+                      >
+                        {categories.map((cat) => (
+                          <option key={cat.id} value={cat.id}>
+                            {cat.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className={modalStyles.inputGroup}>
+                    <label className={modalStyles.label}>Origin &amp; Mining Provenance</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Ratnapura, Sri Lanka (Artisanal Ceylon Mine)"
+                      value={formOrigin}
+                      onChange={(e) => setFormOrigin(e.target.value)}
+                      className={modalStyles.input}
+                    />
+                  </div>
+                </div>
+
+                {/* 2. Gemological Specifications */}
+                <div className={modalStyles.formSection}>
+                  <div className={modalStyles.sectionHeader}>
+                    <div className={modalStyles.sectionIcon}>
+                      <Award size={15} />
+                    </div>
+                    <h4 className={modalStyles.sectionTitle}>2. Gemological Grading &amp; Certification</h4>
+                  </div>
+
+                  <div className={modalStyles.gridTwo}>
+                    <div className={modalStyles.inputGroup}>
+                      <label className={modalStyles.label}>Color Grade / Hue</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Royal Blue (Vivid Cornflower Saturation)"
+                        value={formColor}
+                        onChange={(e) => setFormColor(e.target.value)}
+                        className={modalStyles.input}
+                      />
+                    </div>
+
+                    <div className={modalStyles.inputGroup}>
+                      <label className={modalStyles.label}>Cut &amp; Faceting Shape</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Cushion Mixed Cut, Oval Brilliant"
+                        value={formShape}
+                        onChange={(e) => setFormShape(e.target.value)}
+                        className={modalStyles.input}
+                      />
+                    </div>
+                  </div>
+
+                  <div className={modalStyles.gridTwo}>
+                    <div className={modalStyles.inputGroup}>
+                      <label className={modalStyles.label}>Treatment &amp; Thermal Status</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. 100% Unheated & Untreated Natural"
+                        value={formTreatment}
+                        onChange={(e) => setFormTreatment(e.target.value)}
+                        className={modalStyles.input}
+                      />
+                    </div>
+
+                    <div className={modalStyles.inputGroup}>
+                      <label className={modalStyles.label}>Laboratory Certificate Report #</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. GRS-2026-88419 / GIA Certified"
+                        value={formCert}
+                        onChange={(e) => setFormCert(e.target.value)}
+                        className={modalStyles.input}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* 3. Valuation & Status */}
+                <div className={modalStyles.formSection}>
+                  <div className={modalStyles.sectionHeader}>
+                    <div className={modalStyles.sectionIcon}>
+                      <DollarSign size={15} />
+                    </div>
+                    <h4 className={modalStyles.sectionTitle}>3. Valuation &amp; Vault Availability</h4>
+                  </div>
+
+                  <div className={modalStyles.gridThree}>
+                    <div className={modalStyles.inputGroup}>
+                      <label className={modalStyles.label}>Carat Weight (ct)</label>
+                      <input
+                        type="number"
+                        step="any"
+                        placeholder="e.g. 3.45"
+                        value={formWeight}
+                        onChange={(e) => setFormWeight(e.target.value)}
+                        className={modalStyles.input}
+                      />
+                    </div>
+
+                    <div className={modalStyles.inputGroup}>
+                      <label className={modalStyles.label}>Valuation Price (USD $)</label>
+                      <input
+                        type="number"
+                        step="any"
+                        placeholder="e.g. 4250"
+                        value={formPrice}
+                        onChange={(e) => setFormPrice(e.target.value)}
+                        className={modalStyles.input}
+                      />
+                    </div>
+
+                    <div className={modalStyles.inputGroup}>
+                      <label className={modalStyles.label}>Vault Status</label>
+                      <select
+                        value={formStatus}
+                        onChange={(e) => setFormStatus(e.target.value as any)}
+                        className={modalStyles.select}
+                      >
+                        <option value="AVAILABLE">Available</option>
+                        <option value="RESERVED">Reserved</option>
+                        <option value="SOLD">Sold</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 4. Cloudinary Imagery & Direct File Upload */}
+                <div className={modalStyles.formSection}>
+                  <div className={modalStyles.sectionHeader}>
+                    <div className={modalStyles.sectionIcon}>
+                      <UploadCloud size={15} />
+                    </div>
+                    <div>
+                      <h4 className={modalStyles.sectionTitle}>4. High-Resolution Imagery &amp; Cloudinary</h4>
+                    </div>
+                  </div>
+
+                  {/* Dropzone or Live Preview */}
+                  {formImage ? (
+                    <div className={modalStyles.previewStage}>
+                      <div className={modalStyles.previewImageWrap}>
+                        <Image
+                          src={formImage}
+                          alt="Uploaded Gemstone"
+                          fill
+                          style={{ objectFit: 'contain', padding: '4px' }}
+                        />
+                      </div>
+                      <div className={modalStyles.previewInfo}>
+                        <div className={modalStyles.previewBadge}>
+                          <Check size={12} />
+                          <span>{uploadProgress || (uploadProvider === 'cloudinary' ? 'Stored on Cloudinary CDN' : 'Ready in Vault')}</span>
+                        </div>
+                        <p className={modalStyles.previewUrl} title={formImage}>{formImage}</p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => { setFormImage(''); setUploadProgress(null); }}
+                        className={modalStyles.removeImageBtn}
+                      >
+                        Change Image
+                      </button>
+                    </div>
+                  ) : (
+                    <label className={modalStyles.dropzone}>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className={modalStyles.hiddenFileInput}
+                        disabled={uploadingImage}
+                        onChange={(e) => {
+                          if (e.target.files?.[0]) handleFileUpload(e.target.files[0]);
+                        }}
+                      />
+                      <div className={modalStyles.dropzoneIconWrap}>
+                        {uploadingImage ? <Loader2 size={26} className="animate-spin" /> : <UploadCloud size={26} />}
+                      </div>
+                      <p className={modalStyles.dropzonePrompt}>
+                        {uploadingImage ? (
+                          'Uploading to Cloudinary...'
+                        ) : (
+                          <>Drag &amp; drop gemstone photograph or <span className={modalStyles.dropzoneHighlight}>browse files</span></>
+                        )}
+                      </p>
+                      <p className={modalStyles.dropzoneHelp}>
+                        Supports PNG, JPG, WEBP. Uploads directly to Cloudinary CDN storage.
+                      </p>
+                    </label>
+                  )}
+
+                  {/* Quick Presets Strip */}
+                  <div className={modalStyles.presetStrip}>
+                    <span className={modalStyles.presetLabel}>Quick Ceylon Presets:</span>
+                    {[
+                      { label: 'Blue Sapphire', path: '/images/guide/blue-sapphire.png' },
+                      { label: 'Ruby', path: '/images/guide/ruby.png' },
+                      { label: 'Padparadscha', path: '/images/guide/padparadscha.png' },
+                      { label: 'Pink Sapphire', path: '/images/guide/pink-sapphire.png' },
+                      { label: 'Alexandrite', path: '/images/guide/alexandrite.png' },
+                      { label: 'Yellow Sapphire', path: '/images/guide/yellow-sapphire.png' },
+                      { label: 'Spinel', path: '/images/guide/spinel.png' },
+                    ].map((preset) => (
+                      <button
+                        key={preset.path}
+                        type="button"
+                        onClick={() => { setFormImage(preset.path); setUploadProvider(null); setUploadProgress(null); }}
+                        className={`${modalStyles.presetBtn} ${formImage === preset.path ? modalStyles.presetBtnActive : ''}`}
+                      >
+                        {preset.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 5. Gemological Narrative */}
+                <div className={modalStyles.formSection}>
+                  <div className={modalStyles.sectionHeader}>
+                    <div className={modalStyles.sectionIcon}>
+                      <FileText size={15} />
+                    </div>
+                    <h4 className={modalStyles.sectionTitle}>5. Gemstone Narrative &amp; Vault Dossier</h4>
+                  </div>
+
+                  <div className={modalStyles.inputGroup}>
+                    <label className={modalStyles.label}>Collector Story &amp; Faceting Narrative</label>
+                    <textarea
+                      rows={3}
+                      placeholder="An exceptional unheated specimen showcasing deep velvety scintillation, loupe-clean crystal purity, and peerless Ceylon provenance..."
+                      value={formDesc}
+                      onChange={(e) => setFormDesc(e.target.value)}
+                      className={modalStyles.textarea}
+                    />
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Modal Sticky Footer */}
+              <div className={modalStyles.modalFooter}>
                 <button
                   type="button"
                   onClick={() => { setIsAddOpen(false); setIsEditOpen(false); }}
-                  style={{
-                    padding: '11px 18px',
-                    backgroundColor: '#f3f4f6',
-                    color: '#4b5563',
-                    border: 'none',
-                    borderRadius: '8px',
-                    fontWeight: 600,
-                    fontSize: '0.92rem',
-                    cursor: 'pointer',
-                  }}
+                  className={modalStyles.cancelBtn}
                 >
                   Cancel
                 </button>
+                <button
+                  type="submit"
+                  disabled={submitting || uploadingImage}
+                  className={modalStyles.saveBtn}
+                >
+                  {submitting && <Loader2 size={16} className="animate-spin" />}
+                  <span>{submitting ? 'Saving to Vault...' : isAddOpen ? 'Register Gemstone in Vault' : 'Save Changes'}</span>
+                </button>
               </div>
             </form>
+
           </div>
         </div>
       )}

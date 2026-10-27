@@ -83,6 +83,18 @@ export default function AdminSettingsPage() {
           </div>
 
           <div style={{ borderTop: '1px solid #f3f4f6', paddingTop: '1.5rem' }}>
+            <h3 style={{ fontSize: '1.05rem', color: '#111827', marginBottom: '0.4rem', fontWeight: 600 }}>Cloudinary Media Storage</h3>
+            <p style={{ fontSize: '0.85rem', color: '#6b7280', marginBottom: '1rem' }}>
+              Gemfort connects directly to Cloudinary for instant CDN image hosting. Add these credentials to your <code>.env</code> file:
+            </p>
+            <div style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '1rem', fontFamily: 'monospace', fontSize: '0.82rem', color: '#1e293b', lineHeight: 1.6 }}>
+              <div>CLOUDINARY_CLOUD_NAME=your_cloud_name</div>
+              <div>CLOUDINARY_API_KEY=your_api_key</div>
+              <div>CLOUDINARY_API_SECRET=your_api_secret</div>
+            </div>
+          </div>
+
+          <div style={{ borderTop: '1px solid #f3f4f6', paddingTop: '1.5rem' }}>
             <h3 style={{ fontSize: '1.05rem', color: '#111827', marginBottom: '1rem', fontWeight: 600 }}>Notification Preferences</h3>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
               <input 
