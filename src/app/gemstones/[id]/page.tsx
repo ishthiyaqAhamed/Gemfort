@@ -15,9 +15,12 @@ import {
   Mail,
   X,
   Loader2,
-  AlertCircle
+  AlertCircle,
+  Check,
+  Copy,
+  ExternalLink
 } from 'lucide-react';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useCurrency } from '@/context/CurrencyContext';
 import styles from './product.module.css';
 
@@ -50,6 +53,41 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
   const [stone, setStone] = useState<GemstoneData | null>(null);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
+  const [showShareMenu, setShowShareMenu] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [currentUrl, setCurrentUrl] = useState('');
+  const [hasNativeShare, setHasNativeShare] = useState(false);
+  const shareContainerRef = useRef<HTMLDivElement>(null);
+
+  // Initialize current URL and detect native share support
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentUrl(window.location.href);
+      if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
+        setHasNativeShare(true);
+      }
+    }
+  }, []);
+
+  // Dismiss share menu on outside click or Escape key
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (shareContainerRef.current && !shareContainerRef.current.contains(e.target as Node)) {
+        setShowShareMenu(false);
+      }
+    };
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowShareMenu(false);
+    };
+    if (showShareMenu) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [showShareMenu]);
 
   // Inquiry modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -155,11 +193,59 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
     `Hello Gemfort International,\n\nI am inquiring about an acquisition from your private vault:\n\n• Ref ID: ${stone.id}\n• Gemstone: ${stone.name}\n• Carat: ${stone.weight}\n• Origin: ${stone.origin}\n• Price: ${formattedPrice}\n• Certificate: ${stone.certNumber}\n\nPlease share the high-resolution gemological report and arrange a private consultation.`
   )}`;
 
-  const handleShare = () => {
-    if (typeof navigator !== 'undefined' && navigator.clipboard) {
-      navigator.clipboard.writeText(window.location.href);
+  const handleShareClick = async () => {
+    const isMobile = typeof window !== 'undefined' && (
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+      (window.innerWidth <= 768 && navigator.maxTouchPoints > 0)
+    );
+
+    const shareUrl = currentUrl || (typeof window !== 'undefined' ? window.location.href : '');
+    const shareTitle = stone ? `${stone.name} (${stone.weight}) | Gemfort International Vault` : 'Gemfort International Vault';
+    const shareText = stone ? `Discover this certified natural ${stone.name} (${stone.weight}) from Gemfort International Vault.` : 'Gemfort International Vault';
+
+    // On mobile devices with native share API: open native device share sheet directly
+    if (isMobile && typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
+      try {
+        await navigator.share({
+          title: shareTitle,
+          text: shareText,
+          url: shareUrl,
+        });
+        return;
+      } catch (err: any) {
+        if (err.name === 'AbortError') {
+          return; // User dismissed share sheet
+        }
+        // Fall through to show the dropdown if native share failed
+      }
+    }
+
+    // On desktop or when native share is unavailable: toggle luxury share menu
+    setShowShareMenu((prev) => !prev);
+  };
+
+  const handleCopyLink = async () => {
+    const shareUrl = currentUrl || (typeof window !== 'undefined' ? window.location.href : '');
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(shareUrl);
+      } else {
+        const textArea = document.createElement('textarea');
+        textArea.value = shareUrl;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-9999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      }
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setShowToast(true);
+      setTimeout(() => setCopied(false), 2500);
+      setTimeout(() => setShowToast(false), 2500);
+    } catch (err) {
+      console.error('Failed to copy link:', err);
     }
   };
 
@@ -203,6 +289,16 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
     }
   };
 
+  const shareUrl = currentUrl || '';
+  const shareTitle = stone ? `${stone.name} (${stone.weight}) - Gemfort International` : 'Gemfort International';
+  const shareSummary = stone
+    ? `Explore certified natural ${stone.name} (${stone.weight}) at Gemfort International Vault:\n${shareUrl}`
+    : shareUrl;
+
+  const whatsappShareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareSummary)}`;
+  const emailShareUrl = `mailto:?subject=${encodeURIComponent(shareTitle)}&body=${encodeURIComponent(shareSummary)}`;
+  const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareTitle)}&url=${encodeURIComponent(shareUrl)}`;
+
   return (
     <main>
       <section className={styles.section}>
@@ -214,14 +310,133 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               <ArrowLeft size={15} /> Back to Vault
             </Link>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <div className={styles.shareWrapper} ref={shareContainerRef}>
               <button
-                onClick={handleShare}
+                type="button"
+                onClick={handleShareClick}
                 aria-label="Share Gemstone Details"
                 className={`${styles.shareBtn} ${copied ? styles.shareBtnCopied : ''}`}
+                title={copied ? 'Link Copied!' : 'Share Gemstone'}
               >
-                <Share2 size={15} />
+                {copied ? <Check size={16} /> : <Share2 size={16} />}
               </button>
+
+              {/* Luxury Share Dropdown Popover (Desktop & Fallback) */}
+              {showShareMenu && (
+                <div className={styles.shareDropdown}>
+                  <div className={styles.shareDropdownHeader}>
+                    <span className={styles.shareDropdownTitle}>Share Gemstone</span>
+                    <button
+                      type="button"
+                      onClick={() => setShowShareMenu(false)}
+                      className={styles.shareDropdownClose}
+                      aria-label="Close Share Menu"
+                    >
+                      <X size={15} />
+                    </button>
+                  </div>
+
+                  <div className={styles.shareCopyBox}>
+                    <input
+                      type="text"
+                      readOnly
+                      value={shareUrl}
+                      className={styles.shareCopyInput}
+                      onClick={(e) => (e.target as HTMLInputElement).select()}
+                    />
+                    <button
+                      type="button"
+                      onClick={handleCopyLink}
+                      className={`${styles.shareCopyBtn} ${copied ? styles.shareCopyBtnCopied : ''}`}
+                    >
+                      {copied ? (
+                        <>
+                          <Check size={13} />
+                          <span>Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy size={13} />
+                          <span>Copy</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  <div className={styles.shareGrid}>
+                    <a
+                      href={whatsappShareUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.shareOption}
+                      title="Share via WhatsApp"
+                    >
+                      <span className={`${styles.shareOptionIcon} ${styles.iconWhatsapp}`}>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.58 1.961.94 3.03.94 3.182 0 5.768-2.587 5.768-5.766.001-3.181-2.585-5.767-5.768-5.767zm7.689 5.766c-.001 4.242-3.448 7.689-7.689 7.689-1.341 0-2.59-.35-3.673-.96l-4.108 1.077 1.096-4.01c-.672-1.121-1.045-2.42-1.046-3.796.002-4.242 3.449-7.689 7.69-7.689 4.241 0 7.688 3.448 7.689 7.689z" />
+                        </svg>
+                      </span>
+                      <span>WhatsApp</span>
+                    </a>
+
+                    <a
+                      href={emailShareUrl}
+                      className={styles.shareOption}
+                      title="Share via Email"
+                    >
+                      <span className={`${styles.shareOptionIcon} ${styles.iconEmail}`}>
+                        <Mail size={16} />
+                      </span>
+                      <span>Email</span>
+                    </a>
+
+                    <a
+                      href={twitterShareUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.shareOption}
+                      title="Share on X (Twitter)"
+                    >
+                      <span className={`${styles.shareOptionIcon} ${styles.iconTwitter}`}>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                      </span>
+                      <span>X / Post</span>
+                    </a>
+                  </div>
+
+                  {hasNativeShare && (
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        setShowShareMenu(false);
+                        try {
+                          await navigator.share({
+                            title: shareTitle,
+                            text: `Certified natural ${stone.name} (${stone.weight}) from Gemfort International Vault.`,
+                            url: shareUrl,
+                          });
+                        } catch (err: any) {
+                          if (err.name !== 'AbortError') console.error(err);
+                        }
+                      }}
+                      className={styles.nativeShareBtn}
+                    >
+                      <ExternalLink size={13} />
+                      <span>System Share Options...</span>
+                    </button>
+                  )}
+                </div>
+              )}
+
+              {/* Floating Toast when link copied */}
+              {showToast && (
+                <div className={styles.copyToast}>
+                  <CheckCircle2 size={16} color="#2ecc71" />
+                  <span>Link copied to clipboard!</span>
+                </div>
+              )}
             </div>
           </div>
 
