@@ -149,11 +149,11 @@ export default function AdminInventoryPage() {
     setFormName('');
     setFormPrice('');
     setFormWeight('');
-    setFormColor('Royal Blue (Vivid)');
-    setFormShape('Cushion Mixed Cut');
+    setFormColor('');
+    setFormShape('');
     setFormOrigin('Ratnapura, Sri Lanka');
     setFormTreatment('100% Unheated & Untreated Natural');
-    setFormCert('GRS-2026-88419');
+    setFormCert('');
     setFormStatus('AVAILABLE');
     setFormImage('');
     setFormDesc('');
@@ -223,7 +223,7 @@ export default function AdminInventoryPage() {
     setFormTreatment(stone.treatment || '');
     setFormCert(stone.certificate || '');
     setFormStatus(stone.status);
-    setFormImage(stone.images?.[0] || '/images/guide/blue-sapphire.png');
+    setFormImage(stone.images?.[0] || '');
     setFormDesc(stone.description || '');
     setUploadProgress(null);
     setUploadProvider(stone.images?.[0]?.includes('cloudinary') ? 'cloudinary' : null);
@@ -475,15 +475,16 @@ export default function AdminInventoryPage() {
                   </div>
                 )}
 
-                {/* 1. Core Identity & Category */}
+                {/* 1. Essential Gemstone Details */}
                 <div className={modalStyles.formSection}>
                   <div className={modalStyles.sectionHeader}>
                     <div className={modalStyles.sectionIcon}>
                       <Sparkles size={15} />
                     </div>
-                    <h4 className={modalStyles.sectionTitle}>1. Identity &amp; Classification</h4>
+                    <h4 className={modalStyles.sectionTitle}>Gemstone Details</h4>
                   </div>
 
+                  {/* Gemstone Name & Category */}
                   <div className={modalStyles.gridTwo}>
                     <div className={modalStyles.inputGroup}>
                       <label className={modalStyles.label}>
@@ -492,7 +493,7 @@ export default function AdminInventoryPage() {
                       <input
                         type="text"
                         required
-                        placeholder="e.g. Royal Blue Ceylon Sapphire"
+                        placeholder="e.g. Alexandrite"
                         value={formName}
                         onChange={(e) => setFormName(e.target.value)}
                         className={modalStyles.input}
@@ -501,7 +502,7 @@ export default function AdminInventoryPage() {
 
                     <div className={modalStyles.inputGroup}>
                       <label className={modalStyles.label}>
-                        Category Collection <span className={modalStyles.requiredStar}>*</span>
+                        Category <span className={modalStyles.requiredStar}>*</span>
                       </label>
                       <select
                         value={formCategory}
@@ -517,92 +518,14 @@ export default function AdminInventoryPage() {
                     </div>
                   </div>
 
-                  <div className={modalStyles.inputGroup}>
-                    <label className={modalStyles.label}>Origin &amp; Mining Provenance</label>
-                    <input
-                      type="text"
-                      placeholder="e.g. Ratnapura, Sri Lanka (Artisanal Ceylon Mine)"
-                      value={formOrigin}
-                      onChange={(e) => setFormOrigin(e.target.value)}
-                      className={modalStyles.input}
-                    />
-                  </div>
-                </div>
-
-                {/* 2. Gemological Specifications */}
-                <div className={modalStyles.formSection}>
-                  <div className={modalStyles.sectionHeader}>
-                    <div className={modalStyles.sectionIcon}>
-                      <Award size={15} />
-                    </div>
-                    <h4 className={modalStyles.sectionTitle}>2. Gemological Grading &amp; Certification</h4>
-                  </div>
-
+                  {/* Weight & Price */}
                   <div className={modalStyles.gridTwo}>
                     <div className={modalStyles.inputGroup}>
-                      <label className={modalStyles.label}>Color Grade / Hue</label>
-                      <input
-                        type="text"
-                        placeholder="e.g. Royal Blue (Vivid Cornflower Saturation)"
-                        value={formColor}
-                        onChange={(e) => setFormColor(e.target.value)}
-                        className={modalStyles.input}
-                      />
-                    </div>
-
-                    <div className={modalStyles.inputGroup}>
-                      <label className={modalStyles.label}>Cut &amp; Faceting Shape</label>
-                      <input
-                        type="text"
-                        placeholder="e.g. Cushion Mixed Cut, Oval Brilliant"
-                        value={formShape}
-                        onChange={(e) => setFormShape(e.target.value)}
-                        className={modalStyles.input}
-                      />
-                    </div>
-                  </div>
-
-                  <div className={modalStyles.gridTwo}>
-                    <div className={modalStyles.inputGroup}>
-                      <label className={modalStyles.label}>Treatment &amp; Thermal Status</label>
-                      <input
-                        type="text"
-                        placeholder="e.g. 100% Unheated & Untreated Natural"
-                        value={formTreatment}
-                        onChange={(e) => setFormTreatment(e.target.value)}
-                        className={modalStyles.input}
-                      />
-                    </div>
-
-                    <div className={modalStyles.inputGroup}>
-                      <label className={modalStyles.label}>Laboratory Certificate Report #</label>
-                      <input
-                        type="text"
-                        placeholder="e.g. GRS-2026-88419 / GIA Certified"
-                        value={formCert}
-                        onChange={(e) => setFormCert(e.target.value)}
-                        className={modalStyles.input}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* 3. Valuation & Status */}
-                <div className={modalStyles.formSection}>
-                  <div className={modalStyles.sectionHeader}>
-                    <div className={modalStyles.sectionIcon}>
-                      <DollarSign size={15} />
-                    </div>
-                    <h4 className={modalStyles.sectionTitle}>3. Valuation &amp; Vault Availability</h4>
-                  </div>
-
-                  <div className={modalStyles.gridThree}>
-                    <div className={modalStyles.inputGroup}>
-                      <label className={modalStyles.label}>Carat Weight (ct)</label>
+                      <label className={modalStyles.label}>Weight (Carats)</label>
                       <input
                         type="number"
                         step="any"
-                        placeholder="e.g. 3.45"
+                        placeholder="e.g. 1.50"
                         value={formWeight}
                         onChange={(e) => setFormWeight(e.target.value)}
                         className={modalStyles.input}
@@ -610,44 +533,68 @@ export default function AdminInventoryPage() {
                     </div>
 
                     <div className={modalStyles.inputGroup}>
-                      <label className={modalStyles.label}>Valuation Price (USD $)</label>
+                      <label className={modalStyles.label}>Price (USD $)</label>
                       <input
                         type="number"
                         step="any"
-                        placeholder="e.g. 4250"
+                        placeholder="e.g. 12000"
                         value={formPrice}
                         onChange={(e) => setFormPrice(e.target.value)}
                         className={modalStyles.input}
                       />
                     </div>
+                  </div>
+
+                  {/* Origin & Certificate No */}
+                  <div className={modalStyles.gridTwo}>
+                    <div className={modalStyles.inputGroup}>
+                      <label className={modalStyles.label}>Origin</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Ratnapura, Sri Lanka"
+                        value={formOrigin}
+                        onChange={(e) => setFormOrigin(e.target.value)}
+                        className={modalStyles.input}
+                      />
+                    </div>
 
                     <div className={modalStyles.inputGroup}>
-                      <label className={modalStyles.label}>Vault Status</label>
-                      <select
-                        value={formStatus}
-                        onChange={(e) => setFormStatus(e.target.value as any)}
-                        className={modalStyles.select}
-                      >
-                        <option value="AVAILABLE">Available</option>
-                        <option value="RESERVED">Reserved</option>
-                        <option value="SOLD">Sold</option>
-                      </select>
+                      <label className={modalStyles.label}>Certificate No.</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. GIA-2026-88419 / GRS Report"
+                        value={formCert}
+                        onChange={(e) => setFormCert(e.target.value)}
+                        className={modalStyles.input}
+                      />
                     </div>
+                  </div>
+
+                  {/* Available Status */}
+                  <div className={modalStyles.inputGroup}>
+                    <label className={modalStyles.label}>Available Status</label>
+                    <select
+                      value={formStatus}
+                      onChange={(e) => setFormStatus(e.target.value as any)}
+                      className={modalStyles.select}
+                    >
+                      <option value="AVAILABLE">Available</option>
+                      <option value="RESERVED">Reserved</option>
+                      <option value="SOLD">Sold</option>
+                    </select>
                   </div>
                 </div>
 
-                {/* 4. Cloudinary Imagery & Direct File Upload */}
+                {/* 2. Upload Image & Details */}
                 <div className={modalStyles.formSection}>
                   <div className={modalStyles.sectionHeader}>
                     <div className={modalStyles.sectionIcon}>
                       <UploadCloud size={15} />
                     </div>
-                    <div>
-                      <h4 className={modalStyles.sectionTitle}>4. High-Resolution Imagery &amp; Cloudinary</h4>
-                    </div>
+                    <h4 className={modalStyles.sectionTitle}>Gemstone Image &amp; Details</h4>
                   </div>
 
-                  {/* Dropzone or Live Preview */}
+                  {/* Image Upload Dropzone or Live Preview */}
                   {formImage ? (
                     <div className={modalStyles.previewStage}>
                       <div className={modalStyles.previewImageWrap}>
@@ -690,20 +637,20 @@ export default function AdminInventoryPage() {
                       </div>
                       <p className={modalStyles.dropzonePrompt}>
                         {uploadingImage ? (
-                          'Uploading to Cloudinary...'
+                          'Uploading to Cloudinary CDN...'
                         ) : (
                           <>Drag &amp; drop gemstone photograph or <span className={modalStyles.dropzoneHighlight}>browse files</span></>
                         )}
                       </p>
                       <p className={modalStyles.dropzoneHelp}>
-                        Supports PNG, JPG, WEBP. Uploads directly to Cloudinary CDN storage.
+                        Uploads directly to Cloudinary storage (JPG, PNG, WEBP).
                       </p>
                     </label>
                   )}
 
                   {/* Quick Presets Strip */}
                   <div className={modalStyles.presetStrip}>
-                    <span className={modalStyles.presetLabel}>Quick Ceylon Presets:</span>
+                    <span className={modalStyles.presetLabel}>Quick Presets:</span>
                     {[
                       { label: 'Blue Sapphire', path: '/images/guide/blue-sapphire.png' },
                       { label: 'Ruby', path: '/images/guide/ruby.png' },
@@ -725,7 +672,7 @@ export default function AdminInventoryPage() {
                   </div>
 
                   {/* Direct URL Option */}
-                  <div style={{ marginTop: '0.75rem' }}>
+                  <div>
                     <input
                       type="url"
                       placeholder="Or enter direct image URL (https://...)"
@@ -737,31 +684,23 @@ export default function AdminInventoryPage() {
                         setUploadProgress(val ? 'Custom URL entered' : null);
                       }}
                       className={modalStyles.input}
-                      style={{ fontSize: '0.8rem', padding: '0.5rem 0.75rem' }}
+                      style={{ fontSize: '0.82rem', padding: '0.5rem 0.75rem' }}
                     />
                   </div>
-                </div>
 
-                {/* 5. Gemological Narrative */}
-                <div className={modalStyles.formSection}>
-                  <div className={modalStyles.sectionHeader}>
-                    <div className={modalStyles.sectionIcon}>
-                      <FileText size={15} />
-                    </div>
-                    <h4 className={modalStyles.sectionTitle}>5. Gemstone Narrative &amp; Vault Dossier</h4>
-                  </div>
-
-                  <div className={modalStyles.inputGroup}>
-                    <label className={modalStyles.label}>Collector Story &amp; Faceting Narrative</label>
+                  {/* Details (Description) */}
+                  <div className={modalStyles.inputGroup} style={{ marginTop: '0.5rem' }}>
+                    <label className={modalStyles.label}>Details</label>
                     <textarea
                       rows={3}
-                      placeholder="An exceptional unheated specimen showcasing deep velvety scintillation, loupe-clean crystal purity, and peerless Ceylon provenance..."
+                      placeholder="Enter gemstone details, characteristics, clarity, cutting notes, etc..."
                       value={formDesc}
                       onChange={(e) => setFormDesc(e.target.value)}
                       className={modalStyles.textarea}
                     />
                   </div>
                 </div>
+
 
               </div>
 
