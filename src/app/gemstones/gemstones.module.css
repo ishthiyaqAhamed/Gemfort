@@ -3,86 +3,90 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 2.25rem;
   flex-wrap: wrap;
-  gap: 1rem;
-  border-bottom: 1px solid rgba(199, 164, 80, 0.15);
-  padding-bottom: 1.5rem;
+  gap: 1.25rem;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 1.75rem;
 }
 
 .filterCount {
-  color: rgba(240, 236, 228, 0.5);
-  font-size: 0.78rem;
-  letter-spacing: 2px;
+  color: #475569;
+  font-size: 0.82rem;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .filterControls {
   display: flex;
   gap: 0.75rem;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .filterSelect {
-  padding: 0.6rem 1rem;
-  border: 1px solid rgba(199, 164, 80, 0.25);
+  padding: 0.65rem 1rem;
+  border: 1px solid #cbd5e1;
   border-radius: 8px;
   font-family: var(--font-body);
-  background-color: rgba(255, 255, 255, 0.05);
-  color: rgba(240, 236, 228, 0.85);
+  background-color: #ffffff;
+  color: #0f172a;
   outline: none;
-  font-size: 0.82rem;
+  font-size: 0.85rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: border-color 0.2s;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 .filterSelect:hover, .filterSelect:focus {
-  border-color: rgba(199, 164, 80, 0.6);
+  border-color: #c7a450;
+  box-shadow: 0 0 0 3px rgba(199, 164, 80, 0.15);
 }
 
 /* ─── Grid ─────────────────────────────────── */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2rem;
 }
 
-/* ─── Card ─────────────────────────────────── */
+/* ─── Card (Light Theme Luxury) ────────────── */
 .card {
   position: relative;
-  background: linear-gradient(160deg, #001a3a 0%, #002147 60%, #001228 100%);
-  border-radius: 20px;
+  background: #ffffff;
+  border-radius: 18px;
   overflow: hidden;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(199, 164, 80, 0.15);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.4s ease;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 20px rgba(0, 33, 71, 0.06);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s ease;
   text-decoration: none;
 }
 
 .card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(199, 164, 80, 0.3);
-  border-color: rgba(199, 164, 80, 0.4);
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0, 33, 71, 0.12), 0 0 0 1px rgba(199, 164, 80, 0.35);
+  border-color: rgba(199, 164, 80, 0.5);
 }
 
-/* Shimmer top edge */
+/* Shimmer top gold edge */
 .card::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 1px;
+  height: 2px;
   background: linear-gradient(90deg, transparent, rgba(199, 164, 80, 0.6), transparent);
 }
 
-/* ─── Image Area ────────────────────────────── */
+/* ─── Image Pedestal Area ───────────────────── */
 .imageWrapper {
   position: relative;
   width: 100%;
@@ -91,85 +95,86 @@
   align-items: center;
   justify-content: center;
   overflow: visible;
-  padding: 2rem 2rem 1rem;
+  padding: 2rem 2rem 1.25rem;
+  background: radial-gradient(circle at center, rgba(199, 164, 80, 0.08) 0%, #f8fafc 100%);
 }
 
 /* Soft glow behind the gem */
 .imageWrapper::after {
   content: '';
   position: absolute;
-  bottom: 10%;
+  bottom: 8%;
   left: 50%;
   transform: translateX(-50%);
-  width: 60%;
-  height: 40%;
-  background: radial-gradient(ellipse, rgba(199, 164, 80, 0.18) 0%, transparent 70%);
+  width: 65%;
+  height: 38%;
+  background: radial-gradient(ellipse, rgba(199, 164, 80, 0.22) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
 }
 
 .stoneImg {
   object-fit: contain;
-  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.5)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.6s ease;
+  filter: drop-shadow(0 10px 22px rgba(0, 20, 50, 0.16)) drop-shadow(0 3px 6px rgba(0, 0, 0, 0.08));
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.5s ease;
   z-index: 1;
 }
 
 .card:hover .stoneImg {
-  transform: scale(1.08) translateY(-4px);
-  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6)) drop-shadow(0 4px 8px rgba(199, 164, 80, 0.2));
+  transform: scale(1.06) translateY(-4px);
+  filter: drop-shadow(0 18px 32px rgba(0, 20, 50, 0.22)) drop-shadow(0 4px 10px rgba(199, 164, 80, 0.25));
 }
 
-/* ─── Details (Glassmorphism) ───────────────── */
+/* ─── Details (Clean White Card) ───────────── */
 .cardDetails {
   padding: 1.25rem 1.5rem 1.5rem;
   display: flex;
   flex-direction: column;
-  background: rgba(255, 255, 255, 0.04);
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(4px);
+  background: #ffffff;
+  border-top: 1px solid #f1f5f9;
   flex-grow: 1;
 }
 
 .stoneType {
   font-family: var(--font-body);
-  color: #c7a450;
-  font-size: 0.6rem;
+  color: #937326;
+  font-size: 0.65rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 3px;
-  margin-bottom: 0.4rem;
+  letter-spacing: 2.5px;
+  margin-bottom: 0.35rem;
 }
 
 .stoneName {
-  font-size: 1.05rem;
-  color: #f0ece4;
+  font-size: 1.12rem;
+  color: #002147;
   font-family: var(--font-serif);
-  font-weight: 400;
-  line-height: 1.3;
-  margin-bottom: 1rem;
+  font-weight: 600;
+  line-height: 1.35;
+  margin-bottom: 0.85rem;
 }
 
 .stoneMeta {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.2rem;
-  padding-top: 0.8rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  margin-bottom: 1.15rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid #f1f5f9;
 }
 
 .stoneWeight {
-  font-size: 0.78rem;
-  color: rgba(240, 236, 228, 0.5);
+  font-size: 0.82rem;
+  color: #64748b;
+  font-weight: 500;
   letter-spacing: 0.5px;
 }
 
 .stonePrice {
-  color: #c7a450;
-  font-weight: 600;
-  font-size: 1rem;
+  color: #002147;
+  font-weight: 700;
+  font-size: 1.08rem;
   letter-spacing: 0.5px;
 }
 
@@ -177,31 +182,33 @@
 .actionBtn {
   width: 100%;
   padding: 0.75rem;
-  background: linear-gradient(135deg, rgba(199, 164, 80, 0.15), rgba(199, 164, 80, 0.08));
-  border: 1px solid rgba(199, 164, 80, 0.35);
-  color: #c7a450;
-  font-size: 0.7rem;
+  background: #002147;
+  border: 1px solid #002147;
+  color: #ffffff;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   cursor: pointer;
   border-radius: 8px;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0, 33, 71, 0.12);
 }
 
 .card:hover .actionBtn {
-  background: linear-gradient(135deg, rgba(199, 164, 80, 0.3), rgba(199, 164, 80, 0.15));
-  border-color: rgba(199, 164, 80, 0.7);
-  color: #e0c46e;
+  background: #c7a450;
+  border-color: #c7a450;
+  color: #002147;
+  box-shadow: 0 4px 12px rgba(199, 164, 80, 0.3);
 }
 
-/* ─── Mobile ─────────────────────────────────── */
+/* ─── Mobile Responsiveness ──────────────────── */
 @media (max-width: 768px) {
   .filterBar {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.85rem;
-    padding-bottom: 1.2rem;
+    gap: 1rem;
+    padding-bottom: 1.25rem;
     margin-bottom: 1.5rem;
   }
 
@@ -209,43 +216,44 @@
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0.5rem;
+    gap: 0.6rem;
   }
 
   .filterSelect {
     width: 100%;
-    font-size: 0.72rem;
-    padding: 0.55rem 0.6rem;
+    font-size: 0.76rem;
+    padding: 0.6rem 0.65rem;
   }
 
   .grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.9rem;
+    gap: 1rem;
     padding: 0;
   }
 
   .card {
-    border-radius: 16px;
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(0, 33, 71, 0.05);
   }
 
   .imageWrapper {
-    padding: 1.25rem 1.25rem 0.75rem;
+    padding: 1.25rem 1rem 0.75rem;
     aspect-ratio: 1/1;
   }
 
   .cardDetails {
-    padding: 0.9rem 1rem 1.1rem;
+    padding: 0.85rem 0.95rem 1rem;
   }
 
   .stoneType {
-    font-size: 0.55rem;
-    letter-spacing: 2px;
+    font-size: 0.58rem;
+    letter-spacing: 1.5px;
     margin-bottom: 0.25rem;
   }
 
   .stoneName {
-    font-size: 0.88rem;
-    margin-bottom: 0.75rem;
+    font-size: 0.92rem;
+    margin-bottom: 0.65rem;
   }
 
   .stoneMeta {
@@ -254,17 +262,18 @@
   }
 
   .stoneWeight {
-    font-size: 0.7rem;
+    font-size: 0.72rem;
   }
 
   .stonePrice {
-    font-size: 0.88rem;
+    font-size: 0.94rem;
   }
 
   .actionBtn {
     padding: 0.6rem;
-    font-size: 0.6rem;
-    letter-spacing: 1.5px;
+    font-size: 0.64rem;
+    letter-spacing: 1px;
     border-radius: 6px;
   }
 }
+

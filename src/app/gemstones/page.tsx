@@ -133,12 +133,12 @@ export default function GemstonesPage() {
   return (
     <main>
       <PageHeader 
-        title="Shop Collections" 
+        title="Inventory" 
         subtitle="Ethically Sourced Natural Gemstones from Ceylon" 
         imagePath="/images/hero-bg-blue.jpg"
       />
       
-      <section className="section" style={{ backgroundColor: '#0a0f1a', paddingBottom: '8rem' }}>
+      <section className="section" style={{ background: 'linear-gradient(180deg, #fcfbf8 0%, #f7f5ef 100%)', paddingBottom: '8rem' }}>
         <div className="container" style={{ maxWidth: '1400px' }}>
           
           <div className={styles.filterBar}>
@@ -147,7 +147,7 @@ export default function GemstonesPage() {
                 Showing {filteredStones.length} {filteredStones.length === 1 ? 'gemstone' : 'gemstones'}
               </p>
               {loading && (
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: '#c7a450', fontSize: '0.8rem' }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: '#937326', fontSize: '0.82rem', fontWeight: 600 }}>
                   <Loader2 size={14} className="animate-spin" /> Syncing vault...
                 </span>
               )}
@@ -156,21 +156,22 @@ export default function GemstonesPage() {
             <div className={styles.filterControls}>
               {/* Search input */}
               <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-                <Search size={15} style={{ position: 'absolute', left: '12px', color: 'rgba(255,255,255,0.4)', pointerEvents: 'none' }} />
+                <Search size={15} style={{ position: 'absolute', left: '12px', color: '#64748b', pointerEvents: 'none' }} />
                 <input
                   type="text"
                   placeholder="Search stones..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   style={{
-                    backgroundColor: '#001228',
-                    border: '1px solid rgba(199, 164, 80, 0.25)',
-                    color: '#f0ece4',
+                    backgroundColor: '#ffffff',
+                    border: '1px solid #cbd5e1',
+                    color: '#0f172a',
                     padding: '8px 12px 8px 34px',
                     borderRadius: '8px',
                     fontSize: '0.85rem',
                     outline: 'none',
-                    minWidth: '160px',
+                    minWidth: '170px',
+                    boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
                   }}
                 />
               </div>
@@ -181,20 +182,20 @@ export default function GemstonesPage() {
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
               >
-                <option value="ALL" style={{ backgroundColor: '#001228' }}>All Categories</option>
+                <option value="ALL">All Categories</option>
                 {categories.length > 0 ? (
                   categories.map((cat) => (
-                    <option key={cat.id} value={cat.name} style={{ backgroundColor: '#001228' }}>
+                    <option key={cat.id} value={cat.name}>
                       {cat.name}
                     </option>
                   ))
                 ) : (
                   <>
-                    <option value="Sapphires" style={{ backgroundColor: '#001228' }}>Sapphires</option>
-                    <option value="Rubies" style={{ backgroundColor: '#001228' }}>Rubies</option>
-                    <option value="Padparadscha" style={{ backgroundColor: '#001228' }}>Padparadscha</option>
-                    <option value="Alexandrite" style={{ backgroundColor: '#001228' }}>Alexandrite</option>
-                    <option value="Spinels" style={{ backgroundColor: '#001228' }}>Spinels</option>
+                    <option value="Sapphires">Sapphires</option>
+                    <option value="Rubies">Rubies</option>
+                    <option value="Padparadscha">Padparadscha</option>
+                    <option value="Alexandrite">Alexandrite</option>
+                    <option value="Spinels">Spinels</option>
                   </>
                 )}
               </select>
@@ -205,27 +206,29 @@ export default function GemstonesPage() {
                 value={sortOption}
                 onChange={(e) => setSortOption(e.target.value)}
               >
-                <option value="featured" style={{ backgroundColor: '#001228' }}>Sort by: Featured</option>
-                <option value="price-desc" style={{ backgroundColor: '#001228' }}>Price: High to Low</option>
-                <option value="price-asc" style={{ backgroundColor: '#001228' }}>Price: Low to High</option>
-                <option value="carat-desc" style={{ backgroundColor: '#001228' }}>Carat: High to Low</option>
+                <option value="featured">Sort by: Featured</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="carat-desc">Carat: High to Low</option>
               </select>
             </div>
           </div>
 
           {filteredStones.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '5rem 1rem', color: '#8c9ba5' }}>
-              <p style={{ fontSize: '1.2rem', marginBottom: '1rem', color: '#ffffff' }}>No gemstones match your criteria.</p>
+            <div style={{ textAlign: 'center', padding: '5rem 1rem', color: '#64748b' }}>
+              <p style={{ fontSize: '1.2rem', marginBottom: '1rem', color: '#002147', fontWeight: 600 }}>No gemstones match your criteria.</p>
               <button
                 onClick={() => { setSelectedCategory('ALL'); setSearchQuery(''); }}
                 style={{
-                  padding: '8px 18px',
-                  backgroundColor: '#c7a450',
-                  color: '#002147',
+                  padding: '9px 20px',
+                  backgroundColor: '#002147',
+                  color: '#ffffff',
                   border: 'none',
-                  borderRadius: '6px',
+                  borderRadius: '8px',
                   fontWeight: 600,
+                  fontSize: '0.88rem',
                   cursor: 'pointer',
+                  boxShadow: '0 2px 6px rgba(0, 33, 71, 0.15)',
                 }}
               >
                 Reset Filters

@@ -103,12 +103,12 @@ const Navbar = () => {
               <span>Home</span>
               <ChevronRight size={16} className={styles.mobileNavChevron} />
             </Link>
-            <Link href="/gemstones" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>
-              <span>Vault Inventory</span>
+            <Link href="/about" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>
+              <span>About Us</span>
               <ChevronRight size={16} className={styles.mobileNavChevron} />
             </Link>
-            <Link href="/about" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>
-              <span>The Maison &amp; Legacy</span>
+            <Link href="/gemstones" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>
+              <span>Inventory</span>
               <ChevronRight size={16} className={styles.mobileNavChevron} />
             </Link>
             <Link href="/expertise" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>
@@ -116,15 +116,15 @@ const Navbar = () => {
               <ChevronRight size={16} className={styles.mobileNavChevron} />
             </Link>
             <Link href="/journal" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>
-              <span>Journal &amp; Insights</span>
+              <span>Journal</span>
               <ChevronRight size={16} className={styles.mobileNavChevron} />
             </Link>
             <Link href="/gemstone-guide" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>
-              <span>Gemstone Education Guide</span>
+              <span>Gemstone Guide</span>
               <ChevronRight size={16} className={styles.mobileNavChevron} />
             </Link>
             <Link href="/contact" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>
-              <span>Bespoke Inquiries &amp; Contact</span>
+              <span>Contact</span>
               <ChevronRight size={16} className={styles.mobileNavChevron} />
             </Link>
           </div>
