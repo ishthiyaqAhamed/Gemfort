@@ -1,15 +1,31 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import styles from './FeaturedStones.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { useCurrency } from '@/context/CurrencyContext';
 
-const stones = [
+interface FeaturedStone {
+  id: string | number;
+  slug?: string;
+  name: string;
+  weight?: string | number;
+  origin?: string;
+  image?: string;
+  images?: string[];
+  priceUSD?: number;
+  price?: number;
+  glow?: string;
+  badge?: string;
+}
+
+const initialStones: FeaturedStone[] = [
   {
     id: 1,
+    slug: 'royal-blue-sapphire-3-45ct',
     name: 'Royal Blue Sapphire',
     weight: '3.45 ct',
     origin: 'Ratnapura, Ceylon',
@@ -20,6 +36,7 @@ const stones = [
   },
   {
     id: 3,
+    slug: 'sunset-padparadscha-1-85ct',
     name: 'Sunset Padparadscha',
     weight: '1.85 ct',
     origin: 'Balangoda, Ceylon',
@@ -30,6 +47,7 @@ const stones = [
   },
   {
     id: 2,
+    slug: 'pigeon-blood-ruby-2-10ct',
     name: 'Pigeon Blood Ruby',
     weight: '2.10 ct',
     origin: 'Mozambique',
@@ -40,6 +58,7 @@ const stones = [
   },
   {
     id: 4,
+    slug: 'vivid-pink-sapphire-4-20ct',
     name: 'Vivid Pink Sapphire',
     weight: '4.20 ct',
     origin: 'Ratnapura, Ceylon',
@@ -50,6 +69,7 @@ const stones = [
   },
   {
     id: 6,
+    slug: 'golden-yellow-sapphire-5-10ct',
     name: 'Golden Yellow Sapphire',
     weight: '5.10 ct',
     origin: 'Ratnapura, Ceylon',
@@ -60,6 +80,7 @@ const stones = [
   },
   {
     id: 5,
+    slug: 'color-change-alexandrite-1-50ct',
     name: 'Color Change Alexandrite',
     weight: '1.50 ct',
     origin: 'Minas Gerais',
@@ -72,6 +93,34 @@ const stones = [
 
 const FeaturedStones = () => {
   const { formatPrice } = useCurrency();
+  const [stones, setStones] = useState<FeaturedStone[]>(initialStones);
+
+  useEffect(() => {
+    async function loadFeatured() {
+      try {
+        const res = await fetch('/api/gemstones');
+        const data = await res.json();
+        if (res.ok && data.success && data.data?.length > 0) {
+          // Take first 6 stones from database
+          const mapped = data.data.slice(0, 6).map((item: any, idx: number) => ({
+            id: item.id,
+            slug: item.slug,
+            name: item.name,
+            weight: typeof item.weight === 'number' ? `${item.weight} ct` : item.weight,
+            origin: item.origin || 'Ceylon, Sri Lanka',
+            image: item.images?.[0] || initialStones[idx % initialStones.length]?.image || '/images/guide/blue-sapphire.png',
+            priceUSD: item.price || 0,
+            glow: initialStones[idx % initialStones.length]?.glow || 'rgba(199, 164, 80, 0.35)',
+            badge: item.treatment?.includes('Unheated') ? 'Unheated' : 'Natural',
+          }));
+          setStones(mapped);
+        }
+      } catch (err) {
+        console.error('Failed to load featured stones from API:', err);
+      }
+    }
+    loadFeatured();
+  }, []);
 
   return (
     <section className={`section ${styles.featured}`}>
@@ -107,48 +156,54 @@ const FeaturedStones = () => {
         </div>
 
         <div className={styles.grid}>
-          {stones.map((stone, index) => (
-            <motion.div
-              key={stone.id}
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.08 * (index % 3) }}
-            >
-              <Link href={`/gemstones/${stone.id}`} className={styles.cardLink}>
-                <div className={styles.card}>
-                  <div className={styles.imageWrapper}>
-                    <div 
-                      className={styles.glow} 
-                      style={{ backgroundColor: stone.glow }} 
-                    />
-                    <Image
-                      src={stone.image}
-                      alt={stone.name}
-                      fill
-                      sizes="(max-width: 600px) 45vw, (max-width: 1024px) 33vw, 380px"
-                      className={styles.image}
-                    />
-                  </div>
+          {stones.map((stone, index) => {
+            const stoneHref = `/gemstones/${stone.slug || stone.id}`;
+            const displayImage = stone.image || '/images/guide/blue-sapphire.png';
+            const price = stone.priceUSD ?? stone.price ?? 0;
 
-                  <div className={styles.cardInfo}>
-                    <div className={styles.originMeta}>
-                      <span className={styles.origin}>{stone.origin}</span>
+            return (
+              <motion.div
+                key={String(stone.id)}
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.08 * (index % 3) }}
+              >
+                <Link href={stoneHref} className={styles.cardLink}>
+                  <div className={styles.card}>
+                    <div className={styles.imageWrapper}>
+                      <div 
+                        className={styles.glow} 
+                        style={{ backgroundColor: stone.glow || 'rgba(199, 164, 80, 0.35)' }} 
+                      />
+                      <Image
+                        src={displayImage}
+                        alt={stone.name}
+                        fill
+                        sizes="(max-width: 600px) 45vw, (max-width: 1024px) 33vw, 380px"
+                        className={styles.image}
+                      />
                     </div>
 
-                    <h3 className={styles.stoneName}>{stone.name}</h3>
+                    <div className={styles.cardInfo}>
+                      <div className={styles.originMeta}>
+                        <span className={styles.origin}>{stone.origin}</span>
+                      </div>
 
-                    <div className={styles.cardFooter}>
-                      <span className={styles.price}>{formatPrice(stone.priceUSD)}</span>
-                      <span className={styles.viewAction}>
-                        View Details <ArrowRight size={13} />
-                      </span>
+                      <h3 className={styles.stoneName}>{stone.name}</h3>
+
+                      <div className={styles.cardFooter}>
+                        <span className={styles.price}>{price > 0 ? formatPrice(price) : 'Inquire'}</span>
+                        <span className={styles.viewAction}>
+                          View Details <ArrowRight size={13} />
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
+                </Link>
+              </motion.div>
+            );
+          })}
         </div>
         
         <div className={styles.centerAction}>

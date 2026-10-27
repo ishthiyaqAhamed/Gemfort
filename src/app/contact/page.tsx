@@ -1,12 +1,47 @@
 'use client';
 
+import { useState } from 'react';
 import PageHeader from '@/components/PageHeader/PageHeader';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { MapPin, Phone, Mail, MessageCircle, Clock } from 'lucide-react';
+import { MapPin, Phone, Mail, MessageCircle, Clock, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 import styles from './Contact.module.css';
 
 export default function ContactPage() {
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email || !formData.message) {
+      setStatus({ type: 'error', message: 'Please fill in your name, email, and requirements.' });
+      return;
+    }
+    setLoading(true);
+    setStatus(null);
+    try {
+      const res = await fetch('/api/enquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setStatus({
+          type: 'success',
+          message: 'Thank you for your inquiry. Our gemological concierge has received your request and will reach out shortly.',
+        });
+        setFormData({ name: '', email: '', phone: '', message: '' });
+      } else {
+        setStatus({ type: 'error', message: data.error || 'Failed to submit inquiry. Please try again.' });
+      }
+    } catch (err) {
+      setStatus({ type: 'error', message: 'Network error. Please try again or message us directly on WhatsApp.' });
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <main style={{ backgroundColor: 'var(--bg-secondary)', minHeight: '100vh', paddingBottom: '5rem' }}>
       <PageHeader 
@@ -128,24 +163,86 @@ export default function ContactPage() {
                 The more specific you are, the more useful our reply will be.
               </p>
 
-              <form style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', flex: 1 }}>
+              {status && (
+                <div style={{
+                  padding: '1rem 1.25rem',
+                  borderRadius: '8px',
+                  marginBottom: '1.5rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  backgroundColor: status.type === 'success' ? '#ecfdf5' : '#fef2f2',
+                  color: status.type === 'success' ? '#065f46' : '#991b1b',
+                  border: `1px solid ${status.type === 'success' ? '#a7f3d0' : '#fecaca'}`,
+                  fontSize: '0.92rem',
+                  lineHeight: 1.5,
+                }}>
+                  {status.type === 'success' ? (
+                    <CheckCircle2 size={20} color="#059669" style={{ flexShrink: 0 }} />
+                  ) : (
+                    <AlertCircle size={20} color="#dc2626" style={{ flexShrink: 0 }} />
+                  )}
+                  <span>{status.message}</span>
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', flex: 1 }}>
                 <div>
-                  <label className={styles.label}>Name</label>
-                  <input type="text" className={styles.input} placeholder="Your name" />
+                  <label className={styles.label}>Full Name *</label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className={styles.input}
+                    placeholder="e.g. Jonathan Vance"
+                  />
                 </div>
                 
                 <div>
-                  <label className={styles.label}>Email Address</label>
-                  <input type="email" className={styles.input} placeholder="Your email address" />
+                  <label className={styles.label}>Email Address *</label>
+                  <input
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className={styles.input}
+                    placeholder="e.g. client@example.com"
+                  />
                 </div>
 
                 <div>
-                  <label className={styles.label}>Gemstone Requirements</label>
-                  <textarea rows={6} className={styles.textarea} placeholder="Include variety, approximate carat weight, color preferences, and budget if possible..." style={{ resize: 'vertical' }} />
+                  <label className={styles.label}>Phone / WhatsApp (Optional)</label>
+                  <input
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className={styles.input}
+                    placeholder="e.g. +1 555 123 4567"
+                  />
                 </div>
 
-                <button type="button" className={styles.submitBtn}>
-                  Send Enquiry
+                <div>
+                  <label className={styles.label}>Gemstone Requirements *</label>
+                  <textarea
+                    rows={5}
+                    required
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    className={styles.textarea}
+                    placeholder="Include variety (e.g. Royal Blue Sapphire, Padparadscha), approximate carat weight, color preferences, origin, and budget if possible..."
+                    style={{ resize: 'vertical' }}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className={styles.submitBtn}
+                  style={{ opacity: loading ? 0.7 : 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+                >
+                  {loading && <Loader2 size={18} className="animate-spin" />}
+                  <span>{loading ? 'Submitting Inquiry...' : 'Send Inquiry'}</span>
                 </button>
               </form>
             </motion.div>

@@ -1,16 +1,32 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PageHeader from '@/components/PageHeader/PageHeader';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { X } from 'lucide-react';
-import { articles } from '@/data/articles';
+import { articles as initialArticles } from '@/data/articles';
 
-type Article = typeof articles[0];
+type Article = typeof initialArticles[0];
 
 export default function JournalPage() {
+  const [articleList, setArticleList] = useState<Article[]>(initialArticles);
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
+
+  useEffect(() => {
+    async function fetchJournal() {
+      try {
+        const res = await fetch('/api/journal');
+        const data = await res.json();
+        if (res.ok && data.success && data.data?.length > 0) {
+          setArticleList(data.data);
+        }
+      } catch (err) {
+        console.error('Failed to fetch journal from API:', err);
+      }
+    }
+    fetchJournal();
+  }, []);
 
   // Split content by double newlines into paragraphs
   const renderContent = (content: string) => {
@@ -36,7 +52,7 @@ export default function JournalPage() {
         <div className="container">
           
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '3rem' }}>
-            {articles.map((article, index) => (
+            {articleList.map((article, index) => (
               <motion.article 
                 key={article.id}
                 initial={{ opacity: 0, y: 20 }}

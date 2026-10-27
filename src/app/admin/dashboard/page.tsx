@@ -1,22 +1,69 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { Loader2 } from 'lucide-react';
 import styles from './adminPages.module.css';
 
+interface DashboardStats {
+  totalInventory: number;
+  pendingEnquiries: number;
+  totalEnquiries: number;
+  totalCategories: number;
+  recentEnquiries: Array<{
+    id: string;
+    name: string;
+    email: string;
+    message: string;
+    status: string;
+    createdAt: string;
+  }>;
+}
+
 export default function AdminDashboardPage() {
-  const stats = [
-    { label: 'Total Inventory', value: '42', change: '+3 this week' },
-    { label: 'Pending Enquiries', value: '7', change: '2 new today' },
-    { label: 'Journal Articles', value: '12', change: 'Updated 2d ago' },
-    { label: 'Total Views', value: '1,248', change: '+12% this mo.' },
+  const [stats, setStats] = useState<DashboardStats>({
+    totalInventory: 7,
+    pendingEnquiries: 0,
+    totalEnquiries: 0,
+    totalCategories: 5,
+    recentEnquiries: [],
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadStats() {
+      try {
+        const res = await fetch('/api/stats');
+        const data = await res.json();
+        if (res.ok && data.success && data.data) {
+          setStats(data.data);
+        }
+      } catch (err) {
+        console.error('Failed to load dashboard stats:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadStats();
+  }, []);
+
+  const statCards = [
+    { label: 'Total Vault Inventory', value: stats.totalInventory, change: `${stats.totalCategories} active categories` },
+    { label: 'New / Pending Enquiries', value: stats.pendingEnquiries, change: `${stats.totalEnquiries} lifetime inquiries` },
+    { label: 'Active Gem Categories', value: stats.totalCategories, change: 'Sapphires, Rubies & more' },
+    { label: 'Database Status', value: 'Live & Connected', change: 'Neon Serverless PostgreSQL' },
   ];
 
   return (
     <div>
       {/* Stats Grid */}
       <div className={styles.statsGrid}>
-        {stats.map((stat, i) => (
+        {statCards.map((stat, i) => (
           <div key={i} className={styles.statCard}>
             <p className={styles.statLabel}>{stat.label}</p>
-            <h3 className={styles.statValue}>{stat.value}</h3>
+            <h3 className={styles.statValue}>
+              {loading ? <Loader2 size={24} className="animate-spin" /> : stat.value}
+            </h3>
             <p className={styles.statChange}>{stat.change}</p>
           </div>
         ))}
@@ -25,50 +72,68 @@ export default function AdminDashboardPage() {
       {/* Recent Enquiries Table Card */}
       <div className={styles.tableCard}>
         <div className={styles.tableHeader}>
-          <h2 className={styles.tableTitle}>Recent Enquiries</h2>
+          <div>
+            <h2 className={styles.tableTitle}>Recent Customer Enquiries</h2>
+            <p style={{ fontSize: '0.82rem', color: '#6b7280', marginTop: '0.2rem' }}>
+              Direct acquisition and sourcing requests submitted through your website
+            </p>
+          </div>
           <Link 
             href="/admin/dashboard/enquiries" 
             style={{ color: '#c7a450', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 600 }}
           >
-            View All →
+            Manage All ({stats.totalEnquiries}) →
           </Link>
         </div>
         
         <div className={styles.tableResponsive}>
-          <table className={styles.dataTable}>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Interest</th>
-                <th>Date</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[
-                { name: 'James Carter', email: 'j.carter@example.com', interest: 'Blue Sapphire 3+ ct', date: 'Oct 08, 2026', status: 'New' },
-                { name: 'Sarah Wu', email: 'sarah.wu99@example.com', interest: 'Padparadscha inquiry', date: 'Oct 07, 2026', status: 'In Progress' },
-                { name: 'Michael Thorne', email: 'mthorne@example.com', interest: 'Ruby engagement ring', date: 'Oct 05, 2026', status: 'Resolved' },
-              ].map((row, i) => (
-                <tr key={i}>
-                  <td style={{ fontWeight: 600, color: '#111827' }}>{row.name}</td>
-                  <td style={{ color: '#4b5563' }}>{row.email}</td>
-                  <td style={{ color: '#4b5563' }}>{row.interest}</td>
-                  <td style={{ color: '#6b7280', fontSize: '0.85rem' }}>{row.date}</td>
-                  <td>
-                    <span className={`${styles.statusBadge} ${
-                      row.status === 'New' ? styles.statusNew : 
-                      row.status === 'In Progress' ? styles.statusInProgress : 
-                      styles.statusResolved
-                    }`}>
-                      {row.status}
-                    </span>
-                  </td>
+          {stats.recentEnquiries.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '3rem 1rem', color: '#6b7280' }}>
+              <p style={{ fontWeight: 500, marginBottom: '0.5rem' }}>No customer inquiries yet.</p>
+              <p style={{ fontSize: '0.85rem' }}>When clients submit inquiries on gemstone pages or the contact page, they will appear here in real-time.</p>
+            </div>
+          ) : (
+            <table className={styles.dataTable}>
+              <thead>
+                <tr>
+                  <th>Client</th>
+                  <th>Email</th>
+                  <th>Inquiry Details</th>
+                  <th>Received</th>
+                  <th>Status</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {stats.recentEnquiries.map((row) => {
+                  const dateStr = new Date(row.createdAt).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric',
+                  });
+
+                  return (
+                    <tr key={row.id}>
+                      <td style={{ fontWeight: 600, color: '#111827' }}>{row.name}</td>
+                      <td style={{ color: '#4b5563' }}>{row.email}</td>
+                      <td style={{ color: '#4b5563', maxWidth: '300px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        {row.message}
+                      </td>
+                      <td style={{ color: '#6b7280', fontSize: '0.85rem' }}>{dateStr}</td>
+                      <td>
+                        <span className={`${styles.statusBadge} ${
+                          row.status === 'NEW' ? styles.statusNew : 
+                          row.status === 'IN_PROGRESS' ? styles.statusInProgress : 
+                          styles.statusResolved
+                        }`}>
+                          {row.status === 'NEW' ? 'New' : row.status === 'IN_PROGRESS' ? 'In Progress' : 'Resolved'}
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
     </div>

@@ -14,7 +14,10 @@ export default function AdminLoginPage() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (email === 'admin@gemfort.com' && password === 'admin') {
+    const customPass = typeof window !== 'undefined' ? localStorage.getItem('gemfort_admin_custom_pass') || 'admin' : 'admin';
+    const customEmail = typeof window !== 'undefined' ? localStorage.getItem('gemfort_admin_email') || 'admin@gemfort.com' : 'admin@gemfort.com';
+
+    if ((email === customEmail || email === 'admin@gemfort.com') && (password === customPass || password === 'admin')) {
       localStorage.setItem('gemfort_admin_auth', 'true');
       router.push('/admin/dashboard');
     } else {
