@@ -206,33 +206,14 @@ export default function GemstonesPage() {
           {filteredStones.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '5rem 1rem', color: '#64748b' }}>
               <p style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: '#002147', fontWeight: 600 }}>
-                {stones.length === 0 ? 'No Gemstones in Vault' : 'No gemstones match your criteria.'}
+                {stones.length === 0 ? 'Curated Vault Acquisitions Coming Soon' : 'No gemstones match your criteria.'}
               </p>
-              <p style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: '1.5rem', maxWidth: '460px', margin: '0 auto 1.5rem' }}>
+              <p style={{ fontSize: '0.9rem', color: '#64748b', maxWidth: '480px', margin: stones.length === 0 ? '0 auto' : '0 auto 1.5rem' }}>
                 {stones.length === 0 
-                  ? 'Your vault inventory is currently empty. Add your natural certified gemstones from the admin dashboard.' 
+                  ? 'Our private vault is currently preparing new certified acquisitions. Please check back shortly or reach out for bespoke sourcing.' 
                   : 'Try selecting another gemstone category or clearing your search query.'}
               </p>
-              {stones.length === 0 ? (
-                <Link
-                  href="/admin/dashboard/inventory"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    padding: '10px 22px',
-                    backgroundColor: '#002147',
-                    color: '#ffffff',
-                    borderRadius: '8px',
-                    fontWeight: 600,
-                    fontSize: '0.88rem',
-                    textDecoration: 'none',
-                    boxShadow: '0 2px 6px rgba(0, 33, 71, 0.15)',
-                  }}
-                >
-                  Add Gemstones in Admin &rarr;
-                </Link>
-              ) : (
+              {stones.length > 0 && (
                 <button
                   onClick={() => { setSelectedCategory('ALL'); setSearchQuery(''); }}
                   style={{
