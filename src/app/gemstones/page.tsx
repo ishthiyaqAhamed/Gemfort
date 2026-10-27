@@ -259,7 +259,9 @@ export default function GemstonesPage() {
                             fill 
                             className={styles.stoneImg}
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            unoptimized={displayImage.startsWith('data:')}
                           />
+
                         </div>
                         
                         <div className={styles.cardDetails}>

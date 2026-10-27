@@ -78,6 +78,7 @@ export default function AdminInventoryPage() {
   const [uploadingImage, setUploadingImage] = useState(false);
   const [uploadProgress, setUploadProgress] = useState<string | null>(null);
   const [uploadProvider, setUploadProvider] = useState<'cloudinary' | 'local' | null>(null);
+  const [brokenImages, setBrokenImages] = useState<Record<string, boolean>>({});
 
   const loadData = async () => {
     setLoading(true);
@@ -154,7 +155,7 @@ export default function AdminInventoryPage() {
     setFormTreatment('100% Unheated & Untreated Natural');
     setFormCert('GRS-2026-88419');
     setFormStatus('AVAILABLE');
-    setFormImage('/images/guide/blue-sapphire.png');
+    setFormImage('');
     setFormDesc('');
     setUploadProgress(null);
     setUploadProvider(null);
@@ -359,7 +360,14 @@ export default function AdminInventoryPage() {
                       <td>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                           <div style={{ position: 'relative', width: '42px', height: '42px', backgroundColor: '#07101d', borderRadius: '8px', overflow: 'hidden', flexShrink: 0 }}>
-                            <Image src={displayImage} alt={stone.name} fill style={{ objectFit: 'contain', padding: '3px' }} />
+                            <Image 
+                              src={brokenImages[stone.id] ? '/images/guide/blue-sapphire.png' : displayImage} 
+                              alt={stone.name} 
+                              fill 
+                              style={{ objectFit: 'contain', padding: '3px' }} 
+                              onError={() => setBrokenImages((prev) => ({ ...prev, [stone.id]: true }))}
+                              unoptimized={displayImage.startsWith('data:')}
+                            />
                           </div>
                           <div>
                             <span style={{ fontWeight: 600, color: '#111827', display: 'block' }}>{stone.name}</span>
@@ -648,6 +656,7 @@ export default function AdminInventoryPage() {
                           alt="Uploaded Gemstone"
                           fill
                           style={{ objectFit: 'contain', padding: '4px' }}
+                          unoptimized={formImage.startsWith('data:')}
                         />
                       </div>
                       <div className={modalStyles.previewInfo}>
@@ -713,6 +722,23 @@ export default function AdminInventoryPage() {
                         {preset.label}
                       </button>
                     ))}
+                  </div>
+
+                  {/* Direct URL Option */}
+                  <div style={{ marginTop: '0.75rem' }}>
+                    <input
+                      type="url"
+                      placeholder="Or enter direct image URL (https://...)"
+                      value={formImage && !formImage.startsWith('data:') ? formImage : ''}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setFormImage(val);
+                        setUploadProvider(val.includes('cloudinary') ? 'cloudinary' : null);
+                        setUploadProgress(val ? 'Custom URL entered' : null);
+                      }}
+                      className={modalStyles.input}
+                      style={{ fontSize: '0.8rem', padding: '0.5rem 0.75rem' }}
+                    />
                   </div>
                 </div>
 

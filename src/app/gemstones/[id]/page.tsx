@@ -350,7 +350,9 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                   priority
                   className={styles.mainImage}
                   sizes="(max-width: 1024px) 100vw, 55vw"
+                  unoptimized={stone.img.startsWith('data:')}
                 />
+
               </div>
 
               <div className={styles.stageFooter}>

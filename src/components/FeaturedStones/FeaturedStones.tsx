@@ -182,7 +182,9 @@ const FeaturedStones = () => {
                         fill
                         sizes="(max-width: 600px) 45vw, (max-width: 1024px) 33vw, 380px"
                         className={styles.image}
+                        unoptimized={displayImage.startsWith('data:')}
                       />
+
                     </div>
 
                     <div className={styles.cardInfo}>
