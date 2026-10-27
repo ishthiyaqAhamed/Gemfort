@@ -1,7 +1,18 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Plus, X, Loader2, RefreshCw, CheckCircle2, AlertCircle, BookOpen } from 'lucide-react';
+import Image from 'next/image';
+import { 
+  Plus, 
+  X, 
+  Loader2, 
+  RefreshCw, 
+  CheckCircle2, 
+  AlertCircle, 
+  BookOpen, 
+  UploadCloud, 
+  Check 
+} from 'lucide-react';
 import styles from '../adminPages.module.css';
 
 interface Article {
@@ -24,9 +35,48 @@ export default function AdminJournalPage() {
   const [category, setCategory] = useState('China Fort');
   const [excerpt, setExcerpt] = useState('');
   const [content, setContent] = useState('');
-  const [img, setImg] = useState('/images/hero-bg-stunning.jpg');
+  const [img, setImg] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [alertMsg, setAlertMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
+  // Image Upload state
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<string | null>(null);
+  const [uploadProvider, setUploadProvider] = useState<'cloudinary' | 'local' | null>(null);
+
+  const handleFileUpload = async (file: File) => {
+    if (!file) return;
+    setUploadingImage(true);
+    setUploadProgress('Uploading to Cloudinary CDN...');
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('folder', 'gemfort/journal');
+
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success && data.url) {
+        setImg(data.url);
+        setUploadProvider(data.provider === 'cloudinary' ? 'cloudinary' : 'local');
+        setUploadProgress(
+          data.provider === 'cloudinary'
+            ? 'Stored on Cloudinary CDN'
+            : 'Image Loaded Successfully'
+        );
+      } else {
+        alert(data.error || 'Failed to upload image.');
+      }
+    } catch (err) {
+      console.error('Upload error:', err);
+      alert('Network error while uploading image.');
+    } finally {
+      setUploadingImage(false);
+    }
+  };
 
   const loadArticles = async () => {
     setLoading(true);
@@ -74,6 +124,9 @@ export default function AdminJournalPage() {
         setTitle('');
         setExcerpt('');
         setContent('');
+        setImg('');
+        setUploadProgress(null);
+        setUploadProvider(null);
       } else {
         setAlertMsg({ type: 'error', text: data.error || 'Failed to create article.' });
       }
@@ -244,36 +297,171 @@ export default function AdminJournalPage() {
                 />
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.78rem', color: '#002147', fontWeight: 600, textTransform: 'uppercase', marginBottom: '0.3rem' }}>
-                    Category
-                  </label>
-                  <select
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '0.9rem', outline: 'none', backgroundColor: '#fff' }}
-                  >
-                    <option value="China Fort">China Fort</option>
-                    <option value="Gem Trading">Gem Trading</option>
-                    <option value="Famous Gemstones">Famous Gemstones</option>
-                    <option value="Pathe Market">Pathe Market</option>
-                    <option value="Gemstone Origins">Gemstone Origins</option>
-                    <option value="Gem Heritage">Gem Heritage</option>
-                  </select>
-                </div>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.78rem', color: '#002147', fontWeight: 600, textTransform: 'uppercase', marginBottom: '0.35rem' }}>
+                  Category
+                </label>
+                <select
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '0.9rem', outline: 'none', backgroundColor: '#fff', color: '#0f172a' }}
+                >
+                  <option value="China Fort">China Fort</option>
+                  <option value="Gem Trading">Gem Trading</option>
+                  <option value="Famous Gemstones">Famous Gemstones</option>
+                  <option value="Pathe Market">Pathe Market</option>
+                  <option value="Gemstone Origins">Gemstone Origins</option>
+                  <option value="Gem Heritage">Gem Heritage</option>
+                </select>
+              </div>
 
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.78rem', color: '#002147', fontWeight: 600, textTransform: 'uppercase', marginBottom: '0.3rem' }}>
-                    Banner Image
-                  </label>
-                  <input
-                    type="text"
-                    value={img}
-                    onChange={(e) => setImg(e.target.value)}
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '0.9rem', outline: 'none' }}
-                  />
-                </div>
+              {/* Upload Banner Image */}
+              <div>
+                <label style={{ display: 'block', fontSize: '0.78rem', color: '#002147', fontWeight: 600, textTransform: 'uppercase', marginBottom: '0.35rem' }}>
+                  Banner Image
+                </label>
+
+                {img ? (
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '1rem',
+                    padding: '0.85rem 1rem',
+                    borderRadius: '10px',
+                    border: '1px solid #cbd5e1',
+                    backgroundColor: '#f8fafc',
+                  }}>
+                    <div style={{
+                      position: 'relative',
+                      width: '74px',
+                      height: '52px',
+                      borderRadius: '6px',
+                      overflow: 'hidden',
+                      backgroundColor: '#001a3a',
+                      flexShrink: 0,
+                    }}>
+                      <Image
+                        src={img}
+                        alt="Article Banner Preview"
+                        fill
+                        style={{ objectFit: 'cover' }}
+                        unoptimized={img.startsWith('data:')}
+                      />
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.2rem' }}>
+                        <span style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.25rem',
+                          fontSize: '0.72rem',
+                          fontWeight: 600,
+                          backgroundColor: '#ecfdf5',
+                          color: '#065f46',
+                          padding: '2px 8px',
+                          borderRadius: '999px',
+                          border: '1px solid #a7f3d0'
+                        }}>
+                          <Check size={11} />
+                          <span>{uploadProgress || (uploadProvider === 'cloudinary' ? 'Stored on Cloudinary CDN' : 'Banner Ready')}</span>
+                        </span>
+                      </div>
+                      <p style={{
+                        margin: 0,
+                        fontSize: '0.76rem',
+                        color: '#64748b',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        fontFamily: 'monospace'
+                      }} title={img}>
+                        {img}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => { setImg(''); setUploadProgress(null); }}
+                      style={{
+                        padding: '6px 12px',
+                        fontSize: '0.78rem',
+                        color: '#dc2626',
+                        backgroundColor: '#fef2f2',
+                        border: '1px solid #fecaca',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        fontWeight: 600,
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      Change Image
+                    </button>
+                  </div>
+                ) : (
+                  <div>
+                    <label style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '1.75rem 1rem',
+                      border: '2px dashed #cbd5e1',
+                      borderRadius: '12px',
+                      backgroundColor: uploadingImage ? '#f8fafc' : '#ffffff',
+                      cursor: uploadingImage ? 'not-allowed' : 'pointer',
+                      transition: 'all 0.2s ease',
+                      textAlign: 'center',
+                    }}>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        style={{ display: 'none' }}
+                        disabled={uploadingImage}
+                        onChange={(e) => {
+                          if (e.target.files?.[0]) handleFileUpload(e.target.files[0]);
+                        }}
+                      />
+                      <div style={{
+                        width: '44px',
+                        height: '44px',
+                        borderRadius: '10px',
+                        backgroundColor: '#f1f5f9',
+                        color: '#002147',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginBottom: '0.65rem'
+                      }}>
+                        {uploadingImage ? <Loader2 size={22} className="animate-spin" color="#c7a450" /> : <UploadCloud size={22} color="#002147" />}
+                      </div>
+                      <p style={{ margin: '0 0 0.25rem', fontSize: '0.88rem', fontWeight: 600, color: '#0f172a' }}>
+                        {uploadingImage ? 'Uploading to Cloudinary CDN...' : 'Click or drag image here to upload'}
+                      </p>
+                      <span style={{ fontSize: '0.75rem', color: '#64748b' }}>
+                        PNG, JPG, WebP up to 10MB (Auto-optimized to Cloudinary CDN)
+                      </span>
+                    </label>
+
+                    {/* Direct URL alternative */}
+                    <div style={{ marginTop: '0.6rem' }}>
+                      <input
+                        type="text"
+                        placeholder="Or enter direct image URL (e.g. /images/hero-bg-stunning.jpg or https://...)"
+                        value={img}
+                        onChange={(e) => setImg(e.target.value)}
+                        style={{
+                          width: '100%',
+                          padding: '8px 12px',
+                          borderRadius: '8px',
+                          border: '1px solid #e2e8f0',
+                          fontSize: '0.82rem',
+                          backgroundColor: '#f8fafc',
+                          color: '#334155',
+                          outline: 'none',
+                        }}
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div>
