@@ -42,162 +42,13 @@ interface GemstoneData {
   glowColor: string;
 }
 
-const fallbackStones: GemstoneData[] = [
-  {
-    id: 1,
-    slug: 'royal-blue-sapphire-3-45ct',
-    name: 'Royal Blue Sapphire',
-    type: 'Sapphire',
-    weight: '3.45 ct',
-    img: '/images/guide/blue-sapphire.png',
-    priceUSD: 4250,
-    desc: 'An exceptional unheated Royal Blue Sapphire of peerless Ceylon provenance. Sourced directly from the artisanal gravels of Ratnapura, Sri Lanka. This collector stone showcases a deep, velvety cornflower-to-royal hue with remarkable transparency and vivid natural scintillation.',
-    shape: 'Cushion Mixed Cut',
-    colorGrade: 'Royal Blue (Vivid)',
-    clarity: 'Eye-Clean (VVS)',
-    treatment: '100% Unheated & Untreated',
-    origin: 'Ratnapura, Sri Lanka',
-    certNumber: 'GRS-2024-88419',
-    dimensions: '9.42 × 7.85 × 5.30 mm',
-    glowColor: 'rgba(28, 93, 230, 0.45)'
-  },
-  {
-    id: 2,
-    slug: 'pigeon-blood-ruby-2-10ct',
-    name: 'Pigeon Blood Ruby',
-    type: 'Ruby',
-    weight: '2.10 ct',
-    img: '/images/guide/ruby.png',
-    priceUSD: 6800,
-    desc: 'An ultra-rare Pigeon Blood Ruby with mesmerizing fire and supreme crystalline purity. Exhibits the coveted incandescent crimson fluorescence under direct light, signifying the finest unheated corundum specimen.',
-    shape: 'Cushion Step Cut',
-    colorGrade: 'Pigeon Blood Red',
-    clarity: 'Slightly Included (Natural Silk)',
-    treatment: 'Unheated (Certified Natural)',
-    origin: 'Montepuez, Mozambique',
-    certNumber: 'GIA-2024-54109',
-    dimensions: '7.80 × 6.95 × 4.60 mm',
-    glowColor: 'rgba(230, 32, 68, 0.45)'
-  },
-  {
-    id: 3,
-    slug: 'sunset-padparadscha-1-85ct',
-    name: 'Sunset Padparadscha',
-    type: 'Padparadscha',
-    weight: '1.85 ct',
-    img: '/images/guide/padparadscha.png',
-    priceUSD: 8500,
-    desc: 'The pinnacle of Ceylon gemstones — a sovereign Padparadscha Sapphire manifesting the delicate harmony of lotus petal pink and tropical orange sunset. Certified completely unheated with superb optical clarity.',
-    shape: 'Oval Brilliant Cut',
-    colorGrade: 'Sunset Pink-Orange',
-    clarity: 'Loupe Clean (VVS1)',
-    treatment: '100% Natural & Untreated',
-    origin: 'Balangoda, Sri Lanka',
-    certNumber: 'GRS-2024-91024',
-    dimensions: '8.10 × 6.20 × 4.15 mm',
-    glowColor: 'rgba(245, 120, 80, 0.45)'
-  },
-  {
-    id: 4,
-    slug: 'vivid-pink-sapphire-4-20ct',
-    name: 'Vivid Pink Sapphire',
-    type: 'Sapphire',
-    weight: '4.20 ct',
-    img: '/images/guide/pink-sapphire.png',
-    priceUSD: 3900,
-    desc: 'An eye-clean, vibrant Pink Sapphire radiating intense magenta brilliance. Masterfully faceted with precision symmetry to accentuate its high luster and dazzling electric luster.',
-    shape: 'Cushion Mixed Cut',
-    colorGrade: 'Vivid Neon Pink',
-    clarity: 'Eye-Clean (VS)',
-    treatment: '100% Unheated & Untreated',
-    origin: 'Ratnapura, Sri Lanka',
-    certNumber: 'GIC-2024-11820',
-    dimensions: '9.90 × 8.15 × 5.60 mm',
-    glowColor: 'rgba(238, 77, 160, 0.45)'
-  },
-  {
-    id: 5,
-    slug: 'color-change-alexandrite-1-50ct',
-    name: 'Color Change Alexandrite',
-    type: 'Alexandrite',
-    weight: '1.50 ct',
-    img: '/images/guide/alexandrite.png',
-    priceUSD: 12000,
-    desc: 'Phenomenal natural Alexandrite displaying a dramatic 90% color shift from lush teal-green in natural daylight to radiant incandescent raspberry amethyst under evening halogen lighting.',
-    shape: 'Round Brilliant Cut',
-    colorGrade: 'Teal Green to Raspberry Red',
-    clarity: 'Very Slightly Included',
-    treatment: '100% Untreated Natural',
-    origin: 'Minas Gerais, Brazil',
-    certNumber: 'GÜBELIN-2024-3019',
-    dimensions: '7.40 × 5.85 × 3.90 mm',
-    glowColor: 'rgba(56, 182, 160, 0.45)'
-  },
-  {
-    id: 6,
-    slug: 'golden-yellow-sapphire-5-10ct',
-    name: 'Golden Yellow Sapphire',
-    type: 'Sapphire',
-    weight: '5.10 ct',
-    img: '/images/guide/yellow-sapphire.png',
-    priceUSD: 3200,
-    desc: 'A magnificent, pure canary yellow sapphire exhibiting warm honey sunshine facets. Flawless crystal body with excellent depth and unheated pedigree.',
-    shape: 'Radiant Step Cut',
-    colorGrade: 'Canary Golden Yellow',
-    clarity: 'Flawless / Loupe Clean',
-    treatment: 'Unheated & Untreated',
-    origin: 'Ratnapura, Sri Lanka',
-    certNumber: 'GRS-2024-60142',
-    dimensions: '11.02 × 8.90 × 5.80 mm',
-    glowColor: 'rgba(240, 190, 50, 0.45)'
-  },
-  {
-    id: 7,
-    slug: 'cornflower-blue-sapphire-2-80ct',
-    name: 'Cornflower Blue Sapphire',
-    type: 'Sapphire',
-    weight: '2.80 ct',
-    img: '/images/guide/blue-sapphire.png',
-    priceUSD: 3800,
-    desc: 'Classic velvety Cornflower Blue Ceylon Sapphire with soft inner glow and exceptional silk refraction. Completely unheated, accompanied by full laboratory report & certification.',
-    shape: 'Cushion Mixed Cut',
-    colorGrade: 'Cornflower Blue',
-    clarity: 'Eye-Clean (VVS)',
-    treatment: '100% Unheated',
-    origin: 'Elahera, Sri Lanka',
-    certNumber: 'GRS-2024-73911',
-    dimensions: '8.75 × 7.20 × 4.95 mm',
-    glowColor: 'rgba(65, 120, 245, 0.45)'
-  },
-  {
-    id: 8,
-    slug: 'neon-spinel-3-05ct',
-    name: 'Neon Spinel',
-    type: 'Spinel',
-    weight: '3.05 ct',
-    img: '/images/guide/spinel.png',
-    priceUSD: 2100,
-    desc: 'A fiery, fluorescent hot neon pink Spinel originating from the renowned deposits of Mahenge. Boasts an extraordinarily high refractive index and crystalline brilliance.',
-    shape: 'Cushion Brilliant',
-    colorGrade: 'Electric Hot Pink',
-    clarity: 'Eye-Clean (VVS)',
-    treatment: 'Natural (No Treatments Known)',
-    origin: 'Mahenge, Tanzania',
-    certNumber: 'GIA-2024-41908',
-    dimensions: '8.90 × 7.45 × 5.10 mm',
-    glowColor: 'rgba(255, 60, 140, 0.45)'
-  },
-];
-
 export default function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { formatPrice } = useCurrency();
   const resolvedParams = React.use(params);
   const rawId = resolvedParams.id;
 
-  // Initial fallback
-  const numericId = parseInt(rawId);
-  const initialFallback = fallbackStones.find(s => s.id === numericId || s.slug === rawId) || fallbackStones[0];
-  const [stone, setStone] = useState<GemstoneData>(initialFallback);
+  const [stone, setStone] = useState<GemstoneData | null>(null);
+  const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
 
   // Inquiry modal state
@@ -211,6 +62,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
   useEffect(() => {
     async function fetchGemstone() {
+      setLoading(true);
       try {
         const res = await fetch(`/api/gemstones/${rawId}`);
         const data = await res.json();
@@ -222,11 +74,11 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             name: item.name,
             type: item.category?.name || 'Precious Gemstone',
             weight: typeof item.weight === 'number' ? `${item.weight} ct` : (item.weight || 'Carat on request'),
-            img: item.images?.[0] || initialFallback.img,
-            images: item.images || [initialFallback.img],
+            img: item.images?.[0] || '/images/guide/blue-sapphire.png',
+            images: item.images && item.images.length > 0 ? item.images : ['/images/guide/blue-sapphire.png'],
             video: item.video || null,
             priceUSD: item.price || 0,
-            desc: item.description || initialFallback.desc,
+            desc: item.description || 'Certified natural gemstone from Gemfort International.',
             shape: item.shape || 'Faceted Precision Cut',
             colorGrade: item.color || 'Vivid Ceylon Hue',
             clarity: 'Eye-Clean / Fine Gem Quality',
@@ -234,15 +86,68 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             origin: item.origin || 'Ceylon, Sri Lanka',
             certNumber: item.certificate || 'GRS / GIA Laboratory Certified',
             dimensions: 'Calibrated Precision Faceting',
-            glowColor: initialFallback.glowColor || 'rgba(199, 164, 80, 0.4)',
+            glowColor: 'rgba(199, 164, 80, 0.35)',
           });
+        } else {
+          setStone(null);
         }
       } catch (e) {
         console.error('Error fetching live stone:', e);
+        setStone(null);
+      } finally {
+        setLoading(false);
       }
     }
     fetchGemstone();
   }, [rawId]);
+
+  if (loading) {
+    return (
+      <main>
+        <section className={styles.section} style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ textAlign: 'center', color: '#64748b' }}>
+            <Loader2 size={32} className="animate-spin" style={{ margin: '0 auto 1rem', color: '#c7a450' }} />
+            <p style={{ fontSize: '1.05rem', fontWeight: 600, color: '#002147' }}>Loading gemstone specifications...</p>
+          </div>
+        </section>
+      </main>
+    );
+  }
+
+  if (!stone) {
+    return (
+      <main>
+        <section className={styles.section} style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ textAlign: 'center', maxWidth: '480px', padding: '2rem' }}>
+            <h2 style={{ fontSize: '1.8rem', color: '#002147', marginBottom: '0.75rem', fontFamily: 'serif' }}>
+              Gemstone Not Found
+            </h2>
+            <p style={{ color: '#64748b', fontSize: '0.95rem', marginBottom: '1.75rem', lineHeight: 1.6 }}>
+              This gemstone may have been archived, transferred to a private client, or is not currently active in the vault.
+            </p>
+            <Link
+              href="/gemstones"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                padding: '0.75rem 1.5rem',
+                backgroundColor: '#002147',
+                color: '#ffffff',
+                borderRadius: '8px',
+                fontWeight: 600,
+                textDecoration: 'none',
+                boxShadow: '0 4px 12px rgba(0, 33, 71, 0.15)',
+              }}
+            >
+              <ArrowLeft size={16} />
+              <span>Back to Vault Inventory</span>
+            </Link>
+          </div>
+        </section>
+      </main>
+    );
+  }
 
   const formattedPrice = stone.priceUSD > 0 ? formatPrice(stone.priceUSD) : 'Price on Inquiry';
 
@@ -310,9 +215,6 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             </Link>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <span className={styles.vaultTag}>
-                <Sparkles size={12} /> Private Collection
-              </span>
               <button
                 onClick={handleShare}
                 aria-label="Share Gemstone Details"

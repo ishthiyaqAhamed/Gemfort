@@ -29,17 +29,6 @@ interface Category {
   slug: string;
 }
 
-const fallbackStones: Gemstone[] = [
-  { id: 1, name: 'Royal Blue Sapphire', slug: 'royal-blue-sapphire-3-45ct', type: 'Sapphire', weight: '3.45 ct', img: '/images/guide/blue-sapphire.png', priceUSD: 4250 },
-  { id: 2, name: 'Pigeon Blood Ruby', slug: 'pigeon-blood-ruby-2-10ct', type: 'Ruby', weight: '2.10 ct', img: '/images/guide/ruby.png', priceUSD: 6800 },
-  { id: 3, name: 'Sunset Padparadscha', slug: 'sunset-padparadscha-1-85ct', type: 'Padparadscha', weight: '1.85 ct', img: '/images/guide/padparadscha.png', priceUSD: 8500 },
-  { id: 4, name: 'Vivid Pink Sapphire', slug: 'vivid-pink-sapphire-4-20ct', type: 'Sapphire', weight: '4.20 ct', img: '/images/guide/pink-sapphire.png', priceUSD: 3900 },
-  { id: 5, name: 'Color Change Alexandrite', slug: 'color-change-alexandrite-1-50ct', type: 'Alexandrite', weight: '1.50 ct', img: '/images/guide/alexandrite.png', priceUSD: 12000 },
-  { id: 6, name: 'Golden Yellow Sapphire', slug: 'golden-yellow-sapphire-5-10ct', type: 'Sapphire', weight: '5.10 ct', img: '/images/guide/yellow-sapphire.png', priceUSD: 3200 },
-  { id: 7, name: 'Cornflower Blue Sapphire', slug: 'cornflower-blue-sapphire-2-80ct', type: 'Sapphire', weight: '2.80 ct', img: '/images/guide/blue-sapphire.png', priceUSD: 3800 },
-  { id: 8, name: 'Neon Spinel', slug: 'neon-spinel-3-05ct', type: 'Spinel', weight: '3.05 ct', img: '/images/guide/spinel.png', priceUSD: 2100 },
-];
-
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -57,7 +46,7 @@ const itemVariants = {
 
 export default function GemstonesPage() {
   const { formatPrice } = useCurrency();
-  const [stones, setStones] = useState<Gemstone[]>(fallbackStones);
+  const [stones, setStones] = useState<Gemstone[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
   const [sortOption, setSortOption] = useState<string>('featured');
@@ -75,7 +64,7 @@ export default function GemstonesPage() {
         const gemData = await gemRes.json();
         const catData = await catRes.json();
 
-        if (gemRes.ok && gemData.success && gemData.data?.length > 0) {
+        if (gemRes.ok && gemData.success && gemData.data) {
           setStones(gemData.data);
         }
 
@@ -216,23 +205,51 @@ export default function GemstonesPage() {
 
           {filteredStones.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '5rem 1rem', color: '#64748b' }}>
-              <p style={{ fontSize: '1.2rem', marginBottom: '1rem', color: '#002147', fontWeight: 600 }}>No gemstones match your criteria.</p>
-              <button
-                onClick={() => { setSelectedCategory('ALL'); setSearchQuery(''); }}
-                style={{
-                  padding: '9px 20px',
-                  backgroundColor: '#002147',
-                  color: '#ffffff',
-                  border: 'none',
-                  borderRadius: '8px',
-                  fontWeight: 600,
-                  fontSize: '0.88rem',
-                  cursor: 'pointer',
-                  boxShadow: '0 2px 6px rgba(0, 33, 71, 0.15)',
-                }}
-              >
-                Reset Filters
-              </button>
+              <p style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: '#002147', fontWeight: 600 }}>
+                {stones.length === 0 ? 'No Gemstones in Vault' : 'No gemstones match your criteria.'}
+              </p>
+              <p style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: '1.5rem', maxWidth: '460px', margin: '0 auto 1.5rem' }}>
+                {stones.length === 0 
+                  ? 'Your vault inventory is currently empty. Add your natural certified gemstones from the admin dashboard.' 
+                  : 'Try selecting another gemstone category or clearing your search query.'}
+              </p>
+              {stones.length === 0 ? (
+                <Link
+                  href="/admin/dashboard/inventory"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    padding: '10px 22px',
+                    backgroundColor: '#002147',
+                    color: '#ffffff',
+                    borderRadius: '8px',
+                    fontWeight: 600,
+                    fontSize: '0.88rem',
+                    textDecoration: 'none',
+                    boxShadow: '0 2px 6px rgba(0, 33, 71, 0.15)',
+                  }}
+                >
+                  Add Gemstones in Admin &rarr;
+                </Link>
+              ) : (
+                <button
+                  onClick={() => { setSelectedCategory('ALL'); setSearchQuery(''); }}
+                  style={{
+                    padding: '9px 20px',
+                    backgroundColor: '#002147',
+                    color: '#ffffff',
+                    border: 'none',
+                    borderRadius: '8px',
+                    fontWeight: 600,
+                    fontSize: '0.88rem',
+                    cursor: 'pointer',
+                    boxShadow: '0 2px 6px rgba(0, 33, 71, 0.15)',
+                  }}
+                >
+                  Reset Filters
+                </button>
+              )}
             </div>
           ) : (
             <motion.div 
