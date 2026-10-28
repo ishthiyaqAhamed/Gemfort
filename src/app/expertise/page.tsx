@@ -56,7 +56,13 @@ export default function ExpertisePage() {
                 <h2 className={styles.featureTitle}>Where our stones begin</h2>
               </div>
               <div className={styles.mediaBlock}>
-                <Image src="/images/custom-sourcing.png" alt="Sourcing" fill className={styles.featureImage} />
+                <Image 
+                  src="/images/rough-gemstone-sourcing.png" 
+                  alt="Where our stones begin - Gemstone Sourcing" 
+                  fill 
+                  className={styles.featureImage} 
+                  priority
+                />
               </div>
               <div className={styles.textBlock}>
                 <h3 className={styles.subHeading}>Local sourcing</h3>
