@@ -124,7 +124,12 @@ export default function ExpertisePage() {
                 <h2 className={styles.featureTitle}>Testing &amp; Certification</h2>
               </div>
               <div className={styles.mediaBlock}>
-                <Image src="/images/journal/5.jpg" alt="Testing" fill className={styles.featureImage} />
+                <Image 
+                  src="/images/gem-testing-certification.jpg" 
+                  alt="Testing & Certification - Gem Verification" 
+                  fill 
+                  className={styles.featureImage} 
+                />
               </div>
               <div className={styles.textBlock}>
                 <p className={styles.paragraph} style={{ marginBottom: '1rem' }}>
