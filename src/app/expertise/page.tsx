@@ -89,7 +89,12 @@ export default function ExpertisePage() {
                 <h2 className={styles.featureTitle}>Cutting &amp; Polishing</h2>
               </div>
               <div className={styles.mediaBlock}>
-                <Image src="/images/cutting-polishing.jpg" alt="Cutting & Polishing" fill className={styles.featureImage} />
+                <Image 
+                  src="/images/gem-cutting-polishing.png" 
+                  alt="Cutting & Polishing - Gem Cutting" 
+                  fill 
+                  className={styles.featureImage} 
+                />
               </div>
               <div className={styles.textBlock}>
                 <h3 className={styles.subHeading}>Gem cutting</h3>
