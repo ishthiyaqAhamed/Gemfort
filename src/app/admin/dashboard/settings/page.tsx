@@ -6,7 +6,8 @@ import {
   Copy, 
   Check, 
   Download, 
-  Lock 
+  Lock,
+  AlertCircle
 } from 'lucide-react';
 import styles from '../adminPages.module.css';
 
@@ -22,6 +23,8 @@ export default function AdminSettingsPage() {
   const [password, setPassword] = useState('');
   const [emailNotif, setEmailNotif] = useState(true);
   const [saved, setSaved] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState('');
 
   // Confidential .env Vault state
   const [envData, setEnvData] = useState<EnvCredentials>({
@@ -46,23 +49,64 @@ export default function AdminSettingsPage() {
     }
   };
 
+  const fetchAdminProfile = async () => {
+    try {
+      const res = await fetch('/api/admin/profile');
+      const data = await res.json();
+      if (res.ok && data.success && data.email) {
+        setAdminEmail(data.email);
+        localStorage.setItem('gemfort_admin_email', data.email);
+      }
+    } catch (err) {
+      console.error('Failed to load admin profile:', err);
+    }
+  };
+
   useEffect(() => {
     const savedEmail = localStorage.getItem('gemfort_admin_email');
     if (savedEmail) setAdminEmail(savedEmail);
     const savedNotif = localStorage.getItem('gemfort_admin_notif');
     if (savedNotif !== null) setEmailNotif(savedNotif === 'true');
 
+    fetchAdminProfile();
     fetchEnvCredentials();
   }, []);
 
-  const handleSaveProfile = () => {
-    localStorage.setItem('gemfort_admin_email', adminEmail);
-    localStorage.setItem('gemfort_admin_notif', String(emailNotif));
-    if (password) {
-      localStorage.setItem('gemfort_admin_custom_pass', password);
+  const handleSaveProfile = async () => {
+    setSaving(true);
+    setSaveError('');
+    setSaved(false);
+
+    try {
+      const res = await fetch('/api/admin/profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: adminEmail,
+          password: password ? password : undefined,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        if (data.email) {
+          setAdminEmail(data.email);
+          localStorage.setItem('gemfort_admin_email', data.email);
+        }
+        localStorage.setItem('gemfort_admin_notif', String(emailNotif));
+        setPassword('');
+        setSaved(true);
+        setTimeout(() => setSaved(false), 3500);
+      } else {
+        setSaveError(data.error || 'Failed to update admin profile in database.');
+      }
+    } catch (err: any) {
+      console.error('Failed to update admin profile:', err);
+      setSaveError('Unable to connect to database. Please try again.');
+    } finally {
+      setSaving(false);
     }
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
   };
 
   const copyToClipboard = (text: string, keyName: string) => {
@@ -144,6 +188,25 @@ export default function AdminSettingsPage() {
             </div>
           )}
 
+          {saveError && (
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.65rem',
+              padding: '0.85rem 1.15rem',
+              borderRadius: '8px',
+              marginBottom: '1.25rem',
+              backgroundColor: '#fef2f2',
+              color: '#991b1b',
+              border: '1px solid #fecaca',
+              fontSize: '0.9rem',
+              fontWeight: 500,
+            }}>
+              <AlertCircle size={18} color="#dc2626" />
+              <span>{saveError}</span>
+            </div>
+          )}
+
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <div>
               <label style={{ display: 'block', color: '#334155', marginBottom: '0.4rem', fontSize: '0.82rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Admin Email</label>
@@ -152,16 +215,18 @@ export default function AdminSettingsPage() {
                 value={adminEmail}
                 onChange={(e) => setAdminEmail(e.target.value)}
                 style={{ width: '100%', padding: '11px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '0.92rem' }} 
+                disabled={saving}
               />
             </div>
             <div>
               <label style={{ display: 'block', color: '#334155', marginBottom: '0.4rem', fontSize: '0.82rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Update Password</label>
               <input 
                 type="password" 
-                placeholder="Enter new password (leave blank to keep current 'admin')"
+                placeholder="Enter new password (leave blank to keep current password)"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 style={{ width: '100%', padding: '11px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '0.92rem' }} 
+                disabled={saving}
               />
             </div>
 
@@ -173,6 +238,7 @@ export default function AdminSettingsPage() {
                   checked={emailNotif}
                   onChange={(e) => setEmailNotif(e.target.checked)}
                   style={{ width: '18px', height: '18px', cursor: 'pointer' }} 
+                  disabled={saving}
                 />
                 <label htmlFor="email_notif" style={{ color: '#475569', fontSize: '0.88rem', cursor: 'pointer' }}>
                   Email me immediately when a new private gemstone inquiry is submitted
@@ -185,8 +251,9 @@ export default function AdminSettingsPage() {
                 onClick={handleSaveProfile} 
                 className={styles.primaryBtn}
                 style={{ marginTop: '0.5rem' }}
+                disabled={saving}
               >
-                Save Admin Profile
+                {saving ? 'Saving Profile...' : 'Save Admin Profile'}
               </button>
             </div>
           </div>

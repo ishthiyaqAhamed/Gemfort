@@ -10,18 +10,39 @@ export default function AdminLoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const customPass = typeof window !== 'undefined' ? localStorage.getItem('gemfort_admin_custom_pass') || 'admin' : 'admin';
-    const customEmail = typeof window !== 'undefined' ? localStorage.getItem('gemfort_admin_email') || 'admin@gemfort.com' : 'admin@gemfort.com';
+    setError('');
+    setLoading(true);
 
-    if ((email === customEmail || email === 'admin@gemfort.com') && (password === customPass || password === 'admin')) {
-      localStorage.setItem('gemfort_admin_auth', 'true');
-      router.push('/admin/dashboard');
-    } else {
-      setError('Invalid credentials. Use admin@gemfort.com / admin');
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        localStorage.setItem('gemfort_admin_auth', 'true');
+        if (data.user?.email) {
+          localStorage.setItem('gemfort_admin_email', data.user.email);
+        }
+        router.push('/admin/dashboard');
+      } else {
+        setError(data.error || 'Invalid email or password.');
+      }
+    } catch (err: any) {
+      console.error('Login error:', err);
+      setError('Unable to connect to the authentication server. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -60,6 +81,7 @@ export default function AdminLoginPage() {
               placeholder="admin@gemfort.com"
               className={styles.input}
               required
+              disabled={loading}
             />
           </div>
           
@@ -72,17 +94,14 @@ export default function AdminLoginPage() {
               placeholder="••••••••"
               className={styles.input}
               required
+              disabled={loading}
             />
           </div>
 
-          <button type="submit" className={styles.submitBtn}>
-            Sign In
+          <button type="submit" className={styles.submitBtn} disabled={loading}>
+            {loading ? 'Signing In...' : 'Sign In'}
           </button>
         </form>
-        
-        <p className={styles.demoNote}>
-          Demo credentials: <strong>admin@gemfort.com</strong> / <strong>admin</strong>
-        </p>
 
         <Link href="/" className={styles.backHomeLink}>
           ← Back to Website
